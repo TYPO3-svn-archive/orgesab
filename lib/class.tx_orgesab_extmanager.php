@@ -50,20 +50,15 @@ class tx_orgesab_extmanager
 
 
 
-
-
-
-
-
-
-  /**
+/**
  * promptQuickstart(): Displays the quick start message.
  *
  * @return  string    message wrapped in HTML
+ * @access  public 
  * @since 0.4.2
  * @version 0.4.4
  */
-  function promptQuickstart()
+  public function promptQuickstart()
   {
 //.message-notice
 //.message-information
@@ -71,29 +66,11 @@ class tx_orgesab_extmanager
 //.message-warning
 //.message-error
 
-      $str_prompt = null;
+    $str_prompt = null;
 
-      $str_prompt = $str_prompt.'
-<div class="typo3-message message-warning">
-  <div class="message-body">
-    ' . $GLOBALS['LANG']->sL('LLL:EXT:orgesab/lib/locallang.xml:promptSaveTwice'). '
-  </div>
-</div>
-';
-
-//      $str_prompt = $str_prompt.'
-//<div class="typo3-message message-information">
-//  <div class="message-body">
-//    ' . $GLOBALS['LANG']->sL('LLL:EXT:orgesab/lib/locallang.xml:promptQuickstartBody'). '
-//  </div>
-//</div>
-//';
-    $confArrRpt = unserialize($GLOBALS['TYPO3_CONF_VARS']['EXT']['extConf']['orgesab']);
+    $confArrRpt = $this->zz_getExtConfiguration( );
     $confArrOrg = unserialize($GLOBALS['TYPO3_CONF_VARS']['EXT']['extConf']['org']);
     
-var_dump( __METHOD__, __LINE__, t3lib_div::_GP( ) );
-var_dump( __METHOD__, __LINE__, $confArrRpt );
-
     if($confArrRpt['store_records'] != $confArrOrg['store_records'])
     {
       $str_phrase = $GLOBALS['LANG']->sL('LLL:EXT:orgesab/lib/locallang.xml:promptStoreRecordWarn');
@@ -132,6 +109,36 @@ var_dump( __METHOD__, __LINE__, $confArrRpt );
 
 
     return $str_prompt;
+  }
+
+/**
+ * zz_getExtConfiguration( ): Displays the quick start message.
+ *
+ * @return  string    message wrapped in HTML
+ * @access  public 
+ * @since 0.4.2
+ * @version 0.4.4
+ */
+  public function zz_getExtConfiguration()
+  {
+//.message-notice
+//.message-information
+//.message-ok
+//.message-warning
+//.message-error
+
+    switch( true )
+    {
+      case( ! empty( $_POST ) ):
+        $extConfiguration = $_POST;
+        break;
+      case( empty( $_POST ) ):
+      default:
+        $extConfiguration = unserialize($GLOBALS['TYPO3_CONF_VARS']['EXT']['extConf']['orgesab']);
+        break;
+    }
+    
+    return $extConfiguration;
   }
 
 
