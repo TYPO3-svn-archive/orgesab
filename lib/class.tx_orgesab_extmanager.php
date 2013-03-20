@@ -88,10 +88,12 @@ class tx_orgesab_extmanager
 //  </div>
 //</div>
 //';
-
     $confArrRpt = unserialize($GLOBALS['TYPO3_CONF_VARS']['EXT']['extConf']['orgesab']);
     $confArrOrg = unserialize($GLOBALS['TYPO3_CONF_VARS']['EXT']['extConf']['org']);
     
+var_dump( __METHOD__, __LINE__, t3lib_div::GPvar( ) );
+var_dump( __METHOD__, __LINE__, $confArrRpt );
+
     if($confArrRpt['store_records'] != $confArrOrg['store_records'])
     {
       $str_phrase = $GLOBALS['LANG']->sL('LLL:EXT:orgesab/lib/locallang.xml:promptStoreRecordWarn');
