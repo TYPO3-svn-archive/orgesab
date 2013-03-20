@@ -130,10 +130,10 @@ class tx_orgesab_extmanager
 
     switch( true )
     {
-      case( ! empty( $_POST ) ):
-        $extConfiguration = $_POST;
+      case( ! empty( $_POST['data'] ) ):
+        $extConfiguration = $_POST['data'];
         break;
-      case( empty( $_POST ) ):
+      case( empty( $_POST['data'] ) ):
       default:
         $extConfiguration = unserialize($GLOBALS['TYPO3_CONF_VARS']['EXT']['extConf']['orgesab']);
         break;
