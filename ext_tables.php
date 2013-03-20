@@ -360,7 +360,6 @@ $TCA['tx_orgesab_cat'] = array (
     'delete'            => 'deleted',
     'enablecolumns'     => array (
       'disabled'  => 'hidden',
-      'fe_group'  => 'fe_group',
     ),
     'dividers2tabs'     => true,
     'hideAtCopy'        => false,
