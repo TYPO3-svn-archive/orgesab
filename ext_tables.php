@@ -348,6 +348,27 @@ $TCA['tx_orgesab'] = array (
     'iconfile'          => t3lib_extMgm::extRelPath($_EXTKEY).'ext_icon/esab.gif',
   ),
 );
+
+$TCA['tx_orgesab_cat'] = array (
+  'ctrl' => array (
+    'title'             => 'LLL:EXT:orgesab/locallang_db.xml:tx_orgesab_cat',
+    'label'             => 'title',
+    'tstamp'            => 'tstamp',
+    'crdate'            => 'crdate',
+    'cruser_id'         => 'cruser_id',
+    'default_sortby'    => 'ORDER BY title',
+    'delete'            => 'deleted',
+    'enablecolumns'     => array (
+      'disabled'  => 'hidden',
+      'fe_group'  => 'fe_group',
+    ),
+    'dividers2tabs'     => true,
+    'hideAtCopy'        => false,
+    'dynamicConfigFile' => t3lib_extMgm::extPath($_EXTKEY).'tca.php',
+    'thumbnail'         => 'image',
+    'iconfile'          => t3lib_extMgm::extRelPath($_EXTKEY).'ext_icon/esab.gif',
+  ),
+);
   // esab ///////////////////////////////////////////////////////////////////
 
   // TCA tables //////////////////////////////////////////////////////////////
