@@ -383,16 +383,6 @@ $TCA['tx_orgesab'] = array (
       'label'   => 'LLL:EXT:orgesab/locallang_db.xml:tx_orgesab.price3',
       'config'  => $conf_input_80_trim,
     ),
-    'price4' => array (
-      'exclude' => 0,
-      'label'   => 'LLL:EXT:orgesab/locallang_db.xml:tx_orgesab.price4',
-      'config'  => $conf_input_80_trim,
-    ),
-    'price5' => array (
-      'exclude' => 0,
-      'label'   => 'LLL:EXT:orgesab/locallang_db.xml:tx_orgesab.price5',
-      'config'  => $conf_input_80_trim,
-    ),
     'day1' => array (
       'exclude' => 0,
       'label'   => 'LLL:EXT:orgesab/locallang_db.xml:tx_orgesab.day1',
