@@ -15,7 +15,7 @@ $EM_CONF[$_EXTKEY] = array(
 	'description' => 'Extend the Organiser with a esab database!',
 	'category' => 'plugin',
 	'shy' => 0,
-	'version' => '3.0.2',
+	'version' => '0.0.1',
 	'dependencies' => 'org',
 	'conflicts' => '',
 	'priority' => '',
@@ -34,7 +34,6 @@ $EM_CONF[$_EXTKEY] = array(
 	'CGLcompliance_note' => '',
 	'constraints' => array(
 		'depends' => array(
-			'org' => '3.0.0-3.0.0',
 		),
 		'conflicts' => array(
 		),
