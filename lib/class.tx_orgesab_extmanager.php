@@ -107,8 +107,6 @@ class tx_orgesab_extmanager
 </div>
 ';
 
-    $str_prompt = $str_prompt . var_export( $_POST['data'], true );
-
     return $str_prompt;
   }
 
