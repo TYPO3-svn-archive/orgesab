@@ -18,9 +18,7 @@ if (!defined ('TYPO3_MODE'))
   // Add pagetree icons
   // Configure third party tables
   // draft field tx_orgesab
-  //    fe_users
   //    tx_org_cal
-  //    tx_org_headquarters
   // TCA tables
   //    orgesab
 
@@ -218,10 +216,7 @@ t3lib_extMgm::addPageTSConfig('<INCLUDE_TYPOSCRIPT: source="FILE:EXT:' . $_EXTKE
   // Configure third party tables
   
   // draft field tx_orgesab
-  // fe_users
   // tx_org_cal
-  // tx_org_headquarters
-  // tx_org_news
 
   // draft field tx_orgesab
 $arr_tx_orgesab = array (
@@ -272,57 +267,6 @@ $arr_tx_orgesab = array (
   ),
 );
   // draft field tx_orgesab
-
-  // fe_users
-t3lib_div::loadTCA('fe_users');
-
-  // Add field tx_orgesab
-$showRecordFieldList = $TCA['fe_users']['interface']['showRecordFieldList'];
-$showRecordFieldList = $showRecordFieldList.',tx_orgesab';
-$TCA['fe_users']['interface']['showRecordFieldList'] = $showRecordFieldList;
-  // Add field tx_orgesab
-
-  // Add field tx_orgesab
-$TCA['fe_users']['columns']['tx_orgesab']                  = $arr_tx_orgesab;
-$TCA['fe_users']['columns']['tx_orgesab']['label']         =
-  'LLL:EXT:orgesab/locallang_db.xml:fe_users.tx_orgesab';
-$TCA['fe_users']['columns']['tx_orgesab']['config']['MM']  = 'tx_orgesab_mm_fe_users';
-  // Add field tx_orgesab
-
-  // Insert div [esab] at position $int_div_position
-$str_showitem     = $TCA['fe_users']['types']['0']['showitem'];
-$arr_showitem     = explode('--div--;', $str_showitem);
-$int_div_position = 2;
-foreach($arr_showitem as $key => $value)
-{
-  switch(true)
-  {
-    case($key < $int_div_position):
-        // Don't move divs, which are placed before the new tab
-      $arr_new_showitem[$key] = $value;
-      break;
-    case($key == $int_div_position):
-        // Insert the new tab
-      $arr_new_showitem[$key]     = 'LLL:EXT:orgesab/locallang_db.xml:fe_users.div_tx_orgesab, tx_orgesab,';
-        // Move former tab one position behind
-      $arr_new_showitem[$key + 1] = $value;
-      break;
-    case($key > $int_div_position):
-        // Move divs, which are placed after the new tab one position behind
-      $arr_new_showitem[$key + 1] = $value;
-      break;
-  }
-}
-$str_showitem                 = implode('--div--;', $arr_new_showitem);
-$TCA['fe_users']['types']['0']['showitem']   = $str_showitem;
-  // Insert div [esab] at position $int_div_position
-  
-if($bool_wizards_wo_add_and_list)
-{
-  unset($TCA['fe_users']['columns']['tx_orgesab']['config']['wizards']['add']);
-  unset($TCA['fe_users']['columns']['tx_orgesab']['config']['wizards']['list']);
-}
-  // fe_users
 
   // tx_org_cal
 t3lib_div::loadTCA('tx_org_cal');
@@ -375,108 +319,6 @@ $TCA['tx_org_cal']['types']['tx_orgesab']['showitem'] =
 
   // Insert div [esab] with fields to TCAtypes
   // tx_org_cal
-
-
-
-  // tx_org_headquarters
-  // Load the TCA
-t3lib_div::loadTCA('tx_org_headquarters');
-
-  // Add fields to TCAshowReacordFieldList
-$showRecordFieldList = $TCA['tx_org_headquarters']['interface']['showRecordFieldList'];
-$showRecordFieldList = $showRecordFieldList.',tx_orgesab';
-$TCA['tx_org_headquarters']['interface']['showRecordFieldList'] = $showRecordFieldList;
-  // Add fields to TCAshowReacordFieldList
-
-  // Add fields to TCAcolumns: esab
-$TCA['tx_org_headquarters']['columns']['tx_orgesab']                                =
-  $arr_tx_orgesab;
-$TCA['tx_org_headquarters']['columns']['tx_orgesab']['label']                       =
-  'LLL:EXT:orgesab/locallang_db.xml:tx_org_headquarters.tx_orgesab';
-$TCA['tx_org_headquarters']['columns']['tx_orgesab']['config']['MM']                =
-  'tx_orgesab_mm_tx_org_headquarters';
-$TCA['tx_org_headquarters']['columns']['tx_orgesab']['config']['MM_opposite_field'] =
-  'tx_org_headquarters';
-  // Add fields to TCAcolumns: esab
-
-  // Insert div [esab] with fields to TCAtypes
-$str_showitem     = $TCA['tx_org_headquarters']['types']['0']['showitem'];
-$arr_showitem     = explode('--div--;', $str_showitem);
-$int_div_position = 3;
-foreach($arr_showitem as $key => $value)
-{
-  switch(true)
-  {
-    case($key < $int_div_position):
-        // Don't move divs, which are placed before the new tab
-      $arr_new_showitem[$key] = $value;
-      break;
-    case($key == $int_div_position):
-        // Insert the new tab
-      $arr_new_showitem[$key]     = 'LLL:EXT:orgesab/locallang_db.xml:tx_org_headquarters.div_tx_orgesab, tx_orgesab,';
-        // Move former tab one position behind
-      $arr_new_showitem[$key + 1] = $value;
-      break;
-    case($key > $int_div_position):
-        // Move divs, which are placed after the new tab one position behind
-      $arr_new_showitem[$key + 1] = $value;
-      break;
-  }
-}
-$str_showitem                                           = implode('--div--;', $arr_new_showitem);
-$TCA['tx_org_headquarters']['types']['0']['showitem']   = $str_showitem;
-  // Insert div [esab] with fields to TCAtypes
-  // tx_org_headquarters
-
-  // tx_org_news
-t3lib_div::loadTCA('tx_org_news');
-
-  // Add field tx_orgesab
-$showRecordFieldList = $TCA['tx_org_news']['interface']['showRecordFieldList'];
-$showRecordFieldList = $showRecordFieldList.',tx_orgesab';
-$TCA['tx_org_news']['interface']['showRecordFieldList'] = $showRecordFieldList;
-  // Add field tx_orgesab
-
-  // Add field tx_orgesab
-$TCA['tx_org_news']['columns']['tx_orgesab']                                =
-  $arr_tx_orgesab;
-$TCA['tx_org_news']['columns']['tx_orgesab']['label']                       =
-  'LLL:EXT:orgesab/locallang_db.xml:tx_org_news.tx_orgesab';
-$TCA['tx_org_news']['columns']['tx_orgesab']['config']['MM']                =
-  'tx_orgesab_mm_tx_org_news';
-$TCA['tx_org_news']['columns']['tx_orgesab']['config']['MM_opposite_field'] =
-  'tx_org_news';
-  // Add field tx_orgesab
-
-  // Insert div [esab] at position $int_div_position
-$str_showitem     = $TCA['tx_org_news']['types']['0']['showitem'];
-$arr_showitem     = explode('--div--;', $str_showitem);
-$int_div_position = 2;
-foreach($arr_showitem as $key => $value)
-{
-  switch(true)
-  {
-    case($key < $int_div_position):
-        // Don't move divs, which are placed before the new tab
-      $arr_new_showitem[$key] = $value;
-      break;
-    case($key == $int_div_position):
-        // Insert the new tab
-      $arr_new_showitem[$key]     = 'LLL:EXT:orgesab/locallang_db.xml:tx_org_news.div_tx_orgesab, tx_orgesab,';
-        // Move former tab one position behind
-      $arr_new_showitem[$key + 1] = $value;
-      break;
-    case($key > $int_div_position):
-        // Move divs, which are placed after the new tab one position behind
-      $arr_new_showitem[$key + 1] = $value;
-      break;
-  }
-}
-$str_showitem                                 = implode('--div--;', $arr_new_showitem);
-$TCA['tx_org_news']['types']['0']['showitem']  = $str_showitem;
-  // Insert div [esab] at position $int_div_position
-  // tx_org_news
-
   // Configure third party tables
 
 
