@@ -199,7 +199,7 @@ $TCA['tx_orgesab'] = array (
     ),
     'bookedup' => array (
       'exclude' => $bool_exclude_none,
-      'label'   => 'LLL:EXT:orgesab/locallang_db.xml:tx_orgesab.bookdup',
+      'label'   => 'LLL:EXT:orgesab/locallang_db.xml:tx_orgesab.bookeddup',
       'config' => array (
         'type' => 'check'
       )
