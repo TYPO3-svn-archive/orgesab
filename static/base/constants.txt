@@ -1,0 +1,9 @@
+plugin.org {
+
+  # cat=Organiser Esab/page/302; type=+int; label= page uid esab:Uid of your esab page
+  pages.esab =
+
+  # cat=Organiser Esab/page/303; type=+int; label= sysfolder uid esab:Uid of the sysfolder with the esab data
+  sysfolder.esab =
+
+}

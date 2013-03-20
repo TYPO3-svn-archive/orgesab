@@ -1,0 +1,435 @@
+
+
+  ////////////////////////////////////////
+  //
+  // INDEX
+
+  // plugin.tx_browser_pi1
+  //    views
+  //      201: +Org-Esab: Calendar
+
+
+
+  ////////////////////////////////////////
+  //
+  // plugin.tx_browser_pi1
+
+plugin.tx_browser_pi1 {
+  
+  views {
+    list {
+      201 = +Org-Esab: Calendar
+      201 {
+        name    = +Org-Esab: Calendar
+        select (
+          tx_org_cal.title,
+          tx_org_cal.subtitle,
+          tx_org_cal.teaser_short,
+          tx_org_cal.bodytext,
+          tx_org_cal.datetime,
+          tx_org_cal.type,
+          tx_org_cal.calpage,
+          tx_org_cal.calurl,
+          tx_org_caltype.title,
+          tx_org_event.title,
+          tx_org_event.subtitle,
+          tx_org_event.teaser_short,
+          tx_org_event.bodytext,
+          tx_orgesab.title,
+          tx_orgesab.subtitle,
+          tx_orgesab.producer,
+          tx_orgesab.teaser_subtitle,
+          tx_orgesab.teaser_short,
+          tx_orgesab.teaser_title,
+          tx_orgesab.bodytext
+        )
+        tx_org_cal {
+          teaser_short {
+            10 {
+              tx_orgesab = COA
+              tx_orgesab {
+                required    = 1
+                wrap        = <div class="cal_teasershort cal_teasershort_esab">|</div>
+                10 = TEXT
+                10 {
+                  required    = ###TX_ORG_CALTYPE.TITLE###
+                  value       = ###TX_ORG_CALTYPE.TITLE###
+                  noTrimWrap  = |<strong>|</strong> |
+                }
+                20 = TEXT
+                20 {
+                  required    = 1
+                  if.isTrue   = ###TX_ORG_REPERTOIRE.TEASER_SHORT###
+                  value       = ###TX_ORG_REPERTOIRE.TEASER_SHORT###
+                  stripHtml   = 1
+                  crop        = 200 | &nbsp;... | 1
+                }
+                21 = TEXT
+                21 {
+                  required    = 1
+                  if.isFalse  = ###TX_ORG_REPERTOIRE.TEASER_SHORT###
+                  value       = ###TX_ORG_REPERTOIRE.BODYTEXT###
+                  stripHtml   = 1
+                  crop        = 200 | &nbsp;... | 1
+                }
+                30 = TEXT
+                30 {
+                  value   = more &raquo;
+                  lang.de = mehr &raquo;
+                  typolink {
+                    parameter         = {$plugin.org.pages.calendar} - linktosingle
+                    additionalParams  = &tx_browser_pi1[calendarUid]=###TX_ORG_CAL.UID###&###CHASH###
+                  }
+                  noTrimWrap = | ||
+                }
+              }
+            }
+          }
+          subtitle {
+            10 {
+              tx_orgesab = TEXT
+              tx_orgesab {
+                required  = 1
+                stripHtml = 1
+                crop        = 200 | &nbsp;... | 1
+                value     = ###TX_ORG_REPERTOIRE.SUBTITLE###
+                override  = ###TX_ORG_REPERTOIRE.TEASER_SUBTITLE###
+                wrap      = <div class="cal_subtitle cal_subtitle_esab">|</div>
+              }
+            }
+          }
+          title {
+            10 {
+              tx_orgesab = COA
+              tx_orgesab {
+                10 = TEXT
+                10 {
+                  value     = ###TX_ORG_REPERTOIRE.TITLE###
+                  override  = ###TX_ORG_REPERTOIRE.TEASER_TITLE###
+                  typolink {
+                    parameter         = {$plugin.org.pages.calendar} - linktosingle
+                    additionalParams  = &tx_browser_pi1[calendarUid]=###TX_ORG_CAL.UID###&###CHASH###
+                  }
+                }
+                20 = TEXT
+                20 {
+                  if.isTrue   = ###TX_ORG_REPERTOIRE.PRODUCER###
+                  value       = by ###TX_ORG_REPERTOIRE.PRODUCER###
+                  lang.de     = von ###TX_ORG_REPERTOIRE.PRODUCER###
+                  noTrimWrap  = | <span class="esab_producer">|</span>|
+                }
+              }
+            }
+          }
+        }
+      }
+    }
+    single {
+      201 = +Org-Esab: Calendar
+      201 {
+        select >
+        select (
+          tx_org_cal.title,
+          tx_org_cal.subtitle,
+          tx_org_cal.teaser_short,
+          tx_org_cal.bodytext,
+          tx_org_cal.datetime,
+          tx_org_cal.type,
+
+          tx_org_cal.image,
+          tx_org_cal.imagecaption,
+          tx_org_cal.imageseo,
+          tx_org_cal.imagewidth,
+          tx_org_cal.imageheight,
+          tx_org_cal.imageorient,
+          tx_org_cal.imagecols,
+          tx_org_cal.imageborder,
+          tx_org_cal.image_frames,
+          tx_org_cal.image_link,
+          tx_org_cal.image_zoom,
+          tx_org_cal.image_noRows,
+          tx_org_cal.image_effects,
+          tx_org_cal.image_compression,
+
+          tx_org_cal.description,
+          tx_org_cal.keywords,
+          tx_org_cal.uid,
+
+          tx_org_caltype.title,
+
+          tx_org_calentrance.title,
+          tx_org_calentrance.value,
+          tx_org_calentrance.uid,
+
+          tx_org_event.title,
+          tx_org_event.subtitle,
+          tx_org_event.teaser_short,
+          tx_org_event.bodytext,
+
+          tx_org_event.documents_from_path,
+          tx_org_event.documents,
+          tx_org_event.documentslayout,
+          tx_org_event.documentscaption,
+          tx_org_event.documentssize, 
+
+          tx_org_event.image,
+          tx_org_event.imagecaption,
+          tx_org_event.imageseo,
+          tx_org_event.imagewidth,
+          tx_org_event.imageheight,
+          tx_org_event.imageorient,
+          tx_org_event.imagecols,
+          tx_org_event.imageborder,
+          tx_org_event.image_frames,
+          tx_org_event.image_link,
+          tx_org_event.image_zoom,
+          tx_org_event.image_noRows,
+          tx_org_event.image_effects,
+          tx_org_event.image_compression,
+
+          tx_org_event.description,
+          tx_org_event.keywords,
+          tx_org_event.uid,
+
+          tx_org_location.uid,
+          tx_org_location.title,
+
+          tx_orgesab.title,
+          tx_orgesab.subtitle,
+          tx_orgesab.producer,
+          tx_orgesab.teaser_short,
+          tx_orgesab.bodytext,
+
+          tx_orgesab.documents_from_path,
+          tx_orgesab.documents,
+          tx_orgesab.documentslayout,
+          tx_orgesab.documentscaption,
+          tx_orgesab.documentssize, 
+
+          tx_orgesab.image,
+          tx_orgesab.imagecaption,
+          tx_orgesab.imageseo,
+          tx_orgesab.imagewidth,
+          tx_orgesab.imageheight,
+          tx_orgesab.imageorient,
+          tx_orgesab.imagecols,
+          tx_orgesab.imageborder,
+          tx_orgesab.image_frames,
+          tx_orgesab.image_link,
+          tx_orgesab.image_zoom,
+          tx_orgesab.image_noRows,
+          tx_orgesab.image_effects,
+          tx_orgesab.image_compression,
+
+          tx_orgesab.description,
+          tx_orgesab.keywords,
+          tx_orgesab.uid
+
+        )
+        tx_org_cal {
+          bodytext {
+            tx_orgesab < .default
+            tx_orgesab {
+              imgList                   = ###TX_ORG_REPERTOIRE.IMAGE###
+              1 {
+                file {
+                  width                 = ###TX_ORG_REPERTOIRE.IMAGEWIDTH###
+                  height                = ###TX_ORG_REPERTOIRE.IMAGEHEIGHT###
+                }
+                  // #43983
+                //altText                 = ###TX_ORG_REPERTOIRE.IMAGESEO###
+                //titleText               = ###TX_ORG_REPERTOIRE.IMAGESEO###
+                imageLinkWrap {
+                  ifEmpty {
+                    typolink.parameter  = ###TX_ORG_REPERTOIRE.IMAGE_LINK###
+                  }
+                  typolink.parameter    = ###TX_ORG_REPERTOIRE.IMAGE_LINK###
+                  enable                = ###TX_ORG_REPERTOIRE.IMAGE_ZOOM###
+                }
+              }
+              textPos                   = ###TX_ORG_REPERTOIRE.IMAGEORIENT###
+              image_compression         = ###TX_ORG_REPERTOIRE.IMAGE_COMPRESSION###
+              image_effects             = ###TX_ORG_REPERTOIRE.IMAGE_EFFECTS###
+              noRows                    = ###TX_ORG_REPERTOIRE.IMAGE_NOROWS###
+              cols                      = ###TX_ORG_REPERTOIRE.IMAGECOLS###
+              border                    = ###TX_ORG_REPERTOIRE.IMAGEBORDER###
+                // #43979
+              caption.1.1.value           = ###TX_ORG_REPERTOIRE.IMAGECAPTION###
+              captionAlign              = ###TX_ORG_REPERTOIRE.IMAGECAPTION_POSITION###
+              layout {
+                key                     = ###TX_ORG_REPERTOIRE.IMAGEORIENT###
+              }
+                // #43979, #43982
+              rendering {
+                singleNoCaption {
+                  allStdWrap {
+                    innerWrap {
+                      cObject {
+                        key = ###TX_ORG_REPERTOIRE.IMAGEORIENT###
+                        key {
+                          field > 
+                        }
+                      }
+                    }
+                  }
+                  fallbackRendering {
+                    10 {
+                      if {
+                        isTrue = ###TX_ORG_REPERTOIRE.IMAGECAPTION###
+                        isTrue {
+                          field >
+                        }
+                      }
+                    }
+                    20 {
+                      if {
+                        isTrue = ###TX_ORG_REPERTOIRE.IMAGECAPTION###
+                        isTrue {
+                          field >
+                        }
+                      }
+                    }
+                    30 {
+                      if {
+                        isTrue = ###TX_ORG_REPERTOIRE.IMAGECAPTION###
+                        isTrue {
+                          field >
+                        }
+                      }
+                    }
+                    40 {
+                      if {
+                        isFalse = ###TX_ORG_REPERTOIRE.IMAGECAPTION###
+                        isFalse {
+                          field >
+                        }
+                      }
+                    }
+                  }
+                }
+                noCaption {
+                  fallbackRendering {
+                    if {
+                      isTrue = ###TX_ORG_REPERTOIRE.IMAGECAPTION###
+                      isTrue {
+                        field >
+                      }
+                    }
+                  }
+                }
+                singleCaption {
+                  fallbackRendering {
+                    if {
+                      isTrue = ###TX_ORG_REPERTOIRE.IMAGECAPTION###
+                      isTrue {
+                        field >
+                      }
+                    }
+                  }
+                }
+                splitCaption {
+                  fallbackRendering {
+                    if {
+                      isTrue = ###TX_ORG_REPERTOIRE.IMAGECAPTION###
+                      isTrue {
+                        field >
+                      }
+                    }
+                  }
+                }
+                globalCaption {
+                  fallbackRendering {
+                    if {
+                      isTrue = ###TX_ORG_REPERTOIRE.IMAGECAPTION###
+                      isTrue {
+                        field >
+                      }
+                    }
+                  }
+                }
+              }
+              text {
+                  // #43980
+                wrap = <div class="csc-textpic-text cal_bodytext cal_bodytext_esab">|</div>
+                20 {
+                  if.isTrue   = ###TX_ORG_REPERTOIRE.BODYTEXT###
+                  value       = ###TX_ORG_REPERTOIRE.BODYTEXT###
+                }
+              }
+            }
+          }
+          teaser_short {
+            10 {
+              tx_orgesab = TEXT
+              tx_orgesab {
+                required    = 1
+                if.isTrue   = ###TX_ORG_REPERTOIRE.TEASER_SHORT###
+                value       = ###TX_ORG_REPERTOIRE.TEASER_SHORT###
+                stripHtml   = 1
+                wrap        = <div class="cal_teasershort">|</div>
+              }
+            }
+          }
+          subtitle {
+            10 {
+              tx_orgesab = TEXT
+              tx_orgesab {
+                required  = 1
+                value     = ###TX_ORG_REPERTOIRE.SUBTITLE###
+                wrap      = <h2 class="subtitle">|</h2>
+              }
+            }
+          }
+          title {
+            10 {
+              tx_orgesab = COA
+              tx_orgesab {
+                10 = TEXT
+                10 {
+                  value = ###TX_ORG_REPERTOIRE.TITLE###
+                  wrap  = <h1 class="esab_title">|</h1>
+                }
+                20 = TEXT
+                20 {
+                  if.isTrue   = ###TX_ORG_REPERTOIRE.PRODUCER###
+                  value       = by ###TX_ORG_REPERTOIRE.PRODUCER###
+                  lang.de     = von ###TX_ORG_REPERTOIRE.PRODUCER###
+                  wrap        = <h2 class="esab_producer">|</h2>
+                }
+              }
+            }
+          }
+        }
+        tx_org_event {
+          documents {
+              // esab
+            tx_orgesab < .tx_org_event
+            tx_orgesab {
+                // header
+              10 {
+                if.isTrue = ###TX_ORG_REPERTOIRE.DOCUMENTS######TX_ORG_REPERTOIRE.DOCUMENTS_FROM_PATH###
+                wrap      = <h2 class="esab_documents">|</h2>
+              }
+                // documents
+              20 {
+                itemRendering.10.if.isPositive  = ###TX_ORG_REPERTOIRE.DOCUMENTSLAYOUT###
+                itemRendering.30.if.isTrue      = ###TX_ORG_REPERTOIRE.DOCUMENTSSIZE###
+                tableField = tx_orgesab.documents
+                fields {
+                  from_path = ###TX_ORG_REPERTOIRE.DOCUMENTS_FROM_PATH###
+                  files     = ###TX_ORG_REPERTOIRE.DOCUMENTS###
+                  caption   = ###TX_ORG_REPERTOIRE.DOCUMENTSCAPTION###
+                  layout    = ###TX_ORG_REPERTOIRE.DOCUMENTSLAYOUT###
+                }
+                stdWrap {
+                  if.isTrue = ###TX_ORG_REPERTOIRE.DOCUMENTS######TX_ORG_REPERTOIRE.DOCUMENTS_FROM_PATH###
+                }
+              }
+            }
+          }
+        }
+      }
+    }
+  }
+}
+  // plugin.tx_browser_pi1

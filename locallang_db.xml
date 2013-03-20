@@ -1,0 +1,140 @@
+<?xml version="1.0" encoding="utf-8" standalone="yes" ?>
+<T3locallang>
+  <meta type="array">
+    <type>database</type>
+    <description>Language labels for database tables/fields belonging to extension 'orgesab'</description>
+  </meta>
+  <data type="array">
+    <languageKey index="default" type="array">
+      <label index="dummy.language">default</label>
+      <label index="filter_phrase.schedule">Playing schedule</label>
+      <label index="tca_phrase.esab">Esab</label>
+
+      <label index="fe_users.div_tx_orgesab">Esab</label>
+      <label index="fe_users.tx_orgesab">Esab</label>
+      <label index="tx_org_cal.tx_orgesab">Esab</label>
+      <label index="tx_org_cal.type.tx_orgesab">Take it from the esab table</label>
+      <label index="tx_org_headquarters.div_tx_orgesab">Esab</label>
+      <label index="tx_org_headquarters.tx_orgesab">Esab</label>
+      <label index="tx_org_news.div_tx_orgesab">Esab</label>
+      <label index="tx_org_news.tx_orgesab">Esab</label>
+
+      <label index="tx_orgesab">Esab</label>
+      <label index="tx_orgesab.div_esab">Esab</label>
+      <label index="tx_orgesab.div_teaser">Teaser</label>
+      <label index="tx_orgesab.div_actors">Actors</label>
+      <label index="tx_orgesab.div_direction">Direction</label>
+      <label index="tx_orgesab.div_requirements">Requirements</label>
+      <label index="tx_orgesab.div_technique">Technique</label>
+      <label index="tx_orgesab.div_others">Other Staff</label>
+      <label index="tx_orgesab.div_doc">Documents</label>
+      <label index="tx_orgesab.div_news">News</label>
+      <label index="tx_orgesab.div_media">Media</label>
+      <label index="tx_orgesab.div_calendar">Calendar</label>
+      <label index="tx_orgesab.div_control">Controlling</label>
+      <label index="tx_orgesab.div_seo">Search Engines</label>
+      <label index="tx_orgesab.title">Title of the Esab</label>
+      <label index="tx_orgesab.subtitle">Subheader</label>
+      <label index="tx_orgesab.producer">Producer</label>
+      <label index="tx_orgesab.length">Length of Time</label>
+      <label index="tx_orgesab.staff">Staff</label>
+      <label index="tx_orgesab.bodytext">Bodytext</label>
+      <label index="tx_orgesab.teaser_title">Title of the Esab</label>
+      <label index="tx_orgesab.teaser_subtitle">Subheader</label>
+      <label index="tx_orgesab.teaser_short">Short</label>
+      <label index="tx_orgesab.actor">Actor</label>
+      <label index="tx_orgesab.puppeteer">Puppeteer</label>
+      <label index="tx_orgesab.dancer">Dancer</label>
+      <label index="tx_orgesab.vocals">Vocals</label>
+      <label index="tx_orgesab.musician">Musician</label>
+      <label index="tx_orgesab.video">Video Esab</label>
+      <label index="tx_orgesab.narrator">Narrator</label>
+      <label index="tx_orgesab.director">Director</label>
+      <label index="tx_orgesab.advisor">Advisor</label>
+      <label index="tx_orgesab.assistant">Assistant</label>
+      <label index="tx_orgesab.stage_design">Stage Design</label>
+      <label index="tx_orgesab.tailoring">Tailoring</label>
+      <label index="tx_orgesab.requisite">Requisite</label>
+      <label index="tx_orgesab.garment">Garment</label>
+      <label index="tx_orgesab.makeup">Make Up</label>
+      <label index="tx_orgesab.stage_manager">Stage Manager</label>
+      <label index="tx_orgesab.technical_manager">Technical Manager</label>
+      <label index="tx_orgesab.technique">Technique</label>
+      <label index="tx_orgesab.light">Light</label>
+      <label index="tx_orgesab.sound">Sound</label>
+      <label index="tx_orgesab.otherslabel">Label for the other Staff</label>
+      <label index="tx_orgesab.others">Other Staff</label>
+      <label index="tx_orgesab.documents">Documents</label>
+      <label index="tx_orgesab.tx_org_cal">Calendar</label>
+
+      <label index="wizard.tx_orgesab.add">Add a new esab</label>
+      <label index="wizard.tx_orgesab.edit">Edit the selected esab</label>
+      <label index="wizard.tx_orgesab.list">Display the esab table</label>
+    </languageKey>
+    <languageKey index="de" type="array">
+      <label index="dummy.language">de</label>
+      <label index="filter_phrase.schedule">Spielplan</label>
+      <label index="tca_phrase.esab">Esab</label>
+
+      <label index="fe_users.div_tx_orgesab">Esab</label>
+      <label index="fe_users.tx_orgesab">Esab</label>
+      <label index="tx_org_cal.tx_orgesab">Esab</label>
+      <label index="tx_org_cal.type.tx_orgesab">Aus dem Esab</label>
+      <label index="tx_org_headquarters.div_tx_orgesab">Esab</label>
+      <label index="tx_org_headquarters.tx_orgesab">Esab</label>
+      <label index="tx_org_news.div_tx_orgesab">Esab</label>
+      <label index="tx_org_news.tx_orgesab">Esab</label>
+
+      <label index="tx_orgesab">Esab</label>
+      <label index="tx_orgesab.div_esab">Esab</label>
+      <label index="tx_orgesab.div_teaser">Kurztitel</label>
+      <label index="tx_orgesab.div_actors">Spieler</label>
+      <label index="tx_orgesab.div_direction">Regie</label>
+      <label index="tx_orgesab.div_requirements">Austattung</label>
+      <label index="tx_orgesab.div_technique">Technik</label>
+      <label index="tx_orgesab.div_others">Andere Beteiligte</label>
+      <label index="tx_orgesab.div_doc">Dokumente</label>
+      <label index="tx_orgesab.div_news">Nachrichten</label>
+      <label index="tx_orgesab.div_media">Medien</label>
+      <label index="tx_orgesab.div_calendar">Spieltermine</label>
+      <label index="tx_orgesab.div_control">Steuerung</label>
+      <label index="tx_orgesab.div_seo">Suchmaschinen</label>
+      <label index="tx_orgesab.title">Bezeichnung der Produktion</label>
+      <label index="tx_orgesab.subtitle">Untertitel / Dachzeile</label>
+      <label index="tx_orgesab.producer">Autor</label>
+      <label index="tx_orgesab.length">Dauer</label>
+      <label index="tx_orgesab.staff">Beteiligte</label>
+      <label index="tx_orgesab.bodytext">Text</label>
+      <label index="tx_orgesab.teaser_title">Bezeichnung der Produktion</label>
+      <label index="tx_orgesab.teaser_subtitle">Untertitel / Dachzeile</label>
+      <label index="tx_orgesab.teaser_short">Kurztext</label>
+      <label index="tx_orgesab.actor">Spieler</label>
+      <label index="tx_orgesab.puppeteer">Puppenspieler</label>
+      <label index="tx_orgesab.dancer"><![CDATA[Tänzer]]></label>
+      <label index="tx_orgesab.vocals">Gesang</label>
+      <label index="tx_orgesab.musician">Musiker</label>
+      <label index="tx_orgesab.video">Videoproduktion</label>
+      <label index="tx_orgesab.narrator"><![CDATA[Erzähler]]></label>
+      <label index="tx_orgesab.director">Regisseur</label>
+      <label index="tx_orgesab.advisor">Dramaturg</label>
+      <label index="tx_orgesab.assistant">Assistent</label>
+      <label index="tx_orgesab.stage_design"><![CDATA[Bühnenausstattung]]></label>
+      <label index="tx_orgesab.tailoring"><![CDATA[Kostüme]]></label>
+      <label index="tx_orgesab.requisite">Requisite</label>
+      <label index="tx_orgesab.garment">Gewandmeisterei</label>
+      <label index="tx_orgesab.makeup">Maske</label>
+      <label index="tx_orgesab.stage_manager"><![CDATA[Bühnenmeister]]></label>
+      <label index="tx_orgesab.technical_manager">Technischer Leiter</label>
+      <label index="tx_orgesab.technique">Technik</label>
+      <label index="tx_orgesab.light">Beleuchtung</label>
+      <label index="tx_orgesab.sound">Ton</label>
+      <label index="tx_orgesab.otherslabel"><![CDATA[Bezeichnung für andere Beteiligte]]></label>
+      <label index="tx_orgesab.others">Andere Beteiligte</label>
+      <label index="tx_orgesab.tx_org_cal">Spieltermine</label>
+      <label index="tx_orgesab.documents">Dokumente</label>
+      <label index="wizard.tx_orgesab.add"><![CDATA[Neue Produktion / neues Stück hinzufügen]]></label>
+      <label index="wizard.tx_orgesab.edit"><![CDATA[Ausgewählte Produktion / ausgewähltes Stück bearbeiten]]></label>
+      <label index="wizard.tx_orgesab.list"><![CDATA[Tabelle mit Produktionen / Stücken anzeigen]]></label>
+    </languageKey>
+  </data>
+</T3locallang>

@@ -1,0 +1,74 @@
+
+
+  ////////////////////////////////////////
+  //
+  // INDEX
+
+  // plugin.tx_browser_pi1
+  //    views
+  //      211: calendar +esab - right column
+
+
+
+  ////////////////////////////////////////
+  //
+  // plugin.tx_browser_pi1
+
+plugin.tx_browser_pi1 {
+  
+  views {
+    list {
+      211 = calendar +esab - margin
+      211 {
+        name    = calendar +esab - margin
+        select (
+          tx_org_cal.title,
+          tx_org_cal.teaser_title,
+          tx_org_cal.datetime,
+          tx_org_cal.type,
+          tx_org_caltype.title,
+          tx_org_event.title,
+          tx_org_event.teaser_title,
+          tx_orgesab.title,
+          tx_orgesab.teaser_title
+        )
+        tx_org_cal {
+          title {
+            10 {
+              tx_orgesab = COA
+              tx_orgesab {
+                10 = TEXT
+                10 {
+                  required    = 1
+                  if.isTrue   = ###TX_ORG_REPERTOIRE.TEASER_TITLE###
+                  value       = ###TX_ORG_REPERTOIRE.TEASER_TITLE###
+                  typolink {
+                    parameter         = {$plugin.org.pages.calendar} - linktosingle
+                    additionalParams  = &tx_browser_pi1[calendarUid]=###TX_ORG_CAL.UID###&###CHASH###
+                  }
+                  stripHtml   = 1
+                  crop        = 200 | ... | 1
+                  wrap        = <div class="cal_title cal_title_esab">|</div>
+                }
+                11 = TEXT
+                11 {
+                  required    = 1
+                  if.isFalse  = ###TX_ORG_REPERTOIRE.TEASER_TITLE###
+                  value       = ###TX_ORG_REPERTOIRE.TITLE###
+                  typolink {
+                    parameter         = {$plugin.org.pages.calendar} - linktosingle
+                    additionalParams  = &tx_browser_pi1[calendarUid]=###TX_ORG_CAL.UID###&###CHASH###
+                  }
+                  stripHtml   = 1
+                  wrap        = <div class="cal_title cal_title_esab">|</div>
+                }
+              }
+            }
+          }
+        }
+      }
+    }
+  }
+  
+}
+  // plugin.tx_browser_pi1

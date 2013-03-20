@@ -1,0 +1,83 @@
+
+
+  ////////////////////////////////////////
+  //
+  // INDEX
+
+  // SEO - Search Engine Optimisation
+  //    page
+  // plugin.tx_linkhandler
+  // page
+
+
+
+
+  ////////////////////////////////////////////////////////////////////////////////
+  //
+  // SEO - Search Engine Optimisation
+
+  //    esabUid
+
+  // page
+[globalVar = GP:tx_browser_pi1|esabUid > 0]
+  page {
+    config {
+      noPageTitle = 2
+    }
+    headerData {
+      20 = TEXT
+      20 {
+        data = register:browser_htmlTitleTag
+        ifEmpty {
+          field = title
+          noTrimWrap  = |Organiser esab: ||
+        }
+        wrap = <title>|</title>
+      }
+    }
+    meta {
+      description {
+        field >
+        data = register:browser_description
+      }
+      keywords {
+        field >
+        data = register:browser_keywords
+      }
+    }
+  }
+[global]
+  // page
+  // SEO - Search Engine Optimisation
+
+
+
+  ////////////////////////////////////////////////////////////////////////////////
+  //
+  // plugin.tx_linkhandler
+
+plugin.tx_linkhandler {
+  tx_orgesab {
+    forceLink        = 0
+    useCacheHash     = 1
+    parameter        = {$plugin.org.pages.esab}
+    additionalParams = &tx_browser_pi1[esabUid]={field:uid}
+    additionalParams {
+      insertData = 1
+    } 
+  }
+}
+
+
+
+  ////////////////////////////////////////
+  //
+  // page
+
+page {
+  //includeCSS.orgesab = EXT:orgesab/res/html/orgesab.css
+  config.headerComment (
+          TYPO3-Programmierung: die-netzmacher.de
+  )
+}
+  // page

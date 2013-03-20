@@ -1,0 +1,55 @@
+
+
+  ////////////////////////////////////////
+  //
+  // INDEX
+
+  // plugin.tx_browser_pi1
+  //    views
+  //      201: +Org-Esab: Calendar +expired
+
+
+
+  ////////////////////////////////////////
+  //
+  // plugin.tx_browser_pi1
+
+plugin.tx_browser_pi1 {
+  
+  views {
+    list {
+      201 = +Org-Esab: Calendar +expired
+      201 {
+        name    = +Org-Esab: Calendar +expired
+        tx_org_cal {
+          teaser_short {
+            10 {
+              tx_orgesab {
+                30 {
+                  typolink {
+                    parameter = {$plugin.org.pages.calendar_expired} - linktosingle
+                  }
+                }
+              }
+            }
+          }
+          title {
+            10 {
+              tx_orgesab {
+                10 {
+                  typolink {
+                    parameter = {$plugin.org.pages.calendar_expired} - linktosingle
+                  }
+                }
+              }
+            }
+          }
+        }
+      }
+    }
+    single {
+      201 = +Org-Esab: Calendar +expired
+    }
+  }
+}
+  // plugin.tx_browser_pi1

@@ -1,0 +1,27 @@
+
+  /////////////////////////////////////
+  //
+  // LINKHANDLER
+  // - mod.tx_linkhandler
+  // - RTE.default.tx_linkhandler
+
+
+
+  /////////////////////////////////////
+  //
+  // mod.tx_linkhandler
+
+mod.tx_linkhandler {
+  tx_orgesab {
+    label       = Org: Esab
+    listTables  = tx_orgesab
+      // Please set the onlyPids in page TSconfig of your page and sysfolder
+    // onlyPids    = 1
+  }
+}
+  // mod.tx_linkhandler
+
+  // RTE.default.tx_linkhandler
+RTE.default.tx_linkhandler.tx_orgesab    < mod.tx_linkhandler.tx_orgesab
+
+  // LINKHANDLER
