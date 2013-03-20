@@ -10,7 +10,7 @@
         All alignments in the extension manager effect the TYPO3 backend only.
       ]]></label>
       <label index="promptQuickstartBody"><![CDATA[
-        If you like to start with the Organiser +Esab immediately, start with the default configuration of the extension manager.
+        If you like to start with the Organiser +ESAB immediately, start with the default configuration of the extension manager.
         You have to take care of two items:
         <br />
         <br />
@@ -32,16 +32,16 @@
             [###ORG_STORERECORD###]
           </li>
         </ul>
-        but your Organiser +Esab stores records
+        but your Organiser +ESAB stores records
         <ul style="list-style:outside;">
           <li>
             [###RPT_STORERECORD###]
           </li>
         </ul>
-        It is recommended to take the same configuration for both Organiser and Organiser +Esab.
+        It is recommended to take the same configuration for both Organiser and Organiser +ESAB.
       ]]></label>
       <label index="promptStoreRecordOk"><![CDATA[
-        Organiser and Organiser +Esab have the same configuration for storing records: 
+        Organiser and Organiser +ESAB have the same configuration for storing records: 
         [###RPT_STORERECORD###]. The same configuration is recommended.
       ]]></label>
       <label index="promptSaveTwice"><![CDATA[
@@ -53,7 +53,7 @@
         Alle Einstellungen im Extension Manager beeinflussen ausschlie&szlig;lich das TYPO3-Backend.
       ]]></label>
       <label index="promptQuickstartBody"><![CDATA[
-        Wenn Du mit Organiser +Esab sofort starten m&ouml;chtest, dann arbeite mit den Standardeinstellungen des Extension
+        Wenn Du mit Organiser +ESAB sofort starten m&ouml;chtest, dann arbeite mit den Standardeinstellungen des Extension
         Managers. Du musst nur zwei Dinge beachten:
         <br />
         <br />
@@ -75,17 +75,17 @@
             [###ORG_STORERECORD###]
           </li>
         </ul>
-        aber Dein Organiser +Esab speichert diese so
+        aber Dein Organiser +ESAB speichert diese so
         <ul style="list-style:outside;">
           <li>
             [###RPT_STORERECORD###]
           </li>
         </ul>
-        Wir empfehlen f&uuml;r Organiser +Esab die gleiche Konfiguration wie beim Organiser - also
+        Wir empfehlen f&uuml;r Organiser +ESAB die gleiche Konfiguration wie beim Organiser - also
         <strong>[###ORG_STORERECORD###]</strong>.
       ]]></label>
       <label index="promptStoreRecordOk"><![CDATA[
-        Organiser und Organiser +Esab haben die gleiche Konfiguration f&uuml;r das Speichern von
+        Organiser und Organiser +ESAB haben die gleiche Konfiguration f&uuml;r das Speichern von
         Datens&auml;tzen: [###RPT_STORERECORD###]. So ist es auch empfohlen.
       ]]></label>
       <label index="promptSaveTwice"><![CDATA[

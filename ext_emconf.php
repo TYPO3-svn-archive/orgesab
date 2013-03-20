@@ -11,7 +11,7 @@
 ########################################################################
 
 $EM_CONF[$_EXTKEY] = array(
-	'title' => 'Org +Esab',
+	'title' => 'Org +ESAB',
 	'description' => 'Extend the Organiser with a esab database!',
 	'category' => 'plugin',
 	'shy' => 0,
