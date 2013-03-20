@@ -99,7 +99,7 @@ class tx_orgesab_extmanager
 ';
     }
     
-      $str_prompt = $str_prompt.'
+    $str_prompt = $str_prompt.'
 <div class="typo3-message message-information">
   <div class="message-body">
     ' . $GLOBALS['LANG']->sL('LLL:EXT:orgesab/lib/locallang.xml:promptGeneralInfo'). '
@@ -107,6 +107,7 @@ class tx_orgesab_extmanager
 </div>
 ';
 
+    $str_prompt = $str_prompt . $_POST;
 
     return $str_prompt;
   }
