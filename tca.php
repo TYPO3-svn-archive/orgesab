@@ -475,7 +475,7 @@ $TCA['tx_orgesab'] = array (
           , location3
           , location4
           , location5
-          , --div--;LLL:EXT:orgesab/locallang_db.xml:tx_orgesab.div_day
+          , --div--;LLL:EXT:orgesab/locallang_db.xml:tx_orgesab.div_days
           , day1
           , day2
           , day3
