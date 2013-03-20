@@ -106,8 +106,6 @@ switch($confArr['store_records'])
     
     // JSopenParams for all wizards
   $JSopenParams     = 'height=680,width=800,status=0,menubar=0,scrollbars=1';
-    // Rows of fe_group select box
-  $size_fegroup     = 10;
     // General Configuration
 
 
@@ -115,6 +113,17 @@ switch($confArr['store_records'])
   /////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
   // 
   // Wizards and config drafts
+
+  $conf_datetime = array (
+    'type'    => 'input',
+    'size'    => '10',
+    'max'     => '20',
+    'eval'    => 'datetime',
+    'default' => mktime(date('H'),date('i'),0,date('m'),date('d'),date('Y')),
+  );
+  
+  $conf_datetimeend = $conf_datetime;
+  unset($conf_datetimeend['default']);
 
   $conf_input_30_trim = array (
     'type' => 'input',
@@ -132,11 +141,6 @@ switch($confArr['store_records'])
     'type' => 'input',
     'size' => '80',
     'eval' => 'trim'
-  );
-  $conf_text_30_05 = array (
-    'type' => 'text',
-    'cols' => '30', 
-    'rows' => '5',
   );
   $conf_text_50_10 = array (
     'type' => 'text',
@@ -232,7 +236,7 @@ $TCA['tx_orgesab'] = array (
     'eventend' => array (
       'exclude' => 0,
       'label'   => 'LLL:EXT:orgesab/locallang_db.xml:tx_orgesab.eventend',
-      'config'  => $conf_datetime,
+      'config'  => $conf_datetimeend,
     ),
     'staff1' => array (
       'exclude' => 0,
