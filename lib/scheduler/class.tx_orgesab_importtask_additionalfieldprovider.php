@@ -544,7 +544,7 @@ class tx_orgesab_ImportTask_AdditionalFieldProvider implements tx_scheduler_Addi
 
     $submittedData['frequency'] = ( int ) $submittedData['frequency'];
 
-    if( $submittedData['frequency'] < 86400 )
+    if( $submittedData['frequency'] > ( 60 * 60 * 24 )  )
     {
       $prompt = $this->msgPrefix . ': ' . $GLOBALS['LANG']->sL( 'LLL:EXT:orgesab/lib/scheduler/locallang.xml:msg.enterFrequency' );
       $parentObject->addMessage( $prompt, t3lib_FlashMessage::WARNING );
