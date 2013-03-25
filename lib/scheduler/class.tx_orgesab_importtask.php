@@ -1276,35 +1276,7 @@ class tx_orgesab_ImportTask extends tx_scheduler_Task {
                           ': ' .
                           $this->orgesab_orgesabAdminEmail .
                           '. ';
-// Kein Effekt
-//    $importMode          = htmlspecialchars_decode( $GLOBALS['LANG']->sL( 'LLL:EXT:orgesab/lib/scheduler/locallang.xml:label.importMode' ) ) .
-//                          ': ' .
-//                          htmlspecialchars_decode( $GLOBALS['LANG']->sL( 'LLL:EXT:orgesab/lib/scheduler/locallang.xml:label.importMode.' . $this->orgesab_importMode ) );
-// &ouml; wird Ä
-//    $importMode          = html_entity_decode( $GLOBALS['LANG']->sL( 'LLL:EXT:orgesab/lib/scheduler/locallang.xml:label.importMode' ) ) .
-//                          ': ' .
-//                          html_entity_decode( $GLOBALS['LANG']->sL( 'LLL:EXT:orgesab/lib/scheduler/locallang.xml:label.importMode.' . $this->orgesab_importMode ) );
-    $importMode          = $GLOBALS['LANG']->sL( 'LLL:EXT:orgesab/lib/scheduler/locallang.xml:label.importMode' ) .
-                          ': ' .
-                          $GLOBALS['LANG']->sL( 'LLL:EXT:orgesab/lib/scheduler/locallang.xml:label.importMode.' . $this->orgesab_importMode ) .
-                          '. ';
-    $importLimitDefault   = $GLOBALS['LANG']->sL( 'LLL:EXT:orgesab/lib/scheduler/locallang.xml:label.importLimitDefault' ) .
-                          ': ' .
-                          $this->orgesab_importLimitDefault .
-                          '. ';
-    $importLimitRemove   = $GLOBALS['LANG']->sL( 'LLL:EXT:orgesab/lib/scheduler/locallang.xml:label.importLimitRemove' ) .
-                          ': ' .
-                          $this->orgesab_importLimitRemove .
-                          '. ';
-    $importLimitWarn     = $GLOBALS['LANG']->sL( 'LLL:EXT:orgesab/lib/scheduler/locallang.xml:label.importLimitWarn' ) .
-                          ': ' .
-                          $this->orgesab_importLimitWarn .
-                          '. ';
-    $importReduceMailbox   = $GLOBALS['LANG']->sL( 'LLL:EXT:orgesab/lib/scheduler/locallang.xml:label.importReduceMailbox' ) .
-                          ': ' .
-                          $this->orgesab_importReduceMailbox .
-                          '. ';
-    return $importMode . $orgesabAdminEmail. $importLimitDefault . $importLimitRemove . $importLimitWarn . $importReduceMailbox;
+    return $orgesabAdminEmail;
   }
 }
 
