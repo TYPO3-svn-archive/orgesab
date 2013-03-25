@@ -6,6 +6,8 @@
             * ext_conf_template.txt
             * ext_localconf.php                                         ( new )
             * lib/scheduler/
+              * class.tx_orgesab_importtask.php                         ( new )
+              * class.tx_orgesab_importtask_additionalfieldprovider.php ( new )
               * class.tx_orgesab_quotatask.php                          ( new )
               * class.tx_orgesab_quotatask_additionalfieldprovider.php  ( new )
               * class.tx_orgesab_testtask.php                           ( new )  
