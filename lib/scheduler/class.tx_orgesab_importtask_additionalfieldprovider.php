@@ -607,8 +607,6 @@ class tx_orgesab_ImportTask_AdditionalFieldProvider implements tx_scheduler_Addi
   {
     $bool_isValidatingSuccessful = true;
 
-    $submittedData['orgesab_importUrl'] = ( int ) $submittedData['orgesab_importUrl'];
-
     switch( true )
     {
       case( empty( $submittedData['orgesab_importUrl'] ) ):
