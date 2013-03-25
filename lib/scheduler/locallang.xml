@@ -24,10 +24,10 @@
       <label index="label.testMode.enabled">Enabled (orgesab admin will get the report "Which will happen")</label>
       <label index="label.testTask.name">Org +ESAB Test</label>
       <label index="label.testTask.description">Org +ESAB tests the sending of an e-mail to the orgesab admin. It is a service for development only.</label>
-      <label index="msg.enterFrequency">Frequency is less than one day (24 hours = 86.400 seconds). Are your sure, that your frequency is proper?</label>
-      <label index="msg.enterImportUrl">Please take care of a proper URL for the XML file.</label>
-      <label index="msg.enterOrgesabAdminEmail">Please enter the e-mail adress of the Org +ESAB  admin.</label>
-      <label index="msg.enterStart">Start must be one hour later than now at least. This is a security requirement. If you like to run Org +ESAB Quota earlier, please run it manually.</label>
+      <label index="msg.enterFrequency">Frequency:  frequency is less than one day (24 hours = 86.400 seconds). Are your sure, that your frequency is proper?</label>
+      <label index="msg.enterImportUrl">URL of the xml file: Please take care of a proper URL for the XML file.</label>
+      <label index="msg.enterOrgesabAdminEmail">E-mail: Please enter the e-mail adress of the Org +ESAB  admin.</label>
+      <label index="msg.enterStart">Start: Start must be one hour later than now at least. This is a security requirement. If you like to run Org +ESAB Quota earlier, please run it manually.</label>
       <label index="msg.importMode.ever">Database Update: each time, when this job is running.</label>
       <label index="msg.importMode.never">Database Update: never</label>
       <label index="msg.importMode.update">Database Update: Update only, if the XML file was updated. Best performance.</label>
@@ -59,10 +59,9 @@
       <label index="label.reportMode.warn">Nur im Fehlerfall</label>
       <label index="label.testTask.name">Org +ESAB Test</label>
       <label index="label.testTask.description">Org +ESAB testet den Mail-Versand an den Org +ESAB Administrator. Der Test dient allein der Entwicklung von TYPO3-Org +ESAB.</label>
-      <label index="label.to">An</label>
-      <label index="msg.enterFrequency">Aufruf ist seltener als ein Mal am Tag (24 Stunden = 86.400 Sekunden). Bist Du sicher, dass Du den Wert richtig eingestellt hast?</label>
-      <label index="msg.enterImportUrl">Gib bitte eine korrekte Adresse für Deine XML-Datei an..</label>
-      <label index="msg.enterOrgesabAdminEmail">Bitte gib die Mail-Adresse des Org +ESAB Administrators an.</label>
+      <label index="msg.enterFrequency">Häufigkeit: Aufruf ist seltener als ein Mal am Tag (24 Stunden = 86.400 Sekunden). Bist Du sicher, dass Du den Wert richtig eingestellt hast?</label>
+      <label index="msg.enterImportUrl">URL der XML-Datei: Gib bitte eine korrekte Adresse an.</label>
+      <label index="msg.enterOrgesabAdminEmail">E-Mail: Bitte gib die Mail-Adresse des Org +ESAB Administrators an.</label>
       <label index="msg.enterStart">Start: Die Start-Zeit muss eine mindestens Stunde in der Zukunft liegen. Das ist eine Vorsichtsmaßnahme. Wenn dieser Job eher gestartet werden soll, starte ihn manuell.</label>
       <label index="msg.importMode.ever">Datenbank aktualisieren: jedes Mal, wenn dieser Job läuft.</label>
       <label index="msg.importMode.never">Datenbank aktualisieren: nie. Das macht keinen Sinn!</label>
