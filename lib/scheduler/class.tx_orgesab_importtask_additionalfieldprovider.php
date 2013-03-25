@@ -70,7 +70,9 @@
 class tx_orgesab_ImportTask_AdditionalFieldProvider implements tx_scheduler_AdditionalFieldProvider
 {
 
-  var $msgPrefix = 'Org +ESAB Import';
+  public $msgPrefix = 'Org +ESAB Import';
+  
+  private $defaultImportUrl = 'http://my-domain.com/my.xml';
 
 
 
@@ -208,8 +210,8 @@ class tx_orgesab_ImportTask_AdditionalFieldProvider implements tx_scheduler_Addi
     {
       if( $parentObject->CMD == 'add' )
       {
-          // In case of new task and if field is empty, set default email address
-        $taskInfo['orgesab_importUrl'] = '100';
+          // In case of new task and if field is empty, set to ..
+        $taskInfo['orgesab_importUrl'] = $this->defaultImportUrl;
       }
       elseif( $parentObject->CMD == 'edit' )
       {
@@ -227,7 +229,7 @@ class tx_orgesab_ImportTask_AdditionalFieldProvider implements tx_scheduler_Addi
       // Write the code for the field
     $fieldID    = 'orgesab_importUrl';
     $fieldValue = htmlspecialchars( $taskInfo['orgesab_importUrl'] );
-    $fieldCode  = '<input type="text" name="tx_scheduler[orgesab_importUrl]" id="' . $fieldID . '" value="' . $fieldValue . '" size="5" maxlength="5"/>';
+    $fieldCode  = '<input type="text" name="tx_scheduler[orgesab_importUrl]" id="' . $fieldID . '" value="' . $fieldValue . '" size="80" maxlength="255"/>';
     $additionalFields = array( );
     $additionalFields[$fieldID] = array
     (
@@ -325,7 +327,7 @@ class tx_orgesab_ImportTask_AdditionalFieldProvider implements tx_scheduler_Addi
       if( $parentObject->CMD == 'add' )
       {
           // In case of new task and if field is empty, set default email address
-        $taskInfo['orgesab_reportMode'] = 'test';
+        $taskInfo['orgesab_reportMode'] = 'update';
       }
       elseif( $parentObject->CMD == 'edit' )
       {
@@ -343,24 +345,23 @@ class tx_orgesab_ImportTask_AdditionalFieldProvider implements tx_scheduler_Addi
       // Write the code for the field
     $fieldID      = 'orgesab_reportMode';
     $fieldValue   = $taskInfo['orgesab_reportMode'];
-    $labelEver    = $GLOBALS['LANG']->sL( 'LLL:EXT:orgesab/lib/scheduler/locallang.xml:label.importMode.ever' );
-    $labelNever   = $GLOBALS['LANG']->sL( 'LLL:EXT:orgesab/lib/scheduler/locallang.xml:label.importMode.never' );
-    $labelImport  = $GLOBALS['LANG']->sL( 'LLL:EXT:orgesab/lib/scheduler/locallang.xml:label.importMode.import' );
-    $labelWarn    = $GLOBALS['LANG']->sL( 'LLL:EXT:orgesab/lib/scheduler/locallang.xml:label.importMode.warn' );
-    $labelNever  = $GLOBALS['LANG']->sL( 'LLL:EXT:orgesab/lib/scheduler/locallang.xml:label.reportMode.remove' );
+    $labelEver    = $GLOBALS['LANG']->sL( 'LLL:EXT:orgesab/lib/scheduler/locallang.xml:label.reportMode.ever' );
+    $labelNever   = $GLOBALS['LANG']->sL( 'LLL:EXT:orgesab/lib/scheduler/locallang.xml:label.reportMode.never' );
+    $labelUpdate  = $GLOBALS['LANG']->sL( 'LLL:EXT:orgesab/lib/scheduler/locallang.xml:label.reportMode.update' );
     $labelWarn    = $GLOBALS['LANG']->sL( 'LLL:EXT:orgesab/lib/scheduler/locallang.xml:label.reportMode.warn' );
-    $labelEver    = $GLOBALS['LANG']->sL( 'LLL:EXT:orgesab/lib/scheduler/locallang.xml:label.reportMode.test' );
     $selected               = array( );
-    $selected['remove']     = null;
-    $selected['test']       = null;
+    $selected['ever']       = null;
+    $selected['never']      = null;
+    $selected['update']     = null;
     $selected['warn']       = null;
     $selected[$fieldValue]  = ' selected="selected"';
 
     $fieldCode    = '
                       <select name="tx_scheduler[orgesab_reportMode]" id="' . $fieldID . '" size="1" style="width:300px;">
-                        <option value="remove"' . $selected['remove'] . '>' . $labelNever . '</option>
-                        <option value="warn"' . $selected['warn'] . '>' . $labelWarn . '</option>
-                        <option value="test"' . $selected['test'] . '>' . $labelEver . '</option>
+                        <option value="update"' . $selected['update'] . '>' . $labelUpdate  . '</option>
+                        <option value="ever"'   . $selected['ever']   . '>' . $labelEver    . '</option>
+                        <option value="never"'  . $selected['never']  . '>' . $labelNever   . '</option>
+                        <option value="warn"'   . $selected['warn']   . '>' . $labelWarn    . '</option>
                       </select>
                     ';
     $additionalFields = array( );
@@ -610,7 +611,8 @@ class tx_orgesab_ImportTask_AdditionalFieldProvider implements tx_scheduler_Addi
 
     switch( true )
     {
-      case( $submittedData['orgesab_importUrl'] < 50 ):
+      case( empty( $submittedData['orgesab_importUrl'] ) ):
+      case( $submittedData['orgesab_importUrl'] == $this->defaultImportUrl ):
         $prompt = $this->msgPrefix . ': ' . $GLOBALS['LANG']->sL( 'LLL:EXT:orgesab/lib/scheduler/locallang.xml:msg.enterImportUrl' );
         $parentObject->addMessage( $prompt, t3lib_FlashMessage::ERROR );
         $bool_isValidatingSuccessful = false;
@@ -666,12 +668,16 @@ class tx_orgesab_ImportTask_AdditionalFieldProvider implements tx_scheduler_Addi
       // Messages depending on mode
     switch( $submittedData['orgesab_reportMode'] )
     {
-      case( 'remove' ):
-        $prompt = $GLOBALS['LANG']->sL( 'LLL:EXT:orgesab/lib/scheduler/locallang.xml:msg.reportMode.remove' );;
+      case( 'ever' ):
+        $prompt = $GLOBALS['LANG']->sL( 'LLL:EXT:orgesab/lib/scheduler/locallang.xml:msg.reportMode.ever' );;
+        $parentObject->addMessage( $prompt, t3lib_FlashMessage::INFO );
+        break;
+      case( 'never' ):
+        $prompt = $GLOBALS['LANG']->sL( 'LLL:EXT:orgesab/lib/scheduler/locallang.xml:msg.reportMode.never' );;
         $parentObject->addMessage( $prompt, t3lib_FlashMessage::WARNING );
         break;
-      case( 'test' ):
-        $prompt = $GLOBALS['LANG']->sL( 'LLL:EXT:orgesab/lib/scheduler/locallang.xml:msg.reportMode.test' );;
+      case( 'update' ):
+        $prompt = $GLOBALS['LANG']->sL( 'LLL:EXT:orgesab/lib/scheduler/locallang.xml:msg.reportMode.update' );;
         $parentObject->addMessage( $prompt, t3lib_FlashMessage::INFO );
         break;
       case( 'warn' ):

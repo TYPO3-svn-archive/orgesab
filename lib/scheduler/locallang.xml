@@ -6,271 +6,77 @@
   </meta>
   <data type="array">
     <languageKey index="default" type="array">
-      <label index="email.warn.overrunWarningLimit.subject">Only ###LEFTPLACEINPERCENT### per cent: Your mailbox chocks!</label>
-      <label index="email.warn.overrunWarningLimit.body"><![CDATA[
-Dear ###NAME###,
-
-Your mailbox ###FEUSERSEMAIL### has a size of ###MAILBOXSIZEINMEGABYTES### megabytes.
-Your mailbox is left ###LEFTPLACEINPERCENT### per cent place only.
-
-Please remove e-mails, which aren't needed. If you don't remove mails, you will get 
-this reminder next day again.
-
-CAUTION: If your mailbox will overrun the size of 100 per cent (###QUOTALIMITINMEGABYTES### megabytes), 
-the system will cut down your mailbox to ###REDUCEDMAILBOXINPERCENT### per cent (###REDUCEDMAILBOXINMEGABYTES### megabytes) 
-of the contracted limit by removing e-mails automatically!
-
-Please be appreciative of this reminder and of removing e-mails in case of a overrun,
-because overrun mailboxes provoke high costs of server performance unfortunately.
-
-Kind regards
-###ORGESABADMINCOMPANY###
-###ORGESABADMINNAME###
-phone ###ORGESABADMINPHONE###
-
-P.S. This is an automatical e-mail
-
-      ]]></label>
-      <label index="email.warn.overrunQuotaLimit.subject">###MAILBOXSIZEINMEGABYTES### megabytes: Your mailbox is overrun!</label>
-      <label index="email.warn.overrunQuotaLimit.body"><![CDATA[
-Dear ###NAME###,
-
-Your mailbox ###FEUSERSEMAIL### has a size of ###MAILBOXSIZEINMEGABYTES### megabytes.
-Your mailbox overrun the contracted size of ###QUOTALIMITINMEGABYTES### megabytes
-with ###OVERRUNINMEGABYTES### megabytes (###OVERRUNINPERCENT### per cent).
-
-Please remove emails, which aren't needed. Please avoid extra costs for overrun the contracted size.
-
-CAUTION: If you don't remove emails by your own, the system will cut down your mailbox 
-to ###REDUCEDMAILBOXINPERCENT### per cent (###REDUCEDMAILBOXINMEGABYTES### megabytes) of the contracted limit 
-by removing e-mails automatically!
-
-Please be appreciative of this reminder and of removing emails in case of a overrun,
-because overrun mailboxes provoke high costs of server performance unfortunately.
-
-Kind regards
-###ORGESABADMINCOMPANY###
-###ORGESABADMINNAME###
-phone ###ORGESABADMINPHONE###
-
-P.S. This is an automatical e-mail
-      ]]></label>
-      <label index="label.copy">Copy</label>
       <label index="label.importMode">Database Update</label>
-      <label index="label.importMode.ever">at each job</label>
-      <label index="label.importMode.never">never</label>
+      <label index="label.importMode.ever">At each call</label>
+      <label index="label.importMode.never">Never (doesn't make sense)</label>
       <label index="label.importMode.update">Only, if the XML file was updated (recommended)</label>
       <label index="label.importTask.name">Org +ESAB XML Import</label>
       <label index="label.importTask.description">Org +ESAB imports the current event programm from an XML feed. Enable this job, if Org +ESAB should execute this job continuously.</label>
-      <label index="label.orgesabAdminCompany">Company of the orgesab admin</label>
-      <label index="label.orgesabAdminEmail">E-mail of the orgesab admin</label>
-      <label index="label.orgesabAdminName">Name of the orgesab admin</label>
-      <label index="label.orgesabAdminPhone">Phone of the orgesab admin</label>
-      <label index="label.quotaLimitDefault">Default Quota Limit (in megabyte)</label>
-      <label index="label.quotaLimitRemove">Remove mails from limit (in percent)</label>
-      <label index="label.quotaLimitWarn">Warning Limit (in percent)</label>
-      <label index="label.quotaMode">Quota mode</label>
-      <label index="label.quotaMode.remove">Warnings and removing e-mails</label>
-      <label index="label.quotaMode.warn">Warnings</label>
-      <label index="label.quotaMode.test">Report (test mode)</label>
-      <label index="label.quotaTask.name">Org +ESAB Quota</label>
-      <label index="label.quotaTask.description">Org +ESAB Quota checks orgesab maildirs. It will send warning e-mails to the owner of the current account, if the size of the account is over the warning limit. It will delete some mails, if the size of the folder is over the quota limit. The owner of the current account will informed by e-mail.</label>
-      <label index="label.quotaReduceMailbox">Reduce mailbox to size (in percent)</label>
+      <label index="label.importUrl">URL of the xml file</label>
+      <label index="label.orgesabAdminEmail">E-mail of the Org +ESAB admin</label>
+      <label index="label.reportMode">Send an e-mail</label>
+      <label index="label.reportMode.ever">At each call</label>
+      <label index="label.reportMode.never">Never</label>
+      <label index="label.reportMode.update">If database is updated (recommended)</label>
+      <label index="label.reportMode.warn">In case of errors only</label>
       <label index="label.testMode">Test mode</label>
       <label index="label.testMode.disabled">Disabled (Warning message will sent, e-mails over quota will deleted)</label>
       <label index="label.testMode.enabled">Enabled (orgesab admin will get the report "Which will happen")</label>
       <label index="label.testTask.name">Org +ESAB Test</label>
       <label index="label.testTask.description">Org +ESAB tests the sending of an e-mail to the orgesab admin. It is a service for development only.</label>
-      <label index="label.to">To</label>
       <label index="msg.enterFrequency">Frequency is less than one day (24 hours = 86.400 seconds). Are your sure, that your frequency is proper?</label>
-      <label index="msg.enterOrgesabAdminCompany">Please enter the company name of the orgesab admin.</label>
-      <label index="msg.enterOrgesabAdminEmail">Please enter the e-mail adress of the orgesab admin.</label>
-      <label index="msg.enterOrgesabAdminName">Please enter the name of the orgesab admin.</label>
-      <label index="msg.enterOrgesabAdminPhone">Please enter the phone number of the orgesab admin. The phone number can't be 000 00000000.</label>
-      <label index="msg.enterQuotaLimitDefault">The default Quota limit has to be 50 megabyte at least.</label>
-      <label index="msg.enterQuotaLimitRemove">The Quota limit has to be between 100 per cent and 150 per cent.</label>
-      <label index="msg.enterQuotaLimitRemoveMustBeBigger">The Quota limit has to be bigger than the warning limit.</label>
-      <label index="msg.enterQuotaLimitWarn">The Quota warning limit has to be between 50 per cent and 120 per cent.</label>
-      <label index="msg.enterQuotaReduceMailbox">If a mailbox is over the quota limit, it should reduced to a value between 50 and 100 per cent.</label>
-      <label index="msg.enterQuotaReduceMailboxMustBeSmaller">The value for a reduced mailbox has to be smaller than the Quota limit for removing e-mails.</label>
+      <label index="msg.enterImportUrl">Please take care of a proper URL for the XML file.</label>
+      <label index="msg.enterOrgesabAdminEmail">Please enter the e-mail adress of the Org +ESAB  admin.</label>
       <label index="msg.enterStart">Start must be one hour later than now at least. This is a security requirement. If you like to run Org +ESAB Quota earlier, please run it manually.</label>
-      <label index="msg.importMode.ever">Org +ESAB will update the TYPO3 database at each time, when this job is running.</label>
-      <label index="msg.importMode.never">Org +ESAB will won't import the XML file and won't update the TYPO3 database!</label>
-      <label index="msg.importMode.update">Best performance: Org +ESAB will update the TYPO3 database only, if the XML file was updated.</label>
-      <label index="msg.importMode.undefined">orgesab_quotaMode is undefined!</label>
+      <label index="msg.importMode.ever">Database Update: each time, when this job is running.</label>
+      <label index="msg.importMode.never">Database Update: never</label>
+      <label index="msg.importMode.update">Database Update: Update only, if the XML file was updated. Best performance.</label>
+      <label index="msg.importMode.undefined">Database Update: value is undefined!</label>
       <label index="msg.osIsNotSupported"><![CDATA[
         Sorry, but the operating system "###PHP_OS###" isn't supported by TYPO3 Org +ESAB.<br />
         If you need support, please contact <a href="http://wildt.at.die-netzmacher.de/" target="_blank">http://wildt.at.die-netzmacher.de/</a>
       ]]></label>
-      <label index="msg.quotaMode.remove"><![CDATA[
-        <h1 style="text-align: left; color: red;">
-          CAUTION: Org +ESAB Quota will remove e-mails as of now!"
-        </h1>
-        <h2 style="font-size:1.2em;">
-          Org +ESAB Quota mode is "Warnings and removing e-mails"
-        </h2>
-        <p>
-          Org +ESAB Quota will
-        </p>
-        <ul>
-          <li style="margin:0;">
-            send a warning e-mail to the owner of a mailbox and a copy to the Org +ESAB administrator, 
-            if warning limit is overrun and
-          </li>
-          <li style="margin:0;">
-            will remove e-mails in the mailbox, if the quota limit is overrun. 
-            Owner and administrator will informed of course.
-          </li>
-        </ul>
-        <p>
-          <br />
-        </p>
-        <p>
-          To let remove e-mails automatically is a <span style="color:red;font-weight:bold;">very high-risk!</span> 
-          If you have an unproper configuration like a quota of 0 megabyte, 
-          all e-mails of all mailboxes will removed!
-          You won't have any chance to cancel it.
-        </p>
-        <p>
-          <br />
-        </p>
-        <p>
-          If you aren't strong-willed to use Org +ESAB Quota in this mode:
-        </p>
-        <ul>
-          <li style="margin:0;">
-            Please remove this task directly!
-          </li>
-          <li style="margin:0;">
-            Check your configuration in mode "Report (test mode)".
-          </li>
-          <li style="margin:0;">
-            Use Org +ESAB Quota in mode "Warnings" for a time.
-          </li>
-        </ul>
-        <p>
-          <br />
-        </p>
-        <p style="color:red;font-weight:bold;">
-          You are using TYPO3 and TYPO3 Org +ESAB without any warranty!
-        </p>
-      ]]></label>
-      <label index="msg.quotaMode.test"><![CDATA[
-        <h1 style="text-align: left;">
-          Org +ESAB Quota runs in test mode
-        </h1>
-        <h2 style="font-size:1.2em;">
-          Org +ESAB Quota will send a report to the admin only
-        </h2>
-        <p>
-          The Org +ESAB administrator will get a report by e-mail about what will happen in
-        </p>
-        <ul>
-          <li style="margin:0;">
-            Org +ESAB Quota mode "Warnings"
-          </li>
-          <li style="margin:0;">
-            Org +ESAB Quota mode "Warnings and removing e-mails"
-          </li>
-        </ul>
-      ]]></label>
-      <label index="msg.quotaMode.warn"><![CDATA[
-        <h1 style="text-align: left;">
-          Org +ESAB Quota will warn mailbox owner
-        </h1>
-        <h2 style="font-size:1.2em;">
-          Warning a mailbox owner, if the mailbox overrun the warning limit
-        </h2>
-        <p>
-          Org +ESAB Quota will
-        </p>
-        <ul>
-          <li style="margin:0;">
-            send a warning e-mail to the owner of a mailbox and a copy to the Org +ESAB administrator, 
-            if warning limit is overrun.
-          </li>
-        </ul>
-        <p>
-          <br />
-        </p>
-        <p>
-          Nothing more won't happen.
-        </p>
-      ]]></label>
-      <label index="msg.quotaMode.udefined">orgesab_quotaMode is undefined!</label>
+      <label index="msg.reportMode.ever">Send an e-mail: each time, when this job is running.</label>
+      <label index="msg.reportMode.never">Send an e-mail: never. This is dangerous!</label>
+      <label index="msg.reportMode.update">Send an e-mail: only if TYPO3 database is updated.</label>
+      <label index="msg.reportMode.warn">Send an e-mail: only in case of errors.</label>
+      <label index="msg.reportMode.undefined">Send an e-mail: value is undefined!</label>
     </languageKey>
     <languageKey index="de" type="array">
-      <label index="email.warn.overrunWarningLimit.subject">Noch ###LEFTPLACEINPERCENT### Prozent: Ihre Mailbox l<![CDATA[ä]]>uft <![CDATA[ü]]>ber!</label>
-      <label index="email.warn.overrunWarningLimit.body"><![CDATA[
-Hallo ###NAME###,
-
-Ihre Mailbox ###FEUSERSEMAIL### hat eine Größe von ###MAILBOXSIZEINMEGABYTES### Megabyte erreicht.
-Ihre Mailbox hat nur noch ###LEFTPLACEINPERCENT### Prozent Platz.
-
-Bitte löschen Sie Mails, die Sie nicht mehr brauchen. Wenn Sie keine Mails löschen, 
-erhalten Sie diese Benachrichtigung auch am kommenden Tag.
-
-ACHTUNG: Wenn Ihre Mailbox die Größe von 100 Prozent (###QUOTALIMITINMEGABYTES### Megabyte) überschreitet, 
-wird das System Ihre Mailbox auf ###REDUCEDMAILBOXINPERCENT### Prozent (###REDUCEDMAILBOXINMEGABYTES### Megabyte) der vertraglich
-vereinbarten Größe reduzieren - durch das automatische Löschen von Mails!
-
-Haben Sie bitte Verständnis für die Benachrichtigung und das automatische Löschen von Mails.
-Übergelaufene Mailboxen verursachen leider eine hohe Belastung des Servers.
-
-Viele Grüße
-###ORGESABADMINCOMPANY###
-###ORGESABADMINNAME###
-Tel: ###ORGESABADMINPHONE###
-
-P.S. Dies ist eine automatisch generierte Mail
-      ]]></label>
-      <label index="email.warn.overrunQuotaLimit.subject">###MAILBOXSIZEINMEGABYTES### Megabyte: Ihre Mailbox ist <![CDATA[ü]]>bergelaufen!</label>
-      <label index="email.warn.overrunQuotaLimit.body"><![CDATA[
-Hallo ###NAME###,
-
-Ihre Mailbox ###FEUSERSEMAIL### hat eine Größe von ###MAILBOXSIZEINMEGABYTES### Megabyte erreicht.
-Damit überschreitet Ihre Mailbox die vertraglich vereinbarte Größe von ###QUOTALIMITINMEGABYTES### Megabyte
-um ###OVERRUNINMEGABYTES### Megabyte und um ###OVERRUNINPERCENT### Prozent.
-
-Bitte löschen Sie Mails, die Sie nicht mehr brauchen. Vermeiden Sie zusätzliche Kosten durch
-das Überschreiten vereinbarter Grenzen. Wenn Sie keine Mails löschen, erhalten Sie diese Benachrichtigung 
-auch am kommenden Tag.
-
-ACHTUNG: Wenn Sie Mails nicht selbst löschen, wird das System Ihre Mailbox auf ###REDUCEDMAILBOXINPERCENT### Prozent (###REDUCEDMAILBOXINMEGABYTES### Megabyte) 
-der vereinbarten Größe reduzieren - durch das automatische Löschen von Mails!
-
-Haben Sie bitte Verständnis für die Benachrichtigung und das automatische Löschen von Mails.
-Übergelaufene Mailboxen verursachen leider eine hohe Belastung des Servers.
-
-Viele Grüße
-###ORGESABADMINCOMPANY###
-###ORGESABADMINNAME###
-Tel: ###ORGESABADMINPHONE###
-
-P.S. Dies ist eine automatisch generierte Mail
-      ]]></label>
       <label index="label.copy">Kopie</label>
       <label index="label.importMode">Datenbank aktualisieren</label>
-      <label index="label.importMode.ever">bei jedem Aufruf</label>
-      <label index="label.importMode.never">nie</label>
+      <label index="label.importMode.ever">Bei jedem Aufruf</label>
+      <label index="label.importMode.never">Nie (sinnlos)</label>
       <label index="label.importMode.update">Nur, wenn sich die XML-Datei geändert hat (empfohlen)</label>
       <label index="label.importTask.name">Org +ESAB XML-Import</label>
       <label index="label.importTask.description">Org +ESAB importiert das Jahresprogramm von einem XML-Feed. Aktiviere diesen Job, wenn Org +ESAB den Import regelmäßig erledigen soll.</label>
+      <label index="label.importUrl">URL der XML-Datei</label>
       <label index="label.orgesabAdminEmail">E-Mail des Org +ESAB-Administrators</label>
-      <label index="label.quotaMode">Quota Modus</label>
-      <label index="label.quotaMode.remove">Warnungen und L<![CDATA[&ouml;]]>schen von Mails</label>
-      <label index="label.quotaMode.warn">Warnungen</label>
-      <label index="label.quotaMode.test">Bericht (Test-Modus)</label>
-      <label index="label.quotaTask.name">Org +ESAB Quota</label>
-      <label index="label.quotaTask.description">Org +ESAB Quota <![CDATA[&uuml;]]>berwacht Org +ESAB-Mail-Ordner. <![CDATA[&Uuml;]]>berschreitet die Gr<![CDATA[&ouml;]]><![CDATA[&szlig;]]>e des jeweiligen Ordners die Warn-Grenze, wird eine Warnung an den Konto-Inhaber versendet. Wird das Quota-Limit <![CDATA[&uuml;]]>berschritten, wird ein Teil der Mails gel<![CDATA[&ouml;]]>scht. Der Konto-Inhaber wird per Mail <![CDATA[&uuml;]]>ber das L<![CDATA[&ouml;]]>schen informiert.</label>
+      <label index="label.reportMode">Mail senden</label>
+      <label index="label.reportMode.ever">Bei jedem Aufruf</label>
+      <label index="label.reportMode.never">Nie</label>
+      <label index="label.reportMode.update">Wenn die Datenbank aktualisiert wurde (empfohlen)</label>
+      <label index="label.reportMode.warn">Nur im Fehlerfall</label>
       <label index="label.testTask.name">Org +ESAB Test</label>
       <label index="label.testTask.description">Org +ESAB testet den Mail-Versand an den Org +ESAB Administrator. Der Test dient allein der Entwicklung von TYPO3-Org +ESAB.</label>
       <label index="label.to">An</label>
-      <label index="msg.importMode.ever">Org +ESAB aktualisiert die TYPO3 Datenbank jedes Mal, wenn dieser Job läuft.</label>
-      <label index="msg.importMode.never">Org +ESAB importiert keine XML-Datei. Die TYPO3-Datenbank wird nicht aktualisiert!</label>
-      <label index="msg.importMode.update">Beste Performance: Org +ESAB aktualisiert die TYPO3-Datenbank nur, wenn sich die XML-Datei geändert hat.</label>
-      <label index="msg.importMode.undefined">orgesab_quotaMode hat einen undefinierten Wert.</label>
-      <label index="msg.enterOrgesabAdminEmail">Bitte gebe eine Mail-Adresse an.</label>
+      <label index="msg.enterFrequency">Aufruf ist seltener als ein Mal am Tag (24 Stunden = 86.400 Sekunden). Bist Du sicher, dass Du den Wert richtig eingestellt hast?</label>
+      <label index="msg.enterImportUrl">Gib bitte eine korrekte Adresse für Deine XML-Datei an..</label>
+      <label index="msg.enterOrgesabAdminEmail">Bitte gib die Mail-Adresse des Org +ESAB Administrators an.</label>
+      <label index="msg.enterStart">Start: Die Start-Zeit muss eine mindestens Stunde in der Zukunft liegen. Das ist eine Vorsichtsmaßnahme. Wenn dieser Job eher gestartet werden soll, starte ihn manuell.</label>
+      <label index="msg.importMode.ever">Datenbank aktualisieren: jedes Mal, wenn dieser Job läuft.</label>
+      <label index="msg.importMode.never">Datenbank aktualisieren: nie. Das macht keinen Sinn!</label>
+      <label index="msg.importMode.update">Datenbank aktualisieren: wenn sich die XML-Datei geändert hat. Beste Performance.</label>
+      <label index="msg.importMode.undefined">Datenbank aktualisieren: undefinierter Wert!</label>
+      <label index="msg.osIsNotSupported"><![CDATA[
+        Sorry, aber das Betriebssystem "###PHP_OS###" wird von TYPO3 Org +ESAB nicht unterstützt.<br />
+        Wenn Du Unterstützung brauchst, kannst Du Dich an <a href="http://wildt.at.die-netzmacher.de/" target="_blank">Dirk Wildt, die Netzmacher</a> wenden.
+      ]]></label>
+      <label index="msg.reportMode.ever">Mail senden: jedesmal, wenn dieser Job läuft.</label>
+      <label index="msg.reportMode.never">Mail senden: nie. Das ist gefährlich!</label>
+      <label index="msg.reportMode.update">Mail senden: wenn die Datenbank aktualisiert wurde.</label>
+      <label index="msg.reportMode.warn">Mail senden: nur im Fall von Fehlern</label>
+      <label index="msg.reportMode.undefined">Mail senden: undefinierter Wert!</label>
     </languageKey>
   </data>
 </T3locallang>
