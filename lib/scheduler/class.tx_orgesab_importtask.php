@@ -126,64 +126,18 @@ class tx_orgesab_ImportTask extends tx_scheduler_Task {
       // Get the extension configuration by the extension manager
     $this->extConf = unserialize( $GLOBALS['TYPO3_CONF_VARS']['EXT']['extConf']['orgesab'] );
 
-      // Init the DRS - Development Reporting System
-    $this->initDRS( );
-
-      //
-    if( ! $this->initRequirements( ) )
+    if( ! $this->init( ) )
     {
       $success = false;
       return $success;
     }
 
-      // Init timetracking, set the starttime
-    $this->timeTracking_init( );
-    $debugTrailLevel = 1;
-    $this->timeTracking_log( $debugTrailLevel, 'START' );
-
-      // Get the data of each orgesab mailbox from the database
-    $this->mailboxesData = $this->initMailboxesData( );
-
-      // Loop all mailboxes;
-    if( ! $this->mailboxes( ) )
-    {
-      $success = false;
-    }
-      // Loop all mailboxes;
-
+    $this->drsMailToAdmin( );
+    
       // RETURN : the success
+    $debugTrailLevel = 1;
     $this->timeTracking_log( $debugTrailLevel, 'END' );
     return $success;
-  }
-
-  /**
- * feusersName( )  : Returns true, if limit is overrun, false if not.
- *
- * @return	boolean
- * @version       0.0.1
- * @since         0.0.1
- */
-  private function feusersName( )
-  {
-    $username   = $this->mailboxData['username'];
-    $first_name = $this->mailboxData['first_name'];
-    $last_name  = $this->mailboxData['last_name'];
-
-//$prompt = var_export( $this->mailboxData, true );
-//t3lib_div::devlog( '[tx_orgesab_ImportTask] ' . $prompt, $this->extKey, 0 );
-
-    switch( true )
-    {
-      case( $first_name ):
-      case( $last_name ):
-        $name = $first_name . ' ' . $last_name;
-        break;
-      default:
-        $name = $username;
-        break;
-    }
-
-    return $name;
   }
 
 
@@ -194,76 +148,29 @@ class tx_orgesab_ImportTask extends tx_scheduler_Task {
    *
    **********************************************/
 
-  /**
- * initMailboxesData( ) : Get the data of each orgesab mailbox from the database.
+/**
+ * init( )  : 
  *
- * @return	array		$rows
+ * @return	boolean
+ * @access      private
  * @version       0.0.1
  * @since         0.0.1
  */
-  private function initMailboxesData( )
+  private function init( )
   {
-      // Query
-    $select_fields  = "
-                        uid,
-                        username,
-                        first_name,
-                        last_name,
-                        email,
-                        CONCAT( tx_orgesab_homedir, '/', tx_orgesab_maildir ) AS 'pathToMailbox',
-                        tx_orgesab_import
-                      ";
-    $from_table     = "fe_users";
-    $where_clause   = "(tx_orgesab_homedir != '' OR tx_orgesab_maildir != '') AND deleted = 0";
-    $groupBy        = null;
-    $orderBy        = "pathToMailbox";
-    $limit          = null;
-      // Query
+    $success = true;
 
-      // DRS
-    if( $this->drsModeSql )
+    $this->initDRS( );
+
+    if( ! $this->initRequirements( ) )
     {
-      $query  = $GLOBALS['TYPO3_DB']->SELECTquery
-                (
-                  $select_fields,
-                  $from_table,
-                  $where_clause,
-                  $groupBy,
-                  $orderBy,
-                  $limit
-                );
-      $prompt = $query;
-      t3lib_div::devlog( '[tx_orgesab_ImportTask] ' . $prompt, $this->extKey, 0 );
+      $success = false;
+      return $success;
     }
-      // DRS
 
-      // SELECT
-    $res =  $GLOBALS['TYPO3_DB']->exec_SELECTquery
-            (
-              $select_fields,
-              $from_table,
-              $where_clause,
-              $groupBy,
-              $orderBy,
-              $limit
-            );
-      // SELECT
+    $this->initTimetracking( );
 
-      // Get array with TYPO3Groups
-    $rows = array( );
-    while( $row = $GLOBALS['TYPO3_DB']->sql_fetch_assoc( $res ) )
-    {
-      $rows[ ]  = ( array ) $row;
-    }
-      // Get array with TYPO3Groups
-
-      // DRS
-    if( $this->drsModeSql )
-    {
-      $prompt = '#' . count( $rows ) . ' mailboxes found.';
-      t3lib_div::devlog( '[tx_orgesab_ImportTask] ' . $prompt, $this->extKey, 0 );
-    }
-    return $rows;
+    return $success;
   }
 
   /**
@@ -293,13 +200,13 @@ class tx_orgesab_ImportTask extends tx_scheduler_Task {
     {
       case( 'Enabled (for debugging only!)' ):
         $this->drsModePerformance = true;
-        $this->drsModeImportTask   = true;
+        $this->drsModeImportTask  = true;
         $this->drsModeSql         = true;
         break;
       default:
           // :TODO: Error msg per email to admin
         $this->drsModePerformance = true;
-        $this->drsModeImportTask   = true;
+        $this->drsModeImportTask  = true;
         $this->drsModeSql         = true;
         $prompt = 'DRS mode isn\'t defined.';
         t3lib_div::devlog( '[tx_orgesab_ImportTask] ' . $prompt, $this->extKey, 3 );
@@ -356,6 +263,20 @@ class tx_orgesab_ImportTask extends tx_scheduler_Task {
     return false;
   }
 
+  /**
+ * initTimetracking( ) :
+ *
+ * @return	boolean
+ * @version       0.0.1
+ * @since         0.0.1
+ */
+  private function initTimetracking( )
+  {
+    $this->timeTracking_init( );
+    $debugTrailLevel = 1;
+    $this->timeTracking_log( $debugTrailLevel, 'START' );
+  }
+
   /***********************************************
    *
    * DRS - Development Reporting System
@@ -365,7 +286,7 @@ class tx_orgesab_ImportTask extends tx_scheduler_Task {
 
 
 /**
- * drs_debugTrail( ): Returns class, method and line of the call of this method.
+ * drsDebugTrail( ): Returns class, method and line of the call of this method.
  *                    The calling method is a debug method - if it is called by another
  *                    method, please set the level in the calling method to 2.
  *
@@ -374,7 +295,7 @@ class tx_orgesab_ImportTask extends tx_scheduler_Task {
  * @version 0.0.1
  * @since   0.0.1
  */
-  private function drs_debugTrail( $level = 1 )
+  private function drsDebugTrail( $level = 1 )
   {
     $arr_return = null;
 
@@ -409,7 +330,7 @@ class tx_orgesab_ImportTask extends tx_scheduler_Task {
 
 
 /**
- * drs_mailToAdmin( ): Returns class, method and line of the call of this method.
+ * drsMailToAdmin( ): Returns class, method and line of the call of this method.
  *                    The calling method is a debug method - if it is called by another
  *                    method, please set the level in the calling method to 2.
  *
@@ -419,7 +340,7 @@ class tx_orgesab_ImportTask extends tx_scheduler_Task {
  * @version 3.9.9
  * @since   3.9.9
  */
-  private function drs_mailToAdmin( $subject, $body )
+  private function drsMailToAdmin( $subject=null, $body=null )
   {
       // Get call method
     if( basename( PATH_thisScript ) == 'cli_dispatch.phpsh' )
@@ -498,461 +419,25 @@ class tx_orgesab_ImportTask extends tx_scheduler_Task {
 
   /***********************************************
    *
-   * Mailboxes
+   * Mail
    *
    **********************************************/
 
-  /**
- * mailboxes( )  :
- *
- * @return	boolean
- * @version       0.0.1
- * @since         0.0.1
- */
-  private function mailboxes( )
-  {
-    $success = true;
-
-    foreach( $this->mailboxesData as $this->mailboxData )
-    {
-      if( ! $this->mailbox( ) )
-      {
-        // ...
-        continue;
-      }
-      $this->importSet( );
-      if( $this->importRemove( ) )
-      {
-          // Mailbox is handled by importRemove
-        continue;
-      }
-      $this->importWarning( );
-    }
-
-    return $success;
-  }
 
   /**
- * mailbox( )  :
- *
- * @return	boolean
- * @version       0.0.1
- * @since         0.0.1
- */
-  private function mailbox( )
-  {
-    $success = true;
-
-      // RETURN : size of current mailbox is 0
-    if( ! $this->mailboxSizeInBytes( ) )
-    {
-      return false;
-    }
-      // RETURN : size of current mailbox is 0
-
-    return $success;
-  }
-
-  /**
- * mailboxSizeInBytes( )  :
- *
- * @return	boolean
- * @version       0.0.1
- * @since         0.0.1
- */
-  private function mailboxSizeInBytes( )
-  {
-      // get size of the current mailbox in bytes
-    $output   = null;
-    $mailbox  = $this->mailboxData['pathToMailbox'];
-    $command  = 'du -b --max-depth=0 ' . $mailbox;
-    exec( $command, $output );
-      // get size of the current mailbox in bytes
-
-      // RETURN : output isn't an array
-    if( ! is_array( $output ) )
-    {
-        // DRS
-      if( $this->drsModeError )
-      {
-        $prompt     = 'ERROR: exec doesn\'t returned an array. Command: ' . $command;
-        t3lib_div::devLog( '[tx_orgesab_ImportTask]: ' . $prompt, $this->extKey, 3 );
-      }
-        // DRS
-        // Mail to admin
-      $subject  = 'error in exec( )';
-      $body     = 'Sorry, but the command exec( ) doesn\'t return an array. ' . PHP_EOL .
-                  'Command: ' . $command . PHP_EOL .
-                  'Method: ' . __METHOD__ . PHP_EOL .
-                  'Line: ' . __LINE__ . PHP_EOL .
-                  PHP_EOL .
-                  '';
-      $this->drs_mailToAdmin( $subject, $body );
-        // Mail to admin
-      return false;
-    }
-      // RETURN : output isn't an array
-
-      // Get bytes and path
-    $duLine = $output[0];
-    list( $bytes, $path ) = explode( chr( 9 ), $duLine );
-    $bytes  = ( int ) trim( $bytes );
-    $path   = trim( $path );
-      // Get bytes and path
-
-      // RETURN : size of mailbox is 0 byte
-    if( ( ( int ) $bytes ) <= 1 )
-    {
-        // DRS
-      if( $this->drsModeError )
-      {
-        $prompt     = 'ERROR: size of current mailbox is 0 byte. Command: ' . $command;
-        t3lib_div::devLog( '[tx_orgesab_ImportTask]: ' . $prompt, $this->extKey, 3 );
-      }
-        // DRS
-        // Mail to admin
-      $subject  = 'error with size of mailbox';
-      $body     = 'Sorry, but the size of the mailbox is null.' . PHP_EOL .
-                  'Command: ' . $command . PHP_EOL .
-                  'Method: ' . __METHOD__ . PHP_EOL .
-                  'Line: ' . __LINE__ . PHP_EOL .
-                  PHP_EOL .
-                  '';
-      $this->drs_mailToAdmin( $subject, $body );
-        // Mail to admin
-      return false;
-    }
-      // RETURN : size of mailbox is 0 byte
-
-      // RETURN : size of mailbox is 0 byte
-    if( $path != $mailbox )
-    {
-        // DRS
-      if( $this->drsModeError )
-      {
-        $prompt     = 'ERROR: "' . $path . '" isn\'t any part of the command: ' . $command;
-        t3lib_div::devLog( '[tx_orgesab_ImportTask]: ' . $prompt, $this->extKey, 3 );
-      }
-        // DRS
-        // Mail to admin
-      $subject  = 'error with exec( )';
-      $body     = 'Sorry, but the path "' . $path . '" isn\'t any part of the command below.' . PHP_EOL .
-                  'Command: ' . $command . PHP_EOL .
-                  'Method: ' . __METHOD__ . PHP_EOL .
-                  'Line: ' . __LINE__ . PHP_EOL .
-                  PHP_EOL .
-                  '';
-      $this->drs_mailToAdmin( $subject, $body );
-        // Mail to admin
-      return false;
-    }
-      // RETURN : size of mailbox is 0 byte
-
-      // DRS
-    if( $this->drsModeImportTask )
-    {
-      $prompt = $mailbox . ': ' . $bytes . ' bytes';
-      t3lib_div::devLog( '[tx_orgesab_ImportTask]: ' . $prompt, $this->extKey, 0 );
-    }
-      // DRS
-
-    $this->mailboxSizeInBytes = $bytes;
-    return $bytes;
-  }
-
-
-
-  /***********************************************
-   *
-   * Import
-   *
-   **********************************************/
-
-  /**
- * importRemove( )  :
+ * sendMailWarning( )  : 
  *
  * @return	void
- * @version       0.0.1
- * @since         0.0.1
- */
-  private function importRemove( )
-  {
-      // SWITCH : import mode
-    switch( $this->orgesab_importMode )
-    {
-      case( 'remove' ):
-      case( 'test' ):
-          // Follow the workflow
-        break;
-      case( 'warn' ):
-          // RETURN : Don't follow the workflow in warning mode
-        return false;
-        break;
-      default:
-          // DRS
-        if( $this->drsModeError )
-        {
-          $prompt = 'Import mode is undefined: "' .  $this->orgesab_importMode . '"';
-          t3lib_div::devLog( '[tx_orgesab_ImportTask]: ' . $prompt, $this->extKey, 3 );
-        }
-          // DRS
-          // RETURN : Don't follow the workflow in an undefined mode
-        return false;
-        break;
-    }
-      // SWITCH : import mode
-
-      // RETURN : Mailbox doesn't overrun the limit for import
-    if( $this->mailboxSizeInBytes <= $this->importLimitInBytes )
-    {
-      return false;
-    }
-      // RETURN : Mailbox doesn't overrun the limit for import
-
-      // DRS
-    if( $this->drsModeImportTask )
-    {
-      $prompt = $this->mailboxData['pathToMailbox'] . '  overrruns the import limit. ' .
-                'Mailbox size is ' . $this->mailboxSizeInBytes . ' bytes. ' .
-                'Import limit is ' . $this->importLimitInBytes . ' bytes.' .
-                '';
-      t3lib_div::devLog( '[tx_orgesab_ImportTask]: ' . $prompt, $this->extKey, 2 );
-    }
-      // DRS
-
-    $this->importRemoveMails( );
-  }
-
-  /**
- * importRemoveMails( )  :
- *
- * @return	void
- * @version       0.0.1
- * @since         0.0.1
- */
-  private function importRemoveMails( )
-  {
-  }
-
-  /**
- * importSet( )  :
- *
- * @return	void
- * @version       0.0.1
- * @since         0.0.1
- */
-  private function importSet( )
-  {
-    $importLimitInMegabyte = ( int ) $this->mailboxData['tx_orgesab_import'];
-    if( empty ( $importLimitInMegabyte ) )
-    {
-      $importLimitInMegabyte = ( int ) $this->orgesab_importLimitDefault;
-    }
-
-    switch( true )
-    {
-      case( $importLimitInMegabyte < 1 ):
-          // DRS
-        $prompt_01 = 'FATAL ERROR: current Import limit is "' .  $importLimitInMegabyte . '" megabytes.';
-        $prompt_02 = 'mailbox: "' .  $this->mailboxData['pathToMailbox'] . '" ';
-        $prompt_03 = 'Org +ESAB Import will die!';
-        if( $this->drsModeError )
-        {
-          t3lib_div::devLog( '[tx_orgesab_ImportTask]: ' . $prompt_01, $this->extKey, 3 );
-          t3lib_div::devLog( '[tx_orgesab_ImportTask]: ' . $prompt_02, $this->extKey, 2 );
-          t3lib_div::devLog( '[tx_orgesab_ImportTask]: ' . $prompt_03, $this->extKey, 3 );
-        }
-          // DRS
-        $prompt = $prompt_01 . $prompt_02 . __METHOD__ . ' at line ' . __LINE__ . '.';
-        die( $prompt );
-        break;
-      case( $importLimitInMegabyte < 50 ):
-          // DRS
-        if( $this->drsModeWarn )
-        {
-          $prompt = 'Current Import limit is less than 50 megabytes: ' .
-                    $importLimitInMegabyte . ' megabytes. ' .
-                    'mailbox: ' . $this->mailboxData['pathToMailbox'] . '.';
-          t3lib_div::devLog( '[tx_orgesab_ImportTask]: ' . $prompt, $this->extKey, 2 );
-          $prompt = 'Please check, if this value is proper!';
-          t3lib_div::devLog( '[tx_orgesab_ImportTask]: ' . $prompt, $this->extKey, 2 );
-        }
-        break;
-      default:
-          // Follow the workflow
-        break;
-    }
-
-    $this->importLimitInBytes = ( int ) ( $importLimitInMegabyte * 1024 * 1024 );
-
-//    if( $this->drsModeImportTask )
-//    {
-//      $prompt = 'Import limit in megabytes: ' . $importLimitInMegabyte;
-//      t3lib_div::devLog( '[tx_orgesab_ImportTask]: ' . $prompt, $this->extKey, 0 );
-//      $prompt = 'Import limit in bytes: ' . $this->importLimitInBytes;
-//      t3lib_div::devLog( '[tx_orgesab_ImportTask]: ' . $prompt, $this->extKey, 0 );
-//    }
-  }
-
-  /**
- * importWarning( )  :
- *
- * @return	void
- * @version       0.0.1
- * @since         0.0.1
- */
-  private function importWarning( )
-  {
-      // Get the limit for warnings in bytes
-    $importLimitWarnInBytes = $this->importLimitInBytes / 100 * $this->orgesab_importLimitWarn;
-
-      // RETURN : Mailbox doesn't reach the limit for warnings
-    if( $this->mailboxSizeInBytes <= $importLimitWarnInBytes )
-    {
-      return false;
-    }
-      // RETURN : Mailbox doesn't reach the limit for warnings
-
-      // DRS
-    if( $this->drsModeImportTask )
-    {
-//      $prompt = 'Import limit in bytes: ' . $this->importLimitInBytes;
-//      t3lib_div::devLog( '[tx_orgesab_ImportTask]: ' . $prompt, $this->extKey, 0 );
-//      $prompt = 'Import limit warn in per cent: ' . $this->orgesab_importLimitWarn;
-//      t3lib_div::devLog( '[tx_orgesab_ImportTask]: ' . $prompt, $this->extKey, 0 );
-      $prompt = $this->mailboxData['pathToMailbox'] . '  overrruns the warning limit. ' .
-                'Mailbox size is ' . $this->mailboxSizeInBytes . ' bytes. ' .
-                'Warning limit is ' . ( $this->importLimitInBytes / 100 * $this->orgesab_importLimitWarn ) . '.' .
-                '';
-      t3lib_div::devLog( '[tx_orgesab_ImportTask]: ' . $prompt, $this->extKey, 2 );
-    }
-      // DRS
-
-    $this->sendMailWarning( );
-  }
-
-  /**
- * sendMailWarning( )  : Returns true, if limit is overrun, false if not.
- *
- * @return	boolean
  * @version       0.0.1
  * @since         0.0.1
  */
   private function sendMailWarning( )
   {
-    $this->sendMailWarningImportIsOverrun( );
-    $this->sendMailWarningImportIsNotOverrun( );
-  }
 
-  /**
- * sendMailWarningImportIsNotOverrun( )  : Returns true, if limit is overrun, false if not.
- *
- * @return	boolean
- * @version       0.0.1
- * @since         0.0.1
- */
-  private function sendMailWarningImportIsNotOverrun( )
-  {
-      // RETURN : mailbox is bigger than the import limit
-    if( $this->mailboxSizeInBytes >= $this->importLimitInBytes )
-    {
-      return;
-    }
-      // RETURN : mailbox is bigger than the import limit
-
-      // Get the limit for warnings in bytes
-    $importLimitInMegabytes      = ( int ) $this->importLimitInBytes / 1024 / 1024;
-
-      // Size of the current mailbox in megabytes
-    $mailboxSizeInMegabytes     = ( int ) ( $this->mailboxSizeInBytes / 1024 / 1024 );
-      // Size of the current mailbox in per cent in relation to the import limit
-    $mailboxSizeInPercent       = ( int ) ( $this->mailboxSizeInBytes / $this->importLimitInBytes * 100 );
-
-      // Left place of the current mailbox in per cent in relation to the current import limit
-    $leftPlaceInPercent         = 100 - $mailboxSizeInPercent;
-
-      // Size of a reduced mailbox in megabytes in relation to the current import limit
-    $reducedMailboxInMegabytes  = ( int ) ( $importLimitInMegabytes / 100 * $this->orgesab_importReduceMailbox );
-
-    $marker = array( );
-    $marker['###FEUSERSEMAIL###']               = $this->mailboxData['email'];
-    $marker['###LEFTPLACEINPERCENT###']         = $leftPlaceInPercent;
-    $marker['###MAILBOXSIZEINMEGABYTES###']     = $mailboxSizeInMegabytes;
-    $marker['###NAME###']                       = $this->feusersName( );
-    $marker['###OVERRUNINMEGABYTES###']         = $overrunInMegabytes;
-    $marker['###OVERRUNINPERCENT###']           = $overrunInPercent;
-    $marker['###ORGESABADMINCOMPANY###']        = $this->orgesab_orgesabAdminCompany;
-    $marker['###ORGESABADMINNAME###']           = $this->orgesab_orgesabAdminName;
-    $marker['###ORGESABADMINPHONE###']          = $this->orgesab_orgesabAdminPhone;
-    $marker['###IMPORTLIMITINMEGABYTES###']      = $importLimitInMegabytes;
-    $marker['###REDUCEDMAILBOXINPERCENT###']    = $this->orgesab_importReduceMailbox;
-    $marker['###REDUCEDMAILBOXINMEGABYTES###']  = $reducedMailboxInMegabytes;
-
-    $subject  = $GLOBALS['LANG']->sL( 'LLL:EXT:orgesab/lib/scheduler/locallang.xml:email.warn.overrunWarningLimit.subject' );
-    $body     = $GLOBALS['LANG']->sL( 'LLL:EXT:orgesab/lib/scheduler/locallang.xml:email.warn.overrunWarningLimit.body' );
-    foreach( $marker as $key => $value )
-    {
-      $subject  = str_replace($key, $value, $subject );
-      $body     = str_replace($key, $value, $body );
-    }
-
-      // DRS
-    if( $this->drsModeImportTask )
-    {
-      $prompt = $body;
-      t3lib_div::devLog( '[tx_orgesab_ImportTask]: ' . $prompt, $this->extKey, 0 );
-    }
-      // DRS
-
-      // SWITCH : import mode
-    switch( $this->orgesab_importMode )
-    {
-      case( 'warn' ):
-        $body     = $GLOBALS['LANG']->sL( 'LLL:EXT:orgesab/lib/scheduler/locallang.xml:label.copy' ) .
-                    ': ' .
-                    $this->orgesab_orgesabAdminName . PHP_EOL .
-                    PHP_EOL .
-                    $body;
-        $to       = $this->mailboxData['email'];
-        $cc       = $this->orgesab_orgesabAdminEmail;
-        break;
-      case( 'test' ):
-        $subject  = '[TEST] ' . $subject;
-        $body     = '[TEST] ' . PHP_EOL .
-                    PHP_EOL .
-                    $GLOBALS['LANG']->sL( 'LLL:EXT:orgesab/lib/scheduler/locallang.xml:label.to' ) .
-                    ': ' .
-                    $marker['###NAME###'] . ' (' . $this->mailboxData['email'] . ')' . PHP_EOL .
-                    $GLOBALS['LANG']->sL( 'LLL:EXT:orgesab/lib/scheduler/locallang.xml:label.copy' ) .
-                    ': ' .
-                    $this->orgesab_orgesabAdminName . PHP_EOL .
-                    PHP_EOL .
-                    $body;
-        $to       = $this->orgesab_orgesabAdminEmail;
-        $cc       = null;
-        break;
-      case( 'remove' ):
-          // DRS
-        if( $this->drsModeError )
-        {
-          $prompt = 'Import mode is not allowed: "' .  $this->orgesab_importMode . '"';
-          t3lib_div::devLog( '[tx_orgesab_ImportTask]: ' . $prompt, $this->extKey, 3 );
-        }
-          // DRS
-        return false;
-        break;
-      default:
-          // DRS
-        if( $this->drsModeError )
-        {
-          $prompt = 'Import mode is undefined: "' .  $this->orgesab_importMode . '"';
-          t3lib_div::devLog( '[tx_orgesab_ImportTask]: ' . $prompt, $this->extKey, 3 );
-        }
-          // DRS
-        return false;
-        break;
-    }
-      // SWITCH : import mode
+    $subject  = null;
+    $body     = null;
+    $to       = null;
+    $cc       = null;
 
     try
     {
@@ -992,158 +477,6 @@ class tx_orgesab_ImportTask extends tx_scheduler_Task {
      // DRS
 
   }
-
-  /**
- * sendMailWarningImportIsOverrun( )  : Returns true, if limit is overrun, false if not.
- *
- * @return	boolean
- * @version       0.0.1
- * @since         0.0.1
- */
-  private function sendMailWarningImportIsOverrun( )
-  {
-      // RETURN : mailbox is smaller than the import limit
-    if( $this->mailboxSizeInBytes <  $this->importLimitInBytes )
-    {
-      return;
-    }
-      // RETURN : mailbox is smaller than the import limit
-
-      // Current import limit in megabytes
-    $importLimitInMegabytes      = ( int ) $this->importLimitInBytes / 1024 / 1024;
-
-      // Size of the current mailbox in megabytes
-    $mailboxSizeInMegabytes     = ( int ) ( $this->mailboxSizeInBytes / 1024 / 1024 );
-      // Size of the current mailbox in per cent in relation to the import limit
-    $mailboxSizeInPercent       = ( int ) ( $this->mailboxSizeInBytes / $this->importLimitInBytes * 100 );
-
-      // Size of the overun part of the current mailbox in per cent in relation to the current import limit
-    $overrunInPercent           = $mailboxSizeInPercent - 100;
-      // Size of the overun part of the current mailbox in megabytes in relation to the current import limit
-    $overrunInMegabytes         = $mailboxSizeInMegabytes - $importLimitInMegabytes;
-
-      // Size of a reduced mailbox in megabytes in relation to the current import limit
-    $reducedMailboxInMegabytes  = ( int ) ( $importLimitInMegabytes / 100 * $this->orgesab_importReduceMailbox );
-
-    $marker = array( );
-    $marker['###FEUSERSEMAIL###']               = $this->mailboxData['email'];
-    $marker['###LEFTPLACEINPERCENT###']         = null;
-    $marker['###MAILBOXSIZEINMEGABYTES###']     = $mailboxSizeInMegabytes;
-    $marker['###NAME###']                       = $this->feusersName( );
-    $marker['###OVERRUNINMEGABYTES###']         = $overrunInMegabytes;
-    $marker['###OVERRUNINPERCENT###']           = $overrunInPercent;
-    $marker['###ORGESABADMINCOMPANY###']        = $this->orgesab_orgesabAdminCompany;
-    $marker['###ORGESABADMINNAME###']           = $this->orgesab_orgesabAdminName;
-    $marker['###ORGESABADMINPHONE###']          = $this->orgesab_orgesabAdminPhone;
-    $marker['###IMPORTLIMITINMEGABYTES###']      = $importLimitInMegabytes;
-    $marker['###REDUCEDMAILBOXINPERCENT###']    = $this->orgesab_importReduceMailbox;
-    $marker['###REDUCEDMAILBOXINMEGABYTES###']  = $reducedMailboxInMegabytes;
-
-    $subject  = $GLOBALS['LANG']->sL( 'LLL:EXT:orgesab/lib/scheduler/locallang.xml:email.warn.overrunImportLimit.subject' );
-    $body     = $GLOBALS['LANG']->sL( 'LLL:EXT:orgesab/lib/scheduler/locallang.xml:email.warn.overrunImportLimit.body' );
-    foreach( $marker as $key => $value )
-    {
-      $subject  = str_replace($key, $value, $subject );
-      $body     = str_replace($key, $value, $body );
-    }
-
-      // DRS
-    if( $this->drsModeImportTask )
-    {
-      $prompt = $body;
-      t3lib_div::devLog( '[tx_orgesab_ImportTask]: ' . $prompt, $this->extKey, 0 );
-    }
-      // DRS
-
-      // SWITCH : import mode
-    switch( $this->orgesab_importMode )
-    {
-      case( 'warn' ):
-        $body     = $GLOBALS['LANG']->sL( 'LLL:EXT:orgesab/lib/scheduler/locallang.xml:label.copy' ) .
-                    ': ' .
-                    $this->orgesab_orgesabAdminName . PHP_EOL .
-                    PHP_EOL .
-                    $body;
-        $to       = $this->mailboxData['email'];
-        $cc       = $this->orgesab_orgesabAdminEmail;
-        break;
-      case( 'test' ):
-        $subject  = '[TEST] ' . $subject;
-        $body     = '[TEST] ' . PHP_EOL .
-                    PHP_EOL .
-                    $GLOBALS['LANG']->sL( 'LLL:EXT:orgesab/lib/scheduler/locallang.xml:label.to' ) .
-                    ': ' .
-                    $marker['###NAME###'] . ' (' . $this->mailboxData['email'] . ')' . PHP_EOL .
-                    $GLOBALS['LANG']->sL( 'LLL:EXT:orgesab/lib/scheduler/locallang.xml:label.copy' ) .
-                    ': ' .
-                    $this->orgesab_orgesabAdminName . PHP_EOL .
-                    PHP_EOL .
-                    $body;
-        $to       = $this->orgesab_orgesabAdminEmail;
-        $cc       = null;
-        break;
-      case( 'remove' ):
-          // DRS
-        if( $this->drsModeError )
-        {
-          $prompt = 'Import mode is not allowed: "' .  $this->orgesab_importMode . '"';
-          t3lib_div::devLog( '[tx_orgesab_ImportTask]: ' . $prompt, $this->extKey, 3 );
-        }
-          // DRS
-        return false;
-        break;
-      default:
-          // DRS
-        if( $this->drsModeError )
-        {
-          $prompt = 'Import mode is undefined: "' .  $this->orgesab_importMode . '"';
-          t3lib_div::devLog( '[tx_orgesab_ImportTask]: ' . $prompt, $this->extKey, 3 );
-        }
-          // DRS
-        return false;
-        break;
-    }
-      // SWITCH : import mode
-
-    try
-    {
-      /** @var $mailer t3lib_mail_message */
-      $mailer = t3lib_div::makeInstance( 't3lib_mail_message' );
-      $mailer->setFrom( array( $this->orgesab_orgesabAdminEmail => $this->orgesab_orgesabAdminName ) );
-      $mailer->setReplyTo( array( $this->orgesab_orgesabAdminEmail => $this->orgesab_orgesabAdminName ) );
-      $mailer->setSubject( $subject );
-      $mailer->setBody( $body );
-      $mailer->setTo( $to );
-      $mailer->setCc( $cc );
-
-      $mailsSend  = $mailer->send( );
-      $success    = ( $mailsSend > 0 );
-    }
-    catch( Exception $e )
-    {
-      throw new t3lib_exception( $e->getMessage( ) );
-    }
-
-      // DRS
-    if( $this->drsModeImportTask || $this->drsModeImportError )
-    {
-      switch( $success )
-      {
-        case( false ):
-          $prompt = 'Undefined error. Test email couldn\'t sent to "' . $this->orgesab_orgesabAdminEmail . '"';
-          t3lib_div::devLog( '[tx_orgesab_ImportTask]: ' . $prompt, $this->extKey, 3 );
-          break;
-        case( true ):
-        default:
-          $prompt = 'E-mail is sent to "' . $to . '"';
-          t3lib_div::devLog( '[tx_orgesab_ImportTask]: ' . $prompt, $this->extKey, -1 );
-          break;
-      }
-    }
-     // DRS
-
-  }
-
 
 
 
@@ -1194,7 +527,7 @@ class tx_orgesab_ImportTask extends tx_scheduler_Task {
       // Get the current time
     $endTime = $this->TT->getDifferenceToStarttime( );
 
-    $debugTrail = $this->drs_debugTrail( $debugTrailLevel );
+    $debugTrail = $this->drsDebugTrail( $debugTrailLevel );
 
     // Prompt the current time
     $mSec   = sprintf("%05d", ( $endTime - $this->tt_startTime ) );
@@ -1235,7 +568,7 @@ class tx_orgesab_ImportTask extends tx_scheduler_Task {
  */
   private function timeTracking_prompt( $debugTrailLevel, $prompt )
   {
-    $debugTrail = $this->drs_debugTrail( $debugTrailLevel );
+    $debugTrail = $this->drsDebugTrail( $debugTrailLevel );
 
     switch( true )
     {
