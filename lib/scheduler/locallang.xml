@@ -56,7 +56,7 @@ phone ###ORGESABADMINPHONE###
 P.S. This is an automatical e-mail
       ]]></label>
       <label index="label.copy">Copy</label>
-      <label index="label.importMode">Import mode</label>
+      <label index="label.importMode">Database Update</label>
       <label index="label.importMode.ever">at each job</label>
       <label index="label.importMode.never">never</label>
       <label index="label.importMode.update">Only, if the XML file was updated (recommended)</label>
@@ -250,7 +250,7 @@ Tel: ###ORGESABADMINPHONE###
 P.S. Dies ist eine automatisch generierte Mail
       ]]></label>
       <label index="label.copy">Kopie</label>
-      <label index="label.importMode">Import</label>
+      <label index="label.importMode">Datenbank aktualisieren</label>
       <label index="label.importMode.ever">bei jedem Aufruf</label>
       <label index="label.importMode.never">nie</label>
       <label index="label.importMode.update">Nur, wenn sich die XML-Datei geändert hat (empfohlen)</label>
