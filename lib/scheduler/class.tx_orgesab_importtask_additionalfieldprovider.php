@@ -713,7 +713,14 @@ class tx_orgesab_ImportTask_AdditionalFieldProvider implements tx_scheduler_Addi
 
     if( $submittedData['start'] < $inAnHour )
     {
-      $prompt = $this->msgPrefix . ': ' . $GLOBALS['LANG']->sL( 'LLL:EXT:orgesab/lib/scheduler/locallang.xml:msg.enterStart' );
+      $prompt = $this->msgPrefix 
+              . ': ' 
+              . $GLOBALS['LANG']->sL( 'LLL:EXT:orgesab/lib/scheduler/locallang.xml:msg.enterStart' )
+              . ': ' 
+              .  $submittedData['start']
+              . ': '         
+              . $inAnHour
+              ;
       $parentObject->addMessage( $prompt, t3lib_FlashMessage::ERROR );
       $bool_isValidatingSuccessful = false;
     }
