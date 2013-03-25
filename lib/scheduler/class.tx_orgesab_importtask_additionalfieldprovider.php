@@ -23,6 +23,63 @@
 ***************************************************************/
 
 /**
+ * [CLASS/FUNCTION INDEX of SCRIPT]
+ *
+ *
+ *
+ *   97: class tx_caddy_pi1 extends tslib_pibase
+ *
+ *              SECTION: Main
+ *  154:     public function main( $content, $conf )
+ *
+ *              SECTION: Caddy
+ *  228:     private function caddyProductAdd( )
+ *  250:     private function caddyProductDelete( )
+ *  266:     private function caddyRendered( )
+ *  280:     private function caddyUpdate( )
+ *
+ *              SECTION: Clean
+ *  323:     private function clean( )
+ *
+ *              SECTION: Debug
+ *  345:     private function debugOutputBeforeRunning( )
+ *
+ *              SECTION: Init
+ *  382:     private function init( )
+ *  402:     private function initAccessByIp( )
+ *  448:     private function initDatabase( )
+ *  461:     private function initDatabaseTable( )
+ *  512:     private function initFlexform( )
+ *  525:     private function initGpVar( )
+ *  581:     private function initGpVarCid( )
+ *  631:     private function initInstances( )
+ *  681:     private function initPid( )
+ *  720:     private function initPowermail( )
+ *  733:     private function initTemplate( )
+ *
+ *              SECTION: Send
+ *  754:     private function send( )
+ *  768:     private function sendCustomer( )
+ *  783:     private function sendCustomerDeliveryorder( )
+ *  808:     private function sendCustomerInvoice( )
+ *  833:     private function sendCustomerTerms( )
+ *  858:     private function sendVendor( )
+ *  873:     private function sendVendorDeliveryorder( )
+ *  898:     private function sendVendorInvoice( )
+ *  923:     private function sendVendorTerms( )
+ *
+ *              SECTION: Update Wizard
+ *  957:     private function updateWizard( $content )
+ *
+ *              SECTION: ZZ
+ * 1002:     private function zz_cObjGetSingle( $cObj_name, $cObj_conf )
+ *
+ * TOTAL FUNCTIONS: 29
+ * (This index is automatically created/updated by the extension "extdeveval")
+ *
+ */
+
+/**
  * Aditional fields provider class for usage with the orgesab import task
  *
  * @author        Dirk Wildt (http://wildt.at.die-netzmacher.de/)
@@ -35,6 +92,14 @@ class tx_orgesab_ImportTask_AdditionalFieldProvider implements tx_scheduler_Addi
 {
   
   var $msgPrefix = 'Org +ESAB Import';
+
+
+
+  /***********************************************
+  *
+  * Bulding the form
+  *
+  **********************************************/
 
   /**
     * getAdditionalFields( )  : This method is used to define new fields for adding or editing a task
@@ -323,6 +388,14 @@ class tx_orgesab_ImportTask_AdditionalFieldProvider implements tx_scheduler_Addi
     return $additionalFields;
   }
 
+
+
+  /***********************************************
+  *
+  * Saving
+  *
+  **********************************************/
+
   /**
     * saveAdditionalFields( ) : This method is used to save any additional input into the current task object
     *                           if the task class matches
@@ -402,6 +475,13 @@ class tx_orgesab_ImportTask_AdditionalFieldProvider implements tx_scheduler_Addi
     $task->orgesab_reportMode = $submittedData['orgesab_reportMode'];
   }
 
+
+
+  /***********************************************
+  *
+  * Validating
+  *
+  **********************************************/
   
   /**
     * validateAdditionalFields( ) : This method checks any additional data that is relevant to the specific task
