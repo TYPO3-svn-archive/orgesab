@@ -571,15 +571,15 @@ class tx_orgesab_ImportTask_AdditionalFieldProvider implements tx_scheduler_Addi
     switch( $submittedData['orgesab_importMode'] )
     {
       case( 'ever' ):
-        $prompt = $GLOBALS['LANG']->sL( 'LLL:EXT:orgesab/lib/scheduler/locallang.xml:msg.importMode.ever' );;
+        $prompt = $this->msgPrefix . ': ' . $GLOBALS['LANG']->sL( 'LLL:EXT:orgesab/lib/scheduler/locallang.xml:msg.importMode.ever' );;
         $parentObject->addMessage( $prompt, t3lib_FlashMessage::INFO );
         break;
       case( 'never' ):
-        $prompt = $GLOBALS['LANG']->sL( 'LLL:EXT:orgesab/lib/scheduler/locallang.xml:msg.importMode.never' );;
+        $prompt = $this->msgPrefix . ': ' . $GLOBALS['LANG']->sL( 'LLL:EXT:orgesab/lib/scheduler/locallang.xml:msg.importMode.never' );;
         $parentObject->addMessage( $prompt, t3lib_FlashMessage::WARNING );
         break;
       case( 'update' ):
-        $prompt = $GLOBALS['LANG']->sL( 'LLL:EXT:orgesab/lib/scheduler/locallang.xml:msg.importMode.update' );;
+        $prompt = $this->msgPrefix . ': ' . $GLOBALS['LANG']->sL( 'LLL:EXT:orgesab/lib/scheduler/locallang.xml:msg.importMode.update' );;
         $parentObject->addMessage( $prompt, t3lib_FlashMessage::INFO );
         break;
       default:
@@ -669,19 +669,19 @@ class tx_orgesab_ImportTask_AdditionalFieldProvider implements tx_scheduler_Addi
     switch( $submittedData['orgesab_reportMode'] )
     {
       case( 'ever' ):
-        $prompt = $GLOBALS['LANG']->sL( 'LLL:EXT:orgesab/lib/scheduler/locallang.xml:msg.reportMode.ever' );;
+        $prompt = $this->msgPrefix . ': ' . $GLOBALS['LANG']->sL( 'LLL:EXT:orgesab/lib/scheduler/locallang.xml:msg.reportMode.ever' );;
         $parentObject->addMessage( $prompt, t3lib_FlashMessage::INFO );
         break;
       case( 'never' ):
-        $prompt = $GLOBALS['LANG']->sL( 'LLL:EXT:orgesab/lib/scheduler/locallang.xml:msg.reportMode.never' );;
+        $prompt = $this->msgPrefix . ': ' . $GLOBALS['LANG']->sL( 'LLL:EXT:orgesab/lib/scheduler/locallang.xml:msg.reportMode.never' );;
         $parentObject->addMessage( $prompt, t3lib_FlashMessage::WARNING );
         break;
       case( 'update' ):
-        $prompt = $GLOBALS['LANG']->sL( 'LLL:EXT:orgesab/lib/scheduler/locallang.xml:msg.reportMode.update' );;
+        $prompt = $this->msgPrefix . ': ' . $GLOBALS['LANG']->sL( 'LLL:EXT:orgesab/lib/scheduler/locallang.xml:msg.reportMode.update' );;
         $parentObject->addMessage( $prompt, t3lib_FlashMessage::INFO );
         break;
       case( 'warn' ):
-        $prompt = $GLOBALS['LANG']->sL( 'LLL:EXT:orgesab/lib/scheduler/locallang.xml:msg.reportMode.warn' );;
+        $prompt = $this->msgPrefix . ': ' . $GLOBALS['LANG']->sL( 'LLL:EXT:orgesab/lib/scheduler/locallang.xml:msg.reportMode.warn' );;
         $parentObject->addMessage( $prompt, t3lib_FlashMessage::INFO );
         break;
       default:
