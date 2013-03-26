@@ -122,49 +122,49 @@ class tx_orgesab_ImportTask extends tx_scheduler_Task {
     *
     * @var boolean $drsModeAll
     */
-    private $drsModeAll;
+    public $drsModeAll;
 
   /**
     * DRS mode: display prompt in error case only
     *
     * @var boolean $drsModeError
     */
-    private $drsModeError;
+    public $drsModeError;
 
   /**
     * DRS mode: display prompt in warning case only
     *
     * @var boolean $drsModeWarn
     */
-    private $drsModeWarn;
+    public $drsModeWarn;
 
   /**
     * DRS mode: display prompt in info case only
     *
     * @var boolean $drsModeInfo
     */
-    private $drsModeInfo;
+    public $drsModeInfo;
 
   /**
     * DRS mode: display prompt in performance case
     *
     * @var boolean $drsModePerformance
     */
-    private $drsModePerformance;
+    public $drsModePerformance;
 
   /**
     * DRS mode: display prompt in importTask case
     *
     * @var boolean $drsModeImportTask
     */
-    private $drsModeImportTask;
+    public $drsModeImportTask;
 
   /**
     * DRS mode: display prompt in sql case
     *
     * @var boolean $drsModeSql
     */
-    private $drsModeSql;
+    public $drsModeSql;
 
   /**
     * An email address to be used during the process
