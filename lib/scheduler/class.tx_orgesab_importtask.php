@@ -396,7 +396,7 @@ class tx_orgesab_ImportTask extends tx_scheduler_Task {
         break;
     }
     $body     = __CLASS__ . '::' .  __METHOD__ . ' (' . __LINE__ . ')';
-    $this->pObj->drsMailToAdmin( $subject, $body );
+    $this->drsMailToAdmin( $subject, $body );
   }
 
 /**
@@ -854,7 +854,7 @@ cronCmd:    ' . ( $cronCmd ? $cronCmd : 'not used' )
               . PHP_EOL
               . __CLASS__ . '::' .  __METHOD__ . ' (' . __LINE__ . ')'
               ;
-    $this->pObj->drsMailToAdmin( $subject, $body );
+    $this->drsMailToAdmin( $subject, $body );
       // Send e-mail to admin
 
     return false;
@@ -906,7 +906,7 @@ cronCmd:    ' . ( $cronCmd ? $cronCmd : 'not used' )
               . PHP_EOL
               . __CLASS__ . '::' .  __METHOD__ . ' (' . __LINE__ . ')'
               ;
-    $this->pObj->drsMailToAdmin( $subject, $body );
+    $this->drsMailToAdmin( $subject, $body );
       // e-mail to admin
 
     return $os;
@@ -1009,7 +1009,7 @@ cronCmd:    ' . ( $cronCmd ? $cronCmd : 'not used' )
               . PHP_EOL
               . __CLASS__ . '::' .  __METHOD__ . ' (' . __LINE__ . ')'
               ;
-    $this->pObj->drsMailToAdmin( $subject, $body );
+    $this->drsMailToAdmin( $subject, $body );
       // Send e-mail to admin
 
     return false;
@@ -1266,7 +1266,7 @@ cronCmd:    ' . ( $cronCmd ? $cronCmd : 'not used' )
         break;
     }
     $body     = __CLASS__ . '::' .  __METHOD__ . ' (' . __LINE__ . ')';
-    $this->pObj->drsMailToAdmin( $subject, $body );
+    $this->drsMailToAdmin( $subject, $body );
   }
 
 /**
