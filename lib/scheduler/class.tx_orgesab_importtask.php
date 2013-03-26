@@ -83,6 +83,13 @@ class tx_orgesab_ImportTask extends tx_scheduler_Task {
     * @var array $extConf
     */
     private $extConf;
+    
+  /**
+    * The convert object
+    *
+    * @var object
+    */
+    private $convert;
 
   /**
     * DRS mode: display prompt in every case
@@ -138,14 +145,28 @@ class tx_orgesab_ImportTask extends tx_scheduler_Task {
     *
     * @var string $orgesab_orgesabAdminEmail
     */
-    public $orgesab_orgesabAdminEmail;
+    private $orgesab_orgesabAdminEmail;
 
+  /**
+    * Report mode: ever, never, update
+    *
+    * @var string
+    */
+    private $orgesab_importMode;
+
+  /**
+    * Import URL
+    *
+    * @var string
+    */
+    private $orgesab_importUrl;
+    
   /**
     * Report mode: ever, never, update, warn
     *
     * @var string
     */
-    public $orgesab_reportMode;
+    private $orgesab_reportMode;
 
   /**
     * t3lib_timeTrack object
@@ -174,9 +195,23 @@ class tx_orgesab_ImportTask extends tx_scheduler_Task {
     * @var integer
     */
     private $tt_startTime;
+    
+  /**
+    * The update object
+    *
+    * @var object
+    */
+    private $update;
+
+  /**
+    * The get object
+    *
+    * @var object
+    */
+    private $get;
 
 
-
+    
   /***********************************************
    *
    * Main
@@ -194,215 +229,151 @@ class tx_orgesab_ImportTask extends tx_scheduler_Task {
  */
   public function execute( )
   {
-    $success = false;
-
+      // Init var for debug trail
+    $debugTrailLevel = 1;
+    
       // Get the extension configuration by the extension manager
     $this->extConf = unserialize( $GLOBALS['TYPO3_CONF_VARS']['EXT']['extConf']['orgesab'] );
 
+      // RETURN false : init is unproper
     if( ! $this->init( ) )
     {
-      return $success;
+      $this->timeTracking_log( $debugTrailLevel, 'END' );
+      return false;
     }
+      // RETURN false : init is unproper
 
-    if( ! $this->xmlImport( ) )
+      // RETURN false : content is unproper
+    $content = $this->getContent( );
+    if( ! $content )
     {
-      return $success;
+      $this->timeTracking_log( $debugTrailLevel, 'END' );
+      return false;
     }
+      // RETURN false : content is unproper
     
-    if( ! $this->databaseUpdate( ) )
+      // RETURN true : content is up to date
+    if( $this->get->getContentIsUpToDate( ) )
     {
-      return $success;
+      $this->timeTracking_log( $debugTrailLevel, 'END' );
+      return true;
     }
+      // RETURN true : content is up to date
     
-      // RETURN : the success
-    $debugTrailLevel = 1;
-    $this->timeTracking_log( $debugTrailLevel, 'END' );
-    $success = true;
-    return $success;
+      // RETURN false : content is unproper
+    $content = $this->convertContent( $content );
+    if( ! $content )
+    {
+      $this->timeTracking_log( $debugTrailLevel, 'END' );
+      return false;
+    }
+      // RETURN false : content is unproper
+    
+      // RETURN false : database could not updated
+    if( ! $this->updateDatabase( $content ) )
+    {
+      return false;
+    }
+      // RETURN false : database could not updated
+
+
+    return true;
   }
 
 
 
   /***********************************************
    *
-   * Initials
+   * Additional information for scheduler
+   *
+   **********************************************/
+
+  /**
+ * getAdditionalInformation( ) : This method returns the destination mail address as additional information
+ *
+ * @return	string		Information to display
+ * @access      public
+ * @version       0.0.1
+ * @since         0.0.1
+ */
+  public function getAdditionalInformation( )
+  {
+    $orgesabAdminEmail  = 'Admin'
+                        . ': ' 
+                        . $this->orgesab_orgesabAdminEmail 
+                        ;
+    return $orgesabAdminEmail;
+  }
+
+
+
+  /***********************************************
+   *
+   * Converting
    *
    **********************************************/
 
 /**
- * init( )  : 
- *
- * @return	boolean
- * @access      private
- * @version       0.0.1
- * @since         0.0.1
- */
-  private function init( )
-  {
-    $success = true;
-
-    $this->initDRS( );
-
-    if( ! $this->initRequirements( ) )
-    {
-      $success = false;
-      return $success;
-    }
-
-    $this->initTimetracking( );
-
-    return $success;
-  }
-
-  /**
- * initDRS( )  : Init the DRS - Development Reporting System
- *
- * @return	void
- * @version       0.0.1
- * @since         0.0.1
- */
-  private function initDRS( )
-  {
-
-    if( $this->extConf['debuggingDrs'] == 'Disabled' )
-    {
-      return;
-    }
-
-    $this->drsModeAll   = true;
-    $this->drsModeError = true;
-    $this->drsModeWarn  = true;
-    $this->drsModeInfo  = true;
-
-    $prompt = 'DRS - Development Reporting System: ' . $this->extConf['debuggingDrs'];
-    t3lib_div::devlog( '[tx_orgesab_ImportTask] ' . $prompt, $this->extKey, 0 );
-
-    switch( $this->extConf['debuggingDrs'] )
-    {
-      case( 'Enabled (for debugging only!)' ):
-        $this->drsModePerformance = true;
-        $this->drsModeImportTask  = true;
-        $this->drsModeSql         = true;
-        break;
-      default:
-          // :TODO: Error msg per email to admin
-        $this->drsModePerformance = true;
-        $this->drsModeImportTask  = true;
-        $this->drsModeSql         = true;
-        $prompt = 'DRS mode isn\'t defined.';
-        t3lib_div::devlog( '[tx_orgesab_ImportTask] ' . $prompt, $this->extKey, 3 );
-        break;
-    }
-  }
-
-  /**
- * initRequirements( ) :
+ * convertContent( )  : 
  *
  * @return	boolean
  * @access      private 
  * @version       0.0.1
  * @since         0.0.1
  */
-  private function initRequirements( )
-  {
-      // SWITCH : server OS
-    switch( strtolower( PHP_OS ) )
-    {
-      case( 'linux' ):
-          // Linux is proper: Follow the workflow
-        break;
-      default:
-          // RETURN : OS isn't supported
-          // DRS
-        if( $this->drsModeError )
-        {
-          $prompt = 'Sorry, but the operating system "' . PHP_OS . '" isn\'t supported by TYPO3 Org +ESAB.';
-          t3lib_div::devLog( '[tx_orgesab_ImportTask]: ' . $prompt, $this->extKey, 3 );
-        }
-          // DRS
-        return false;
-          // RETURN : OS isn't supported
-    }
-      // SWITCH : server OS
-
-      // RETURN : email address is given
-    if ( ! empty( $this->orgesab_orgesabAdminEmail ) )
-    {
-      return true;
-    }
-      // RETURN : email address is given
-
-      // DRS
-    if( $this->drsModeError )
-    {
-      $prompt = 'email address is missing for the Org +ESAB admin.';
-      t3lib_div::devLog( '[tx_orgesab_ImportTask]: ' . $prompt, $this->extKey, 3 );
-    }
-      // DRS
-
-
-
-    return false;
-  }
-
-  /**
- * initTimetracking( ) :
- *
- * @return	boolean
- * @access      private 
- * @version       0.0.1
- * @since         0.0.1
- */
-  private function initTimetracking( )
-  {
-    $this->timeTracking_init( );
-    $debugTrailLevel = 1;
-    $this->timeTracking_log( $debugTrailLevel, 'START' );
-  }
-
-
-
-  /***********************************************
-   *
-   * Database
-   *
-   **********************************************/
-
-  /**
- * databaseUpdate( )  : 
- *
- * @return	boolean
- * @access      private 
- * @version       0.0.1
- * @since         0.0.1
- */
-  private function databaseUpdate( )
+  private function convertContent( )
   {
     $success = false;
 
-    $this->databaseUpdateInstance( );
-    $success = $this->database->main( );
+    $this->convertContentInstance( );
+    $success = $this->convert->main( );
 
     $success = true;
+    $this->convertContentDrsMail( $success );
+
     return $success;  
   }
 
 /**
- * databaseUpdateInstance( )  : 
+ * convertContentDrsMail( )  : 
+ *
+ * @return	void
+ * @access      private 
+ * @version       0.0.1
+ * @since         0.0.1
+ */
+  private function convertContentDrsMail( $success )
+  {
+    switch( $success )
+    {
+      case( false ):
+        $subject  = 'Failed';
+        break;
+      case( true ):
+      default:
+        $subject  = 'Success';
+        break;
+    }
+    $body     = __CLASS__ . '::' .  __METHOD__ . ' (' . __LINE__ . ')';
+    $this->pObj->drsMailToAdmin( $subject, $body );
+  }
+
+/**
+ * convertContentInstance( )  : 
  *
  * @return	boolean
  * @access      private 
  * @version       0.0.1
  * @since         0.0.1
  */
-  private function databaseUpdateInstance( )
+  private function convertContentInstance( )
   {
     $path2lib = t3lib_extMgm::extPath( $this->extKey ) . 'lib/';
 
-    require_once( $path2lib . 'sql/class.tx_orgesab_sql.php' );
+    require_once( $path2lib . 'class.tx_orgesab_convert.php' );
     
-    $this->database = t3lib_div::makeInstance( 'tx_orgesab_sql' );
-    $this->database->setPobj( $this );
+    $this->convert = t3lib_div::makeInstance( 'tx_orgesab_convert' );
+    $this->convert->setPobj( $this );
   }
 
   
@@ -570,6 +541,353 @@ cronCmd:    ' . ( $cronCmd ? $cronCmd : 'not used' )
 
   /***********************************************
    *
+   * get
+   *
+   **********************************************/
+
+/**
+ * getContent( )  : 
+ *
+ * @return	boolean
+ * @access      private 
+ * @version       0.0.1
+ * @since         0.0.1
+ */
+  private function getContent( )
+  {
+      // Initiate the get class
+    $this->getContentInstance( );
+    
+      // RETURN true : proper content
+    if( $this->get->main( ) )
+    {
+      return false;
+    }
+      // RETURN true : proper content
+
+      // RETURN false : unproper content
+    return false;
+  }
+
+/**
+ * getContentInstance( )  : 
+ *
+ * @return	boolean
+ * @access      private 
+ * @version       0.0.1
+ * @since         0.0.1
+ */
+  private function getContentInstance( )
+  {
+    $path2lib = t3lib_extMgm::extPath( $this->extKey ) . 'lib/';
+
+    require_once( $path2lib . 'class.tx_orgesab_get.php' );
+    
+    $this->get        = t3lib_div::makeInstance( 'tx_orgesab_get' );
+    $this->get->setPobj( $this );
+  }
+
+
+
+  /***********************************************
+   *
+   * Get
+   *
+   **********************************************/
+
+/**
+ * getAdminmail( ): 
+ *
+ * @return	void
+ * @access      public 
+ * @version       0.0.1
+ * @since         0.0.1
+ */
+  public function getAdminmail( )
+  {
+    return $this->orgesab_orgesabAdminEmail;
+  }
+
+/**
+ * getImportMode( ): 
+ *
+ * @return	void
+ * @access      public 
+ * @version       0.0.1
+ * @since         0.0.1
+ */
+  public function getImportMode( )
+  {
+    return $this->orgesab_importMode;
+  }
+
+/**
+ * getImportUrl( ): 
+ *
+ * @return	void
+ * @access      public 
+ * @version       0.0.1
+ * @since         0.0.1
+ */
+  public function getImportUrl( )
+  {
+    return $this->orgesab_importUrl;
+  }
+
+/**
+ * getReportMode( ): 
+ *
+ * @return	void
+ * @access      public 
+ * @version       0.0.1
+ * @since         0.0.1
+ */
+  public function getReportMode( )
+  {
+    return $this->orgesab_reportMode;
+  }
+
+
+
+  /***********************************************
+   *
+   * Initials
+   *
+   **********************************************/
+
+/**
+ * init( )  : 
+ *
+ * @return	boolean
+ * @access      private
+ * @version       0.0.1
+ * @since         0.0.1
+ */
+  private function init( )
+  {
+    $success = true;
+
+    $this->initDRS( );
+
+    if( ! $this->initRequirements( ) )
+    {
+      $success = false;
+      return $success;
+    }
+
+    $this->initTimetracking( );
+
+    return $success;
+  }
+
+  /**
+ * initDRS( )  : Init the DRS - Development Reporting System
+ *
+ * @return	void
+ * @version       0.0.1
+ * @since         0.0.1
+ */
+  private function initDRS( )
+  {
+
+    if( $this->extConf['debuggingDrs'] == 'Disabled' )
+    {
+      return;
+    }
+
+    $this->drsModeAll   = true;
+    $this->drsModeError = true;
+    $this->drsModeWarn  = true;
+    $this->drsModeInfo  = true;
+
+    $prompt = 'DRS - Development Reporting System: ' . $this->extConf['debuggingDrs'];
+    t3lib_div::devlog( '[tx_orgesab_ImportTask] ' . $prompt, $this->extKey, 0 );
+
+    switch( $this->extConf['debuggingDrs'] )
+    {
+      case( 'Enabled (for debugging only!)' ):
+        $this->drsModePerformance = true;
+        $this->drsModeImportTask  = true;
+        $this->drsModeSql         = true;
+        break;
+      default:
+          // :TODO: Error msg per email to admin
+        $this->drsModePerformance = true;
+        $this->drsModeImportTask  = true;
+        $this->drsModeSql         = true;
+        $prompt = 'DRS mode isn\'t defined.';
+        t3lib_div::devlog( '[tx_orgesab_ImportTask] ' . $prompt, $this->extKey, 3 );
+        break;
+    }
+  }
+
+/**
+ * initRequirements( ) :
+ *
+ * @return	boolean
+ * @access      private 
+ * @version       0.0.1
+ * @since         0.0.1
+ */
+  private function initRequirements( )
+  {
+    if( ! $this->initRequirementsAdminmail( ) )
+    {
+      return false;
+    }
+    
+    if( ! $this->initRequirementsOs( ) )
+    {
+      return false;
+    }
+    
+    if( ! $this->initRequirementsAllowUrlFopen( ) )
+    {
+      return false;
+    }
+    
+    return true;
+    
+  }
+
+/**
+ * initRequirementsAdminmail( ) :
+ *
+ * @return	boolean
+ * @access      private 
+ * @version       0.0.1
+ * @since         0.0.1
+ */
+  private function initRequirementsAdminmail( )
+  {
+      // RETURN : email address is given
+    if ( ! empty( $this->orgesab_orgesabAdminEmail ) )
+    {
+      return true;
+    }
+      // RETURN : email address is given
+
+      // DRS
+    if( $this->drsModeError )
+    {
+      $prompt = 'email address is missing for the Org +ESAB admin.';
+      t3lib_div::devLog( '[tx_orgesab_ImportTask]: ' . $prompt, $this->extKey, 3 );
+    }
+      // DRS
+
+    return false;
+  }
+
+/**
+ * initRequirementsAllowUrlFopen( ) :
+ *
+ * @return	boolean
+ * @access      private 
+ * @version       0.0.1
+ * @since         0.0.1
+ */
+  private function initRequirementsAllowUrlFopen( )
+  {
+    $allow_url_fopen = ini_get( 'allow_url_fopen');
+    
+      // RETURN : true. allow_url_fopen is enabled
+    if( $allow_url_fopen )
+    {
+      return true;
+    }
+      // RETURN : true. allow_url_fopen is enabled
+    
+      // DRS
+    if( $this->drsModeError )
+    {
+      $prompt = 'PHP ini property allow_url_fopen is disabled.';
+      t3lib_div::devLog( '[tx_orgesab_ImportTask]: ' . $prompt, $this->extKey, 3 );
+    }
+      // DRS
+    
+      // Send e-mail to admin
+    $subject  = 'Failed';
+    $body     = 'Sorry, but PHP ini property allow_url_fopen is disabled.' . PHP_EOL
+              . PHP_EOL
+              . __CLASS__ . '::' .  __METHOD__ . ' (' . __LINE__ . ')'
+              ;
+    $this->pObj->drsMailToAdmin( $subject, $body );    
+      // Send e-mail to admin
+    
+    return false;
+  }
+
+/**
+ * initRequirementsOs( ) :
+ *
+ * @return	boolean
+ * @access      private 
+ * @version       0.0.1
+ * @since         0.0.1
+ */
+  private function initRequirementsOs( )
+  {
+    $os = false;
+    
+      // SWITCH : server OS
+    switch( strtolower( PHP_OS ) )
+    {
+      case( 'linux' ):
+          // Linux is proper: Follow the workflow
+        $os = true;
+        break;
+      default:
+          // OS isn't supported
+        $os = false;
+    }
+      // SWITCH : server OS
+    
+      // RETURN : os is supported
+    if( $os )
+    {
+      return true;
+    }
+      // RETURN : os is supported
+    
+      // DRS
+    if( $this->drsModeError )
+    {
+      $prompt = 'Sorry, but the operating system "' . PHP_OS . '" isn\'t supported by TYPO3 Org +ESAB.';
+      t3lib_div::devLog( '[tx_orgesab_ImportTask]: ' . $prompt, $this->extKey, 3 );
+    }
+      // DRS
+
+      // e-mail to admin
+    $subject  = 'Failed';
+    $body     = 'Sorry, but ' . PHP_OS . ' isn\'t supported.' . PHP_EOL
+              . PHP_EOL
+              . __CLASS__ . '::' .  __METHOD__ . ' (' . __LINE__ . ')'
+              ;
+    $this->pObj->drsMailToAdmin( $subject, $body );
+      // e-mail to admin
+    
+    return $os;
+  }
+
+  /**
+ * initTimetracking( ) :
+ *
+ * @return	boolean
+ * @access      private 
+ * @version       0.0.1
+ * @since         0.0.1
+ */
+  private function initTimetracking( )
+  {
+    $this->timeTracking_init( );
+    $debugTrailLevel = 1;
+    $this->timeTracking_log( $debugTrailLevel, 'START' );
+  }
+
+
+
+  /***********************************************
+   *
    * Mail
    *
    **********************************************/
@@ -627,6 +945,38 @@ cronCmd:    ' . ( $cronCmd ? $cronCmd : 'not used' )
     }
      // DRS
 
+  }
+
+
+
+  /***********************************************
+   *
+   * Registry
+   *
+   **********************************************/
+
+/**
+ * registryGet( ): 
+ *
+ * @return	void
+ * @access      public 
+ * @version       0.0.1
+ * @since         0.0.1
+ */
+  public function registryGet( )
+  {
+  }
+
+/**
+ * registrySet( ): 
+ *
+ * @return	void
+ * @access      public 
+ * @version       0.0.1
+ * @since         0.0.1
+ */
+  public function registrySet( )
+  {
   }
 
 
@@ -742,70 +1092,73 @@ cronCmd:    ' . ( $cronCmd ? $cronCmd : 'not used' )
 
 
 
-
   /***********************************************
    *
-   * Scheduler Form
+   * Update
    *
    **********************************************/
 
-  /**
- * getAdditionalInformation( ) : This method returns the destination mail address as additional information
- *
- * @return	string		Information to display
- * @access      public
- * @version       0.0.1
- * @since         0.0.1
- */
-  public function getAdditionalInformation( )
-  {
-    $orgesabAdminEmail  = 'Admin'
-                        . ': ' 
-                        . $this->orgesab_orgesabAdminEmail 
-                        ;
-    return $orgesabAdminEmail;
-  }
-
-
-
-  /***********************************************
-   *
-   * XML
-   *
-   **********************************************/
-
-  /**
- * xmlImport( )  : 
+/**
+ * updateDatabase( )  : 
  *
  * @return	boolean
  * @access      private 
  * @version       0.0.1
  * @since         0.0.1
  */
-  private function xmlImport( )
+  private function updateDatabase( )
   {
-    $this->xmlImportInstance( );
-    $success = $this->xml->main( );
+    $success = false;
 
-    return $success;
+    $this->updateDatabaseInstance( );
+    $success = $this->update->main( );
+
+    $success = true;
+    $this->updateDatabaseDrsMail( $success );
+
+    return $success;  
   }
 
 /**
- * xmlImportInstance( )  : 
+ * updateDatabaseDrsMail( )  : 
+ *
+ * @return	void
+ * @access      private 
+ * @version       0.0.1
+ * @since         0.0.1
+ */
+  private function updateDatabaseDrsMail( $success )
+  {
+    switch( $success )
+    {
+      case( false ):
+        $subject  = 'Failed';
+        break;
+      case( true ):
+      default:
+        $subject  = 'Success';
+        break;
+    }
+    $body     = __CLASS__ . '::' .  __METHOD__ . ' (' . __LINE__ . ')';
+    $this->pObj->drsMailToAdmin( $subject, $body );
+  }
+
+/**
+ * updateDatabaseInstance( )  : 
  *
  * @return	boolean
  * @access      private 
  * @version       0.0.1
  * @since         0.0.1
  */
-  private function xmlImportInstance( )
+  private function updateDatabaseInstance( )
   {
     $path2lib = t3lib_extMgm::extPath( $this->extKey ) . 'lib/';
 
-    require_once( $path2lib . 'xml/class.tx_orgesab_xml.php' );
+    require_once( $path2lib . 'class.tx_orgesab_update.php' );
     
-    $this->xml        = t3lib_div::makeInstance( 'tx_orgesab_xml' );
-    $this->xml->setPobj( $this );
+    $this->update = t3lib_div::makeInstance( 'tx_orgesab_update' );
+    $this->update->setPobj( $this );
   }
   
 }
