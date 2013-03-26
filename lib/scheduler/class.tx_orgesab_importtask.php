@@ -28,60 +28,57 @@
  *
  *
  *
- *   98: class tx_orgesab_ImportTask extends tx_scheduler_Task
+ *   95: class tx_orgesab_ImportTask extends tx_scheduler_Task
  *
  *              SECTION: Main
- *  257:     public function execute( )
+ *  254:     public function execute( )
  *
  *              SECTION: Additional information for scheduler
- *  326:     public function getAdditionalInformation( )
+ *  323:     public function getAdditionalInformation( )
  *
  *              SECTION: Converting
- *  351:     private function convertContent( )
- *  373:     private function convertContentDrsMail( $success )
- *  397:     private function convertContentInstance( )
+ *  348:     private function convertContent( )
+ *  370:     private function convertContentDrsMail( $success )
+ *  394:     private function convertContentInstance( )
  *
  *              SECTION: DRS - Development Reporting System
- *  426:     private function drsDebugTrail( $level = 1 )
- *  472:     public function drsMailToAdmin( $subject='Information', $body=null )
+ *  423:     private function drsDebugTrail( $level = 1 )
+ *  469:     public function drsMailToAdmin( $subject='Information', $body=null )
  *
- *              SECTION: get
- *  584:     private function getContent( )
- *  608:     private function getContentInstance( )
+ *              SECTION: Get private
+ *  581:     private function getContent( )
+ *  605:     private function getContentInstance( )
  *
- *              SECTION: Get
- *  634:     public function getAdminmail( )
- *  647:     public function getImportMode( )
- *  660:     public function getImportUrl( )
- *  673:     public function getReportMode( )
+ *              SECTION: Get public
+ *  631:     public function getAdminmail( )
+ *  644:     public function getImportMode( )
+ *  657:     public function getImportUrl( )
+ *  670:     public function getReportMode( )
  *
  *              SECTION: Initials
- *  694:     private function init( )
- *  718:     private function initDRS( )
- *  760:     private function initRequirements( )
- *  789:     private function initRequirementsAdminmail( )
- *  817:     private function initRequirementsAllowUrlFopen( )
- *  856:     private function initRequirementsOs( )
- *  908:     private function initTimetracking( )
- *
- *              SECTION: Mail
- *  936:     private function sendMailWarning( $subject=null, $body=null, $to=null, $cc=null )
+ *  691:     private function init( )
+ *  715:     private function initDRS( )
+ *  757:     private function initRequirements( )
+ *  786:     private function initRequirementsAdminmail( )
+ *  814:     private function initRequirementsAllowUrlFopen( )
+ *  853:     private function initRequirementsOs( )
+ *  905:     private function initTimetracking( )
  *
  *              SECTION: Registry
- *  998:     public function registryGet( )
- * 1010:     public function registrySet( )
+ *  928:     public function registryGet( )
+ *  940:     public function registrySet( )
  *
  *              SECTION: Time tracking
- * 1030:     private function timeTracking_init( )
- * 1052:     private function timeTracking_log( $debugTrailLevel, $prompt )
- * 1104:     private function timeTracking_prompt( $debugTrailLevel, $prompt )
+ *  960:     private function timeTracking_init( )
+ *  982:     private function timeTracking_log( $debugTrailLevel, $prompt )
+ * 1034:     private function timeTracking_prompt( $debugTrailLevel, $prompt )
  *
  *              SECTION: Update
- * 1141:     private function updateDatabase( )
- * 1163:     private function updateDatabaseDrsMail( $success )
- * 1187:     private function updateDatabaseInstance( )
+ * 1071:     private function updateDatabase( )
+ * 1093:     private function updateDatabaseDrsMail( $success )
+ * 1117:     private function updateDatabaseInstance( )
  *
- * TOTAL FUNCTIONS: 29
+ * TOTAL FUNCTIONS: 28
  * (This index is automatically created/updated by the extension "extdeveval")
  *
  */
