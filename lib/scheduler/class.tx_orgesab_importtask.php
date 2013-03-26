@@ -1071,9 +1071,9 @@ cronCmd:    ' . ( $cronCmd ? $cronCmd : 'not used' )
  * @version       0.0.1
  * @since         0.0.1
  */
-  public function setImportMode( )
+  public function setImportMode( $value )
   {
-    return $this->orgesab_importMode;
+    $this->orgesab_importMode = $value;
   }
 
 /**
@@ -1084,9 +1084,9 @@ cronCmd:    ' . ( $cronCmd ? $cronCmd : 'not used' )
  * @version       0.0.1
  * @since         0.0.1
  */
-  public function setImportUrl( )
+  public function setImportUrl( $value )
   {
-    return $this->orgesab_importUrl;
+    $this->orgesab_importUrl = $value;
   }
 
 /**
@@ -1097,9 +1097,9 @@ cronCmd:    ' . ( $cronCmd ? $cronCmd : 'not used' )
  * @version       0.0.1
  * @since         0.0.1
  */
-  public function setReportMode( )
+  public function setReportMode( $value )
   {
-    return $this->orgesab_reportMode;
+    $this->orgesab_reportMode = $value;
   }
 
 

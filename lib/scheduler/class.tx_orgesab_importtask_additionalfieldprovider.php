@@ -415,7 +415,8 @@ class tx_orgesab_ImportTask_AdditionalFieldProvider implements tx_scheduler_Addi
  */
   private function saveFieldImportMode( array $submittedData, tx_scheduler_Task $task )
   {
-    $task->orgesab_reportMode = $submittedData['orgesab_importMode'];
+//    $task->orgesab_reportMode = $submittedData['orgesab_importMode'];
+    $task->setImportMode( $submittedData['orgesab_importMode'] );
   }
 
   /**
@@ -430,8 +431,8 @@ class tx_orgesab_ImportTask_AdditionalFieldProvider implements tx_scheduler_Addi
  */
   private function saveFieldImportUrl( array $submittedData, tx_scheduler_Task $task )
   {
-    $orgesab_importUrl       = ( int ) $submittedData['orgesab_importUrl'];
-    $task->orgesab_importUrl = $orgesab_importUrl;
+    //$task->orgesab_importUrl = $submittedData['orgesab_importUrl'];
+    $task->setImportUrl( $submittedData['orgesab_importUrl'] );
   }
 
   /**
@@ -446,7 +447,6 @@ class tx_orgesab_ImportTask_AdditionalFieldProvider implements tx_scheduler_Addi
  */
   private function saveFieldOrgesabAdminEmail( array $submittedData, tx_scheduler_Task $task )
   {
-//    $task->orgesab_orgesabAdminEmail = $submittedData['orgesab_orgesabAdminEmail'];
     $task->setAdminmail( $submittedData['orgesab_orgesabAdminEmail'] );
   }
 
@@ -462,7 +462,8 @@ class tx_orgesab_ImportTask_AdditionalFieldProvider implements tx_scheduler_Addi
  */
   private function saveFieldReportMode( array $submittedData, tx_scheduler_Task $task )
   {
-    $task->orgesab_reportMode = $submittedData['orgesab_reportMode'];
+//    $task->orgesab_reportMode = $submittedData['orgesab_reportMode'];
+    $task->setReportMode( $submittedData['orgesab_reportMode'] );
   }
 
 
