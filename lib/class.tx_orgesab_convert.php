@@ -41,7 +41,7 @@
  *
  *              SECTION: Main
  *  196:     private function xmlForDatabase( )
- *  227:     private function xmlFetchFile( )
+ *  227:     private function convertContent( )
  *  247:     private function xmlIsUpdated( )
  *
  * TOTAL FUNCTIONS: 6
@@ -58,7 +58,7 @@
  * @version       0.0.1
  * @since         0.0.1
  */
-class tx_orgesab_xml {
+class tx_orgesab_convert {
 
   /**
     * Extension key
@@ -97,7 +97,7 @@ class tx_orgesab_xml {
 
     $this->init( );
 
-    if( ! $this->xmlFetchFile( ) )
+    if( ! $this->convertContent( ) )
     {
       return $success;
     }
@@ -217,14 +217,14 @@ class tx_orgesab_xml {
   }
 
 /**
- * xmlFetchFile( )  :
+ * convertContent( )  :
  *
  * @return	boolean
  * @access private
  * @version       0.0.1
  * @since         0.0.1
  */
-  private function xmlFetchFile( )
+  private function convertContent( )
   {
     $success = false;
     $this->updateDatabase = false;
@@ -257,8 +257,8 @@ class tx_orgesab_xml {
   }
 }
 
-if (defined('TYPO3_MODE') && isset($GLOBALS['TYPO3_CONF_VARS'][TYPO3_MODE]['XCLASS']['ext/orgesab/lib/xml/class.tx_orgesab_xml.php'])) {
-  include_once($GLOBALS['TYPO3_CONF_VARS'][TYPO3_MODE]['XCLASS']['ext/orgesab/lib/xml/class.tx_orgesab_xml.php']);
+if (defined('TYPO3_MODE') && isset($GLOBALS['TYPO3_CONF_VARS'][TYPO3_MODE]['XCLASS']['ext/orgesab/lib/class.tx_orgesab_convert.php'])) {
+  include_once($GLOBALS['TYPO3_CONF_VARS'][TYPO3_MODE]['XCLASS']['ext/orgesab/lib/class.tx_orgesab_convert.php']);
 }
 
 ?>
