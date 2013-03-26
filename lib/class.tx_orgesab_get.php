@@ -330,10 +330,11 @@ class tx_orgesab_get {
  */
   private function getMd5Comparision( $content )
   {
-    $contentIsUpToDate = false;
+    $contentIsUpToDate  = false;
+    $key                = 'md5LastContent';
 
     $md5CurrFile = $this->getMd5( $content );
-    $md5LastFile = $this->pObj->registryGet( );
+    $md5LastFile = $this->pObj->registryGet( $key );
 
     if( $md5CurrFile != $md5LastFile )
     {

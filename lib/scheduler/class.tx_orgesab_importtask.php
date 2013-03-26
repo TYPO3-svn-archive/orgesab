@@ -193,6 +193,13 @@ class tx_orgesab_ImportTask extends tx_scheduler_Task {
     private $orgesab_reportMode;
 
   /**
+    * registry object
+    *
+    * @var object
+    */
+    private $registry;
+
+  /**
     * t3lib_timeTrack object
     *
     * @var object
@@ -283,6 +290,8 @@ class tx_orgesab_ImportTask extends tx_scheduler_Task {
       return true;
     }
       // RETURN true : content is up to date
+    
+    $md5 = md5( $content );
 
       // RETURN false : content is unproper
     $content = $this->convertContent( $content );
@@ -300,7 +309,12 @@ class tx_orgesab_ImportTask extends tx_scheduler_Task {
     }
       // RETURN false : database could not updated
 
-
+      // Set registry
+    $key    = 'md5LastContent';
+    $value  = $md5;
+    $this->registrySet($key, $value);
+      // Set registry
+    
     return true;
   }
 
@@ -700,6 +714,8 @@ cronCmd:    ' . ( $cronCmd ? $cronCmd : 'not used' )
       return $success;
     }
 
+    $this->initRegistryInstance( );
+
     $this->initTimetracking( );
 
     return $success;
@@ -902,6 +918,19 @@ cronCmd:    ' . ( $cronCmd ? $cronCmd : 'not used' )
  * @version       0.0.1
  * @since         0.0.1
  */
+  private function initRegistryInstance( )
+  {
+    $this->registry = t3lib_div::makeInstance('t3lib_Registry');
+  }
+
+  /**
+ * initTimetracking( ) :
+ *
+ * @return	boolean
+ * @access private
+ * @version       0.0.1
+ * @since         0.0.1
+ */
   private function initTimetracking( )
   {
     $this->timeTracking_init( );
@@ -925,8 +954,60 @@ cronCmd:    ' . ( $cronCmd ? $cronCmd : 'not used' )
  * @version       0.0.1
  * @since         0.0.1
  */
-  public function registryGet( )
+  public function registryGet( $key )
   {
+      // RETURN null  : key is unproper
+    if( ! $this->registryKey( $key ) )
+    {
+      return null;
+    }
+      // RETURN null  : key is unproper
+
+      // Get value from registry
+    $value = $this->registry->get( $this->extKey, $key );
+    
+    return $value;
+  }
+
+/**
+ * registryKey( ):
+ *
+ * @return	void
+ * @access public
+ * @version       0.0.1
+ * @since         0.0.1
+ */
+  public function registryKey( $key )
+  {
+    switch( $key )
+    {
+      case( 'md5LastContent' ):
+        return true;
+        break;
+      default:
+          // Follow the workflow
+        break;
+      
+    }
+
+      // DRS
+    if( $this->drsModeError )
+    {
+      $prompt = 'Key for registry is undefined. Key is ' . $key;
+      t3lib_div::devLog( '[tx_orgesab_ImportTask]: ' . $prompt, $this->extKey, 3 );
+    }
+      // DRS
+
+      // Send e-mail to admin
+    $subject  = 'Failed';
+    $body     = 'Sorry, but key for registry is undefined. Key is ' . $key . PHP_EOL
+              . PHP_EOL
+              . __CLASS__ . '::' .  __METHOD__ . ' (' . __LINE__ . ')'
+              ;
+    $this->pObj->drsMailToAdmin( $subject, $body );
+      // Send e-mail to admin
+    
+    return false;
   }
 
 /**
@@ -937,8 +1018,22 @@ cronCmd:    ' . ( $cronCmd ? $cronCmd : 'not used' )
  * @version       0.0.1
  * @since         0.0.1
  */
-  public function registrySet( )
+  public function registrySet( $key, $value )
   {
+      // RETURN null  : key is unproper
+    if( ! $this->registryKey( $key ) )
+    {
+      return null;
+    }
+      // RETURN null  : key is unproper
+
+    if( empty( $value ) )
+    {
+      // Do nothing
+    }
+
+      // Update registry
+    $this->registry->set( $this->extKey, $key, $value );
   }
 
 
