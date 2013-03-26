@@ -22,6 +22,43 @@
 *  This copyright notice MUST APPEAR in all copies of the script!
 ***************************************************************/
 
+
+/**
+ * [CLASS/FUNCTION INDEX of SCRIPT]
+ *
+ *
+ *
+ *   70: class tx_orgesab_ImportTask_AdditionalFieldProvider implements tx_scheduler_AdditionalFieldProvider
+ *
+ *              SECTION: Bulding the form
+ *  101:     public function getAdditionalFields( array &$taskInfo, $task, tx_scheduler_Module $parentObject )
+ *  131:     private function getFieldImportMode( array &$taskInfo, $task, $parentObject )
+ *  204:     private function getFieldImportUrl( array &$taskInfo, $task, $parentObject )
+ *  262:     private function getFieldOrgesabAdminEmail( array &$taskInfo, $task, $parentObject )
+ *  320:     private function getFieldReportMode( array &$taskInfo, $task, $parentObject )
+ *
+ *              SECTION: Saving
+ *  393:     public function saveAdditionalFields( array $submittedData, tx_scheduler_Task $task )
+ *  411:     private function saveFieldImportMode( array $submittedData, tx_scheduler_Task $task )
+ *  426:     private function saveFieldImportUrl( array $submittedData, tx_scheduler_Task $task )
+ *  442:     private function saveFieldOrgesabAdminEmail( array $submittedData, tx_scheduler_Task $task )
+ *  457:     private function saveFieldReportMode( array $submittedData, tx_scheduler_Task $task )
+ *
+ *              SECTION: Validating
+ *  480:     public function validateAdditionalFields( array &$submittedData, tx_scheduler_Module $parentObject )
+ *  536:     private function validateFieldFrequency( array &$submittedData, tx_scheduler_Module $parentObject )
+ *  561:     private function validateFieldImportMode( array &$submittedData, tx_scheduler_Module $parentObject )
+ *  601:     private function validateFieldImportUrl( array &$submittedData, tx_scheduler_Module $parentObject )
+ *  632:     private function validateFieldOrgesabAdminEmail( array &$submittedData, tx_scheduler_Module $parentObject )
+ *  658:     private function validateFieldReportMode( array &$submittedData, tx_scheduler_Module $parentObject )
+ *  698:     private function validateFieldStart( array &$submittedData, tx_scheduler_Module $parentObject )
+ *  726:     public function validateOS( tx_scheduler_Module $parentObject )
+ *
+ * TOTAL FUNCTIONS: 18
+ * (This index is automatically created/updated by the extension "extdeveval")
+ *
+ */
+
 /**
  * Class "tx_orgesab_ImportTask" provides procedures for check import and control orgesab mailboxes
  *
@@ -146,11 +183,12 @@ class tx_orgesab_ImportTask extends tx_scheduler_Task {
    *
    **********************************************/
 
-  /**
+/**
  * execute( )  : Function executed from the Scheduler.
  *               * Sends an email
  *
  * @return	boolean
+ * @access      public
  * @version       0.0.1
  * @since         0.0.1
  */
@@ -261,6 +299,7 @@ class tx_orgesab_ImportTask extends tx_scheduler_Task {
  * initRequirements( ) :
  *
  * @return	boolean
+ * @access      private 
  * @version       0.0.1
  * @since         0.0.1
  */
@@ -310,6 +349,7 @@ class tx_orgesab_ImportTask extends tx_scheduler_Task {
  * initTimetracking( ) :
  *
  * @return	boolean
+ * @access      private 
  * @version       0.0.1
  * @since         0.0.1
  */
@@ -332,10 +372,11 @@ class tx_orgesab_ImportTask extends tx_scheduler_Task {
  * databaseUpdate( )  : 
  *
  * @return	boolean
+ * @access      private 
  * @version       0.0.1
  * @since         0.0.1
  */
-  public function databaseUpdate( )
+  private function databaseUpdate( )
   {
     $success = false;
 
@@ -343,7 +384,26 @@ class tx_orgesab_ImportTask extends tx_scheduler_Task {
     $body     = __METHOD__ . ' (' . __LINE__ . ')';
     $this->drsMailToAdmin( $subject, $body );
 
+    $success = true;
     return $success;  
+  }
+
+/**
+ * databaseUpdateInstance( )  : 
+ *
+ * @return	boolean
+ * @access      private 
+ * @version       0.0.1
+ * @since         0.0.1
+ */
+  private function databaseUpdateInstance( )
+  {
+    $path2lib = t3lib_extMgm::extPath( $this->extKey ) . 'lib/';
+
+    require_once( $path2lib . 'sql/class.tx_orgesab_sql.php' );
+    
+    $this->database = t3lib_div::makeInstance( 'tx_orgesab_sql' );
+    $this->database->setPobj( $this );
   }
 
   
@@ -361,6 +421,7 @@ class tx_orgesab_ImportTask extends tx_scheduler_Task {
  *
  * @param	integer		$level      : integer
  * @return	array		$arr_return : with elements class, method, line and prompt
+ * @access      private 
  * @version 0.0.1
  * @since   0.0.1
  */
@@ -406,8 +467,9 @@ class tx_orgesab_ImportTask extends tx_scheduler_Task {
  * @param	string		$subject     : ...
  * @param	string		$body        : ...
  * @return	array		$arr_return  : with elements class, method, line and prompt
- * @version 3.9.9
- * @since   3.9.9
+ * @access      private 
+ * @version 0.0.1
+ * @since   0.0.1
  */
   private function drsMailToAdmin( $subject='Information', $body=null )
   {
@@ -422,6 +484,7 @@ class tx_orgesab_ImportTask extends tx_scheduler_Task {
         }
           // DRS
         return;
+        break;
     }
       // Get call method
     if( basename( PATH_thisScript ) == 'cli_dispatch.phpsh' )
@@ -517,6 +580,7 @@ cronCmd:    ' . ( $cronCmd ? $cronCmd : 'not used' )
  * sendMailWarning( )  : 
  *
  * @return	void
+ * @access      private 
  * @version       0.0.1
  * @since         0.0.1
  */
@@ -578,6 +642,7 @@ cronCmd:    ' . ( $cronCmd ? $cronCmd : 'not used' )
  * timeTracking_init( ):  Init the timetracking object. Set the global $startTime.
  *
  * @return	void
+ * @access      private 
  * @version       0.0.1
  * @since         0.0.1
  */
@@ -651,6 +716,7 @@ cronCmd:    ' . ( $cronCmd ? $cronCmd : 'not used' )
  * @param	integer		$debugTrailLevel  : level for the debug trail
  * @param	string		$prompt: The prompt for devlog.
  * @return	void
+ * @access      private 
  * @version       0.0.1
  * @since         0.0.1
  */
@@ -688,15 +754,16 @@ cronCmd:    ' . ( $cronCmd ? $cronCmd : 'not used' )
  * getAdditionalInformation( ) : This method returns the destination mail address as additional information
  *
  * @return	string		Information to display
+ * @access      public
  * @version       0.0.1
  * @since         0.0.1
  */
   public function getAdditionalInformation( )
   {
-    $orgesabAdminEmail  = 'Admin' .
-                          ': ' .
-                          $this->orgesab_orgesabAdminEmail .
-                          '. ';
+    $orgesabAdminEmail  = 'Admin'
+                        . ': ' 
+                        . $this->orgesab_orgesabAdminEmail 
+                        ;
     return $orgesabAdminEmail;
   }
 
@@ -712,36 +779,40 @@ cronCmd:    ' . ( $cronCmd ? $cronCmd : 'not used' )
  * xmlImport( )  : 
  *
  * @return	boolean
+ * @access      private 
  * @version       0.0.1
  * @since         0.0.1
  */
-  public function xmlImport( )
+  private function xmlImport( )
   {
+    $this->xmlImportInstance( );
+
     $success = false;
 
     $subject  = 'Failed';
     $body     = __METHOD__ . ' (' . __LINE__ . ')';
     $this->drsMailToAdmin( $subject, $body );
 
-    return $success;
-    
-    if( ! $this->databaseUpdate( ) )
-    {
-      $subject  = 'Failed';
-      $body     = __METHOD__ . ' (' . __LINE__ . ')';
-      $this->drsMailToAdmin( $subject, $body );
-      return $success;
-    }
-    
-    $subject  = 'Success';
-    $body     = __METHOD__ . ' (' . __LINE__ . ')';
-    $this->drsMailToAdmin( $subject, $body );
-
-      // RETURN : the success
-    $debugTrailLevel = 1;
-    $this->timeTracking_log( $debugTrailLevel, 'END' );
     $success = true;
     return $success;
+  }
+
+/**
+ * xmlImportInstance( )  : 
+ *
+ * @return	boolean
+ * @access      private 
+ * @version       0.0.1
+ * @since         0.0.1
+ */
+  private function xmlImportInstance( )
+  {
+    $path2lib = t3lib_extMgm::extPath( $this->extKey ) . 'lib/';
+
+    require_once( $path2lib . 'xml/class.tx_orgesab_xml.php' );
+    
+    $this->xml        = t3lib_div::makeInstance( 'tx_orgesab_xml' );
+    $this->xml->setPobj( $this );
   }
   
 }
