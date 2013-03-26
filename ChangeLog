@@ -2,17 +2,21 @@
   13-03-25
   * #46652: Cron Job
             Effected files:
-            * ext_autoload.php                                          ( new )
+            * ext_autoload.php                                            ( new )
             * ext_conf_template.txt
-            * ext_localconf.php                                         ( new )
-            * lib/scheduler/
-              * class.tx_orgesab_importtask.php                         ( new )
-              * class.tx_orgesab_importtask_additionalfieldprovider.php ( new )
-              * class.tx_orgesab_quotatask.php                          ( new )
-              * class.tx_orgesab_quotatask_additionalfieldprovider.php  ( new )
-              * class.tx_orgesab_testtask.php                           ( new )  
-              * class.tx_orgesab_testtask_additionalfieldprovider.php   ( new )
-              * locallang.xml                                           ( new )
+            * ext_localconf.php                                           ( new )
+            * lib
+              * class.tx_orgesab_get.php                                  ( new )
+              * class.tx_orgesab_convert.php                              ( new )
+              * class.tx_orgesab_update.php                               ( new )
+              * scheduler
+                * class.tx_orgesab_importtask.php                         ( new )
+                * class.tx_orgesab_importtask_additionalfieldprovider.php ( new )
+                * class.tx_orgesab_quotatask.php                          ( new )
+                * class.tx_orgesab_quotatask_additionalfieldprovider.php  ( new )
+                * class.tx_orgesab_testtask.php                           ( new )  
+                * class.tx_orgesab_testtask_additionalfieldprovider.php   ( new )
+                * locallang.xml                                           ( new )
 0.0.1
   13-03-20
   Initial Release
