@@ -104,6 +104,13 @@ class tx_orgesab_ImportTask extends tx_scheduler_Task {
     public $orgesab_orgesabAdminEmail;
 
   /**
+    * Report mode: ever, never, update, warn
+    *
+    * @var string
+    */
+    public $orgesab_reportMode;
+
+  /**
     * t3lib_timeTrack object
     *
     * @var object
@@ -149,26 +156,30 @@ class tx_orgesab_ImportTask extends tx_scheduler_Task {
  */
   public function execute( )
   {
-    $success = true;
+    $success = false;
 
       // Get the extension configuration by the extension manager
     $this->extConf = unserialize( $GLOBALS['TYPO3_CONF_VARS']['EXT']['extConf']['orgesab'] );
 
     if( ! $this->init( ) )
     {
-      $success = false;
       return $success;
     }
 
-    $subject  = 'Success';
-    $body     = __METHOD__ . ' (' . __LINE__ . ')';
-    $this->drsMailToAdmin( $subject, $body );
+    if( ! $this->xmlImport( ) )
+    {
+      return $success;
+    }
     
-    $this->xmlImport( );
+    if( ! $this->databaseUpdate( ) )
+    {
+      return $success;
+    }
     
       // RETURN : the success
     $debugTrailLevel = 1;
     $this->timeTracking_log( $debugTrailLevel, 'END' );
+    $success = true;
     return $success;
   }
 
@@ -309,13 +320,39 @@ class tx_orgesab_ImportTask extends tx_scheduler_Task {
     $this->timeTracking_log( $debugTrailLevel, 'START' );
   }
 
+
+
+  /***********************************************
+   *
+   * Database
+   *
+   **********************************************/
+
+  /**
+ * databaseUpdate( )  : 
+ *
+ * @return	boolean
+ * @version       0.0.1
+ * @since         0.0.1
+ */
+  public function databaseUpdate( )
+  {
+    $success = false;
+
+    $subject  = 'Failed';
+    $body     = __METHOD__ . ' (' . __LINE__ . ')';
+    $this->drsMailToAdmin( $subject, $body );
+
+    return $success;  
+  }
+
+  
+  
   /***********************************************
    *
    * DRS - Development Reporting System
    *
    **********************************************/
-
-
 
 /**
  * drsDebugTrail( ): Returns class, method and line of the call of this method.
@@ -374,6 +411,18 @@ class tx_orgesab_ImportTask extends tx_scheduler_Task {
  */
   private function drsMailToAdmin( $subject='Information', $body=null )
   {
+    switch( true )
+    {
+      case( $this->orgesab_reportMode == 'never' ):
+          // DRS
+        if( $this->drsModeInfo )
+        {
+          $prompt = 'Report mode is "never": DRS mail isn\'t sent.';
+          t3lib_div::devLog( '[tx_orgesab_ImportTask]: ' . $prompt, $this->extKey, 2 );
+        }
+          // DRS
+        return;
+    }
       // Get call method
     if( basename( PATH_thisScript ) == 'cli_dispatch.phpsh' )
     {
@@ -452,6 +501,7 @@ cronCmd:    ' . ( $cronCmd ? $cronCmd : 'not used' )
           break;
       }
     }
+      // DRS
   }
 
 
@@ -649,6 +699,51 @@ cronCmd:    ' . ( $cronCmd ? $cronCmd : 'not used' )
                           '. ';
     return $orgesabAdminEmail;
   }
+
+
+
+  /***********************************************
+   *
+   * XML
+   *
+   **********************************************/
+
+  /**
+ * xmlImport( )  : 
+ *
+ * @return	boolean
+ * @version       0.0.1
+ * @since         0.0.1
+ */
+  public function xmlImport( )
+  {
+    $success = false;
+
+    $subject  = 'Failed';
+    $body     = __METHOD__ . ' (' . __LINE__ . ')';
+    $this->drsMailToAdmin( $subject, $body );
+
+    return $success;
+    
+    if( ! $this->databaseUpdate( ) )
+    {
+      $subject  = 'Failed';
+      $body     = __METHOD__ . ' (' . __LINE__ . ')';
+      $this->drsMailToAdmin( $subject, $body );
+      return $success;
+    }
+    
+    $subject  = 'Success';
+    $body     = __METHOD__ . ' (' . __LINE__ . ')';
+    $this->drsMailToAdmin( $subject, $body );
+
+      // RETURN : the success
+    $debugTrailLevel = 1;
+    $this->timeTracking_log( $debugTrailLevel, 'END' );
+    $success = true;
+    return $success;
+  }
+  
 }
 
 if (defined('TYPO3_MODE') && isset($GLOBALS['TYPO3_CONF_VARS'][TYPO3_MODE]['XCLASS']['ext/orgesab/lib/scheduler/class.tx_orgesab_importtask.php'])) {
