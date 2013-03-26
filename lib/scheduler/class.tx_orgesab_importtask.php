@@ -101,7 +101,7 @@ class tx_orgesab_ImportTask extends tx_scheduler_Task {
     *
     * @var string $orgesab_orgesabAdminEmail
     */
-    pubölic $orgesab_orgesabAdminEmail;
+    public $orgesab_orgesabAdminEmail;
 
   /**
     * t3lib_timeTrack object
