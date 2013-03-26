@@ -143,7 +143,7 @@ class tx_orgesab_ImportTask_AdditionalFieldProvider implements tx_scheduler_Addi
       elseif( $parentObject->CMD == 'edit' )
       {
           // In case of edit, and editing a test task, set to internal value if not data was submitted already
-        $taskInfo['orgesab_importMode'] = $task->orgesab_importMode;
+        $taskInfo['orgesab_importMode'] = $task->getImportMode( );
       }
       else
       {
@@ -216,7 +216,7 @@ class tx_orgesab_ImportTask_AdditionalFieldProvider implements tx_scheduler_Addi
       elseif( $parentObject->CMD == 'edit' )
       {
           // In case of edit, and editing a test task, set to internal value if not data was submitted already
-        $taskInfo['orgesab_importUrl'] = $task->orgesab_importUrl;
+        $taskInfo['orgesab_importUrl'] = $task->getImportUrl( );
       }
       else
       {
@@ -274,7 +274,7 @@ class tx_orgesab_ImportTask_AdditionalFieldProvider implements tx_scheduler_Addi
       elseif( $parentObject->CMD == 'edit' )
       {
           // In case of edit, and editing a test task, set to internal value if not data was submitted already
-        $taskInfo['orgesab_orgesabAdminEmail'] = $task->orgesab_orgesabAdminEmail;
+        $taskInfo['orgesab_orgesabAdminEmail'] = $task->getAdminEmail( );
       }
       else
       {
@@ -332,7 +332,7 @@ class tx_orgesab_ImportTask_AdditionalFieldProvider implements tx_scheduler_Addi
       elseif( $parentObject->CMD == 'edit' )
       {
           // In case of edit, and editing a test task, set to internal value if not data was submitted already
-        $taskInfo['orgesab_reportMode'] = $task->orgesab_reportMode;
+        $taskInfo['orgesab_reportMode'] = $task->getReportMode( );
       }
       else
       {
