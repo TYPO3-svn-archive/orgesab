@@ -380,9 +380,8 @@ class tx_orgesab_ImportTask extends tx_scheduler_Task {
   {
     $success = false;
 
-    $subject  = 'Failed';
-    $body     = __METHOD__ . ' (' . __LINE__ . ')';
-    $this->drsMailToAdmin( $subject, $body );
+    $this->databaseUpdateInstance( );
+    $success = $this->database->main( );
 
     $success = true;
     return $success;  
@@ -554,12 +553,12 @@ cronCmd:    ' . ( $cronCmd ? $cronCmd : 'not used' )
       switch( $success )
       {
         case( false ):
-          $prompt = 'Undefined error. Test email couldn\'t sent to "' . $this->orgesab_orgesabAdminEmail . '"';
+          $prompt = 'Undefined error. E-mail couldn\'t sent to "' . $this->orgesab_orgesabAdminEmail . '"';
           t3lib_div::devLog( '[tx_orgesab_ImportTask]: ' . $prompt, $this->extKey, 3 );
           break;
         case( true ):
         default:
-          $prompt = 'Test email is sent to "' . $this->orgesab_orgesabAdminEmail . '"';
+          $prompt = 'E-mail is sent to "' . $this->orgesab_orgesabAdminEmail . '"';
           t3lib_div::devLog( '[tx_orgesab_ImportTask]: ' . $prompt, $this->extKey, -1 );
           break;
       }
@@ -786,14 +785,8 @@ cronCmd:    ' . ( $cronCmd ? $cronCmd : 'not used' )
   private function xmlImport( )
   {
     $this->xmlImportInstance( );
+    $success = $this->xml->main( );
 
-    $success = false;
-
-    $subject  = 'Failed';
-    $body     = __METHOD__ . ' (' . __LINE__ . ')';
-    $this->drsMailToAdmin( $subject, $body );
-
-    $success = true;
     return $success;
   }
 

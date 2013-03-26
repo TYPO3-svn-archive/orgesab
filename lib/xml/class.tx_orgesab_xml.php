@@ -106,6 +106,11 @@ class tx_orgesab_xml {
     
     $this->init( );
 
+    $subject  = 'Failed';
+    $body     = __METHOD__ . ' (' . __LINE__ . ')';
+    $this->pObj->drsMailToAdmin( $subject, $body );
+
+    $success = true;
     return $success;
   }
 
