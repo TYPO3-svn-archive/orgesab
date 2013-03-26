@@ -602,7 +602,7 @@ cronCmd:    ' . ( $cronCmd ? $cronCmd : 'not used' )
       // RETURN true : proper content
     if( $this->get->main( ) )
     {
-      return false;
+      return true;
     }
       // RETURN true : proper content
 
