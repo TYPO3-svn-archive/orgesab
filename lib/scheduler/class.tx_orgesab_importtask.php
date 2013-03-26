@@ -569,7 +569,7 @@ cronCmd:    ' . ( $cronCmd ? $cronCmd : 'not used' )
 
   /***********************************************
    *
-   * get
+   * Get private
    *
    **********************************************/
 
@@ -619,7 +619,7 @@ cronCmd:    ' . ( $cronCmd ? $cronCmd : 'not used' )
 
   /***********************************************
    *
-   * Get
+   * Get public
    *
    **********************************************/
 
@@ -910,73 +910,6 @@ cronCmd:    ' . ( $cronCmd ? $cronCmd : 'not used' )
     $this->timeTracking_init( );
     $debugTrailLevel = 1;
     $this->timeTracking_log( $debugTrailLevel, 'START' );
-  }
-
-
-
-  /***********************************************
-   *
-   * Mail
-   *
-   **********************************************/
-
-
-  /**
- * sendMailWarning( )  :
- *
- * @param	[type]		$$subject: ...
- * @param	[type]		$body: ...
- * @param	[type]		$to: ...
- * @param	[type]		$cc: ...
- * @return	void
- * @access private
- * @version       0.0.1
- * @since         0.0.1
- */
-  private function sendMailWarning( $subject=null, $body=null, $to=null, $cc=null )
-  {
-    if( empty( $to ) )
-    {
-      $to = $this->orgesab_orgesabAdminEmail;
-    }
-
-    try
-    {
-      /** @var $mailer t3lib_mail_message */
-      $mailer = t3lib_div::makeInstance( 't3lib_mail_message' );
-      $mailer->setFrom( array( $this->orgesab_orgesabAdminEmail => $this->orgesab_orgesabAdminName ) );
-      $mailer->setReplyTo( array( $this->orgesab_orgesabAdminEmail => $this->orgesab_orgesabAdminName ) );
-      $mailer->setSubject( $subject );
-      $mailer->setBody( $body );
-      $mailer->setTo( $to );
-      $mailer->setCc( $cc );
-
-      $mailsSend  = $mailer->send( );
-      $success    = ( $mailsSend > 0 );
-    }
-    catch( Exception $e )
-    {
-      throw new t3lib_exception( $e->getMessage( ) );
-    }
-
-      // DRS
-    if( $this->drsModeImportTask || $this->drsModeImportError )
-    {
-      switch( $success )
-      {
-        case( false ):
-          $prompt = 'Undefined error. Test email couldn\'t sent to "' . $this->orgesab_orgesabAdminEmail . '"';
-          t3lib_div::devLog( '[tx_orgesab_ImportTask]: ' . $prompt, $this->extKey, 3 );
-          break;
-        case( true ):
-        default:
-          $prompt = 'E-mail is sent to "' . $to . '"';
-          t3lib_div::devLog( '[tx_orgesab_ImportTask]: ' . $prompt, $this->extKey, -1 );
-          break;
-      }
-    }
-     // DRS
-
   }
 
 
