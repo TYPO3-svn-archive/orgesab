@@ -446,7 +446,8 @@ class tx_orgesab_ImportTask_AdditionalFieldProvider implements tx_scheduler_Addi
  */
   private function saveFieldOrgesabAdminEmail( array $submittedData, tx_scheduler_Task $task )
   {
-    $task->orgesab_orgesabAdminEmail = $submittedData['orgesab_orgesabAdminEmail'];
+//    $task->orgesab_orgesabAdminEmail = $submittedData['orgesab_orgesabAdminEmail'];
+    $task->setAdminmail( $submittedData['orgesab_orgesabAdminEmail'] );
   }
 
   /**

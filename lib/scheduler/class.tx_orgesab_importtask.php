@@ -1046,6 +1046,66 @@ cronCmd:    ' . ( $cronCmd ? $cronCmd : 'not used' )
 
   /***********************************************
    *
+   * Set public
+   *
+   **********************************************/
+
+/**
+ * setAdminmail( ):
+ *
+ * @return	void
+ * @access public
+ * @version       0.0.1
+ * @since         0.0.1
+ */
+  public function setAdminmail( $value )
+  {
+    $this->orgesab_orgesabAdminEmail = $value;
+  }
+
+/**
+ * setImportMode( ):
+ *
+ * @return	void
+ * @access public
+ * @version       0.0.1
+ * @since         0.0.1
+ */
+  public function setImportMode( )
+  {
+    return $this->orgesab_importMode;
+  }
+
+/**
+ * setImportUrl( ):
+ *
+ * @return	void
+ * @access public
+ * @version       0.0.1
+ * @since         0.0.1
+ */
+  public function setImportUrl( )
+  {
+    return $this->orgesab_importUrl;
+  }
+
+/**
+ * setReportMode( ):
+ *
+ * @return	void
+ * @access public
+ * @version       0.0.1
+ * @since         0.0.1
+ */
+  public function setReportMode( )
+  {
+    return $this->orgesab_reportMode;
+  }
+
+
+
+  /***********************************************
+   *
    * Time tracking
    *
    **********************************************/
