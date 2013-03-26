@@ -264,7 +264,7 @@ class tx_orgesab_ImportTask extends tx_scheduler_Task {
   private function initDRS( )
   {
 
-    if( $this->extConf['drsMode'] == 'Disabled' )
+    if( $this->extConf['debuggingDrs'] == 'Disabled' )
     {
       return;
     }
@@ -274,10 +274,10 @@ class tx_orgesab_ImportTask extends tx_scheduler_Task {
     $this->drsModeWarn  = true;
     $this->drsModeInfo  = true;
 
-    $prompt = 'DRS - Development Reporting System: ' . $this->extConf['drsMode'];
+    $prompt = 'DRS - Development Reporting System: ' . $this->extConf['debuggingDrs'];
     t3lib_div::devlog( '[tx_orgesab_ImportTask] ' . $prompt, $this->extKey, 0 );
 
-    switch( $this->extConf['drsMode'] )
+    switch( $this->extConf['debuggingDrs'] )
     {
       case( 'Enabled (for debugging only!)' ):
         $this->drsModePerformance = true;

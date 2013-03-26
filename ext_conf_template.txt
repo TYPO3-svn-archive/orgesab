@@ -1,6 +1,9 @@
   # cat=be language/enable/100;             type=options[English,German]; label= Localise special backend labels: Language for special backend labels like TypoScript static templates and the link handler.
 LLstatic = English
 
+  # cat=debugging/enable/100;           type=options[Disabled,Enabled (for debugging only!)]; label= DRS - Development Reporting System: Messages will be written to DevLog (you need the extension devlog).
+debuggingDrs            = Disabled
+
   # cat=organiser/enable/10;              type=user[EXT:orgesab/lib/class.tx_orgesab_extmanager.php:tx_orgesab_extmanager->promptQuickstart]; label=Information
 information=1
   # cat=organiser/enable/201;             type=options[Default (recommended),None excluded: Editor has access to all,All excluded: Administrator configures it]; label=Exclude Esab fields: Simplify backend forms! Default: The editor has access to most fields. None excluded: The editor has access to all fields like the administrator. All excluded: the editor has access to required fields only like the title. This option has an effect for editors and it hasn't any effect for administrators.
