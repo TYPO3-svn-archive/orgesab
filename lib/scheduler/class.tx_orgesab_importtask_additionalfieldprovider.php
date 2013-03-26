@@ -274,7 +274,7 @@ class tx_orgesab_ImportTask_AdditionalFieldProvider implements tx_scheduler_Addi
       elseif( $parentObject->CMD == 'edit' )
       {
           // In case of edit, and editing a test task, set to internal value if not data was submitted already
-        $taskInfo['orgesab_orgesabAdminEmail'] = $task->getAdminEmail( );
+        $taskInfo['orgesab_orgesabAdminEmail'] = $task->getAdminmail( );
       }
       else
       {
