@@ -166,7 +166,7 @@ class tx_orgesab_get {
     }
 
       // DRS
-    if( $this->pObj->drsError )
+    if( $this->pObj->drsModeError )
     {
       $prompt = 'pObj isn\'t any object';
       t3lib_div::devLog( '[tx_orgesab_ImportTask]: ' . $prompt, $this->extKey, 3 );
@@ -202,18 +202,28 @@ class tx_orgesab_get {
  */
   private function getContent( )
   {
+      // get the pointer for the URL file 
     $handle = fopen( $this->pObj->getImportUrl( ), 'r' );
+
+      // RETURN false : unproper pointer
     if( ! $this->getContentIsRessource( $handle ) )
     {
       fclose( $handle );
       return false;
     }
+      // RETURN false : unproper pointer
+
+      // get the content of the ressource
     $content  = stream_get_contents( $handle );
+
+      // RETURN false : unproper content
     if( ! $this->getContentIsNotEmpty( $content ) )
     {
       fclose( $handle );
       return false;
     }
+      // RETURN false : unproper content
+
     fclose( $handle );
 
     return $content;
@@ -236,7 +246,7 @@ class tx_orgesab_get {
     }
 
       // DRS
-    if( $this->pObj->drsError )
+    if( $this->pObj->drsModeError )
     {
       $prompt = 'content is empty: ' . $this->pObj->getImportUrl( );
       t3lib_div::devLog( '[tx_orgesab_ImportTask]: ' . $prompt, $this->extKey, 3 );
@@ -272,7 +282,7 @@ class tx_orgesab_get {
     }
 
       // DRS
-    if( $this->pObj->drsError )
+    if( $this->pObj->drsModeError )
     {
       $prompt = 'Can\'t get a ressource for  ' . $this->pObj->getImportUrl( );
       t3lib_div::devLog( '[tx_orgesab_ImportTask]: ' . $prompt, $this->extKey, 3 );
@@ -382,7 +392,7 @@ class tx_orgesab_get {
       default:
         $success = false;
           // DRS
-        if( $this->pObj->drsError )
+        if( $this->pObj->drsModeError )
         {
           $prompt = 'Undefined value for import mode';
           t3lib_div::devLog( '[tx_orgesab_ImportTask]: ' . $prompt, $this->extKey, 3 );
@@ -421,7 +431,7 @@ class tx_orgesab_get {
     }
 
       // DRS
-    if( $this->pObj->drsError )
+    if( $this->pObj->drsModeError )
     {
       $prompt = 'pObj isn\'t an object';
       t3lib_div::devLog( '[tx_orgesab_ImportTask]: ' . $prompt, $this->extKey, 3 );
