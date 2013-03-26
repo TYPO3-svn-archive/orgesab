@@ -372,7 +372,7 @@ class tx_orgesab_ImportTask extends tx_scheduler_Task {
  * @version 3.9.9
  * @since   3.9.9
  */
-  private function drsMailToAdmin( $subject='Org +ESAB: information', $body=null )
+  private function drsMailToAdmin( $subject='Information', $body=null )
   {
       // Get call method
     if( basename( PATH_thisScript ) == 'cli_dispatch.phpsh' )
@@ -387,8 +387,9 @@ class tx_orgesab_ImportTask extends tx_scheduler_Task {
     }
       // Get call method
     
-    $subject  = $subject
-              .
+    $subject  = 'Org +ESAB: '
+              . $subject
+              ;
 
       // Get execution information
     $exec = $this->getExecution( );
