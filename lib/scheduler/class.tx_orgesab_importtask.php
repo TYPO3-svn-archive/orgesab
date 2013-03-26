@@ -28,57 +28,59 @@
  *
  *
  *
- *   95: class tx_orgesab_ImportTask extends tx_scheduler_Task
+ *   97: class tx_orgesab_ImportTask extends tx_scheduler_Task
  *
  *              SECTION: Main
- *  254:     public function execute( )
+ *  263:     public function execute( )
  *
  *              SECTION: Additional information for scheduler
- *  323:     public function getAdditionalInformation( )
+ *  339:     public function getAdditionalInformation( )
  *
  *              SECTION: Converting
- *  348:     private function convertContent( )
- *  370:     private function convertContentDrsMail( $success )
- *  394:     private function convertContentInstance( )
+ *  364:     private function convertContent( )
+ *  386:     private function convertContentDrsMail( $success )
+ *  410:     private function convertContentInstance( )
  *
  *              SECTION: DRS - Development Reporting System
- *  423:     private function drsDebugTrail( $level = 1 )
- *  469:     public function drsMailToAdmin( $subject='Information', $body=null )
+ *  439:     private function drsDebugTrail( $level = 1 )
+ *  485:     public function drsMailToAdmin( $subject='Information', $body=null )
  *
  *              SECTION: Get private
- *  581:     private function getContent( )
- *  605:     private function getContentInstance( )
+ *  597:     private function getContent( )
+ *  621:     private function getContentInstance( )
  *
  *              SECTION: Get public
- *  631:     public function getAdminmail( )
- *  644:     public function getImportMode( )
- *  657:     public function getImportUrl( )
- *  670:     public function getReportMode( )
+ *  647:     public function getAdminmail( )
+ *  660:     public function getImportMode( )
+ *  673:     public function getImportUrl( )
+ *  686:     public function getReportMode( )
  *
  *              SECTION: Initials
- *  691:     private function init( )
- *  715:     private function initDRS( )
- *  757:     private function initRequirements( )
- *  786:     private function initRequirementsAdminmail( )
- *  814:     private function initRequirementsAllowUrlFopen( )
- *  853:     private function initRequirementsOs( )
- *  905:     private function initTimetracking( )
+ *  707:     private function init( )
+ *  733:     private function initDRS( )
+ *  775:     private function initRequirements( )
+ *  804:     private function initRequirementsAdminmail( )
+ *  832:     private function initRequirementsAllowUrlFopen( )
+ *  871:     private function initRequirementsOs( )
+ *  923:     private function initRegistryInstance( )
+ *  936:     private function initTimetracking( )
  *
  *              SECTION: Registry
- *  928:     public function registryGet( )
- *  940:     public function registrySet( )
+ *  960:     public function registryGet( $key )
+ *  984:     public function registryKey( $key )
+ * 1027:     public function registrySet( $key, $value )
  *
  *              SECTION: Time tracking
- *  960:     private function timeTracking_init( )
- *  982:     private function timeTracking_log( $debugTrailLevel, $prompt )
- * 1034:     private function timeTracking_prompt( $debugTrailLevel, $prompt )
+ * 1061:     private function timeTracking_init( )
+ * 1083:     private function timeTracking_log( $debugTrailLevel, $prompt )
+ * 1135:     private function timeTracking_prompt( $debugTrailLevel, $prompt )
  *
  *              SECTION: Update
- * 1071:     private function updateDatabase( )
- * 1093:     private function updateDatabaseDrsMail( $success )
- * 1117:     private function updateDatabaseInstance( )
+ * 1172:     private function updateDatabase( )
+ * 1194:     private function updateDatabaseDrsMail( $success )
+ * 1218:     private function updateDatabaseInstance( )
  *
- * TOTAL FUNCTIONS: 28
+ * TOTAL FUNCTIONS: 30
  * (This index is automatically created/updated by the extension "extdeveval")
  *
  */
@@ -290,7 +292,7 @@ class tx_orgesab_ImportTask extends tx_scheduler_Task {
       return true;
     }
       // RETURN true : content is up to date
-    
+
     $md5 = md5( $content );
 
       // RETURN false : content is unproper
@@ -314,7 +316,7 @@ class tx_orgesab_ImportTask extends tx_scheduler_Task {
     $value  = $md5;
     $this->registrySet($key, $value);
       // Set registry
-    
+
     return true;
   }
 
@@ -949,6 +951,7 @@ cronCmd:    ' . ( $cronCmd ? $cronCmd : 'not used' )
 /**
  * registryGet( ):
  *
+ * @param	[type]		$$key: ...
  * @return	void
  * @access public
  * @version       0.0.1
@@ -965,13 +968,14 @@ cronCmd:    ' . ( $cronCmd ? $cronCmd : 'not used' )
 
       // Get value from registry
     $value = $this->registry->get( $this->extKey, $key );
-    
+
     return $value;
   }
 
 /**
  * registryKey( ):
  *
+ * @param	[type]		$$key: ...
  * @return	void
  * @access public
  * @version       0.0.1
@@ -987,7 +991,7 @@ cronCmd:    ' . ( $cronCmd ? $cronCmd : 'not used' )
       default:
           // Follow the workflow
         break;
-      
+
     }
 
       // DRS
@@ -1006,13 +1010,15 @@ cronCmd:    ' . ( $cronCmd ? $cronCmd : 'not used' )
               ;
     $this->pObj->drsMailToAdmin( $subject, $body );
       // Send e-mail to admin
-    
+
     return false;
   }
 
 /**
  * registrySet( ):
  *
+ * @param	[type]		$$key: ...
+ * @param	[type]		$value: ...
  * @return	void
  * @access public
  * @version       0.0.1

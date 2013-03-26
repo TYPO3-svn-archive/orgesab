@@ -46,8 +46,8 @@
  *  331:     private function getMd5Comparision( $content )
  *
  *              SECTION: Set
- *  363:     private function setContentIsUpdated( $content )
- *  414:     public function setPobj( $pObj )
+ *  364:     private function setContentIsUpdated( $content )
+ *  415:     public function setPobj( $pObj )
  *
  * TOTAL FUNCTIONS: 11
  * (This index is automatically created/updated by the extension "extdeveval")
