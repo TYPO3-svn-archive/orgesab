@@ -28,33 +28,60 @@
  *
  *
  *
- *   70: class tx_orgesab_ImportTask_AdditionalFieldProvider implements tx_scheduler_AdditionalFieldProvider
+ *   98: class tx_orgesab_ImportTask extends tx_scheduler_Task
  *
- *              SECTION: Bulding the form
- *  101:     public function getAdditionalFields( array &$taskInfo, $task, tx_scheduler_Module $parentObject )
- *  131:     private function getFieldImportMode( array &$taskInfo, $task, $parentObject )
- *  204:     private function getFieldImportUrl( array &$taskInfo, $task, $parentObject )
- *  262:     private function getFieldOrgesabAdminEmail( array &$taskInfo, $task, $parentObject )
- *  320:     private function getFieldReportMode( array &$taskInfo, $task, $parentObject )
+ *              SECTION: Main
+ *  257:     public function execute( )
  *
- *              SECTION: Saving
- *  393:     public function saveAdditionalFields( array $submittedData, tx_scheduler_Task $task )
- *  411:     private function saveFieldImportMode( array $submittedData, tx_scheduler_Task $task )
- *  426:     private function saveFieldImportUrl( array $submittedData, tx_scheduler_Task $task )
- *  442:     private function saveFieldOrgesabAdminEmail( array $submittedData, tx_scheduler_Task $task )
- *  457:     private function saveFieldReportMode( array $submittedData, tx_scheduler_Task $task )
+ *              SECTION: Additional information for scheduler
+ *  326:     public function getAdditionalInformation( )
  *
- *              SECTION: Validating
- *  480:     public function validateAdditionalFields( array &$submittedData, tx_scheduler_Module $parentObject )
- *  536:     private function validateFieldFrequency( array &$submittedData, tx_scheduler_Module $parentObject )
- *  561:     private function validateFieldImportMode( array &$submittedData, tx_scheduler_Module $parentObject )
- *  601:     private function validateFieldImportUrl( array &$submittedData, tx_scheduler_Module $parentObject )
- *  632:     private function validateFieldOrgesabAdminEmail( array &$submittedData, tx_scheduler_Module $parentObject )
- *  658:     private function validateFieldReportMode( array &$submittedData, tx_scheduler_Module $parentObject )
- *  698:     private function validateFieldStart( array &$submittedData, tx_scheduler_Module $parentObject )
- *  726:     public function validateOS( tx_scheduler_Module $parentObject )
+ *              SECTION: Converting
+ *  351:     private function convertContent( )
+ *  373:     private function convertContentDrsMail( $success )
+ *  397:     private function convertContentInstance( )
  *
- * TOTAL FUNCTIONS: 18
+ *              SECTION: DRS - Development Reporting System
+ *  426:     private function drsDebugTrail( $level = 1 )
+ *  472:     public function drsMailToAdmin( $subject='Information', $body=null )
+ *
+ *              SECTION: get
+ *  584:     private function getContent( )
+ *  608:     private function getContentInstance( )
+ *
+ *              SECTION: Get
+ *  634:     public function getAdminmail( )
+ *  647:     public function getImportMode( )
+ *  660:     public function getImportUrl( )
+ *  673:     public function getReportMode( )
+ *
+ *              SECTION: Initials
+ *  694:     private function init( )
+ *  718:     private function initDRS( )
+ *  760:     private function initRequirements( )
+ *  789:     private function initRequirementsAdminmail( )
+ *  817:     private function initRequirementsAllowUrlFopen( )
+ *  856:     private function initRequirementsOs( )
+ *  908:     private function initTimetracking( )
+ *
+ *              SECTION: Mail
+ *  936:     private function sendMailWarning( $subject=null, $body=null, $to=null, $cc=null )
+ *
+ *              SECTION: Registry
+ *  998:     public function registryGet( )
+ * 1010:     public function registrySet( )
+ *
+ *              SECTION: Time tracking
+ * 1030:     private function timeTracking_init( )
+ * 1052:     private function timeTracking_log( $debugTrailLevel, $prompt )
+ * 1104:     private function timeTracking_prompt( $debugTrailLevel, $prompt )
+ *
+ *              SECTION: Update
+ * 1141:     private function updateDatabase( )
+ * 1163:     private function updateDatabaseDrsMail( $success )
+ * 1187:     private function updateDatabaseInstance( )
+ *
+ * TOTAL FUNCTIONS: 29
  * (This index is automatically created/updated by the extension "extdeveval")
  *
  */
@@ -83,7 +110,7 @@ class tx_orgesab_ImportTask extends tx_scheduler_Task {
     * @var array $extConf
     */
     private $extConf;
-    
+
   /**
     * The convert object
     *
@@ -160,7 +187,7 @@ class tx_orgesab_ImportTask extends tx_scheduler_Task {
     * @var string
     */
     private $orgesab_importUrl;
-    
+
   /**
     * Report mode: ever, never, update, warn
     *
@@ -195,7 +222,7 @@ class tx_orgesab_ImportTask extends tx_scheduler_Task {
     * @var integer
     */
     private $tt_startTime;
-    
+
   /**
     * The update object
     *
@@ -211,7 +238,7 @@ class tx_orgesab_ImportTask extends tx_scheduler_Task {
     private $get;
 
 
-    
+
   /***********************************************
    *
    * Main
@@ -223,7 +250,7 @@ class tx_orgesab_ImportTask extends tx_scheduler_Task {
  *               * Sends an email
  *
  * @return	boolean
- * @access      public
+ * @access public
  * @version       0.0.1
  * @since         0.0.1
  */
@@ -231,7 +258,7 @@ class tx_orgesab_ImportTask extends tx_scheduler_Task {
   {
       // Init var for debug trail
     $debugTrailLevel = 1;
-    
+
       // Get the extension configuration by the extension manager
     $this->extConf = unserialize( $GLOBALS['TYPO3_CONF_VARS']['EXT']['extConf']['orgesab'] );
 
@@ -251,7 +278,7 @@ class tx_orgesab_ImportTask extends tx_scheduler_Task {
       return false;
     }
       // RETURN false : content is unproper
-    
+
       // RETURN true : content is up to date
     if( $this->get->getContentIsUpToDate( ) )
     {
@@ -259,7 +286,7 @@ class tx_orgesab_ImportTask extends tx_scheduler_Task {
       return true;
     }
       // RETURN true : content is up to date
-    
+
       // RETURN false : content is unproper
     $content = $this->convertContent( $content );
     if( ! $content )
@@ -268,7 +295,7 @@ class tx_orgesab_ImportTask extends tx_scheduler_Task {
       return false;
     }
       // RETURN false : content is unproper
-    
+
       // RETURN false : database could not updated
     if( ! $this->updateDatabase( $content ) )
     {
@@ -292,15 +319,15 @@ class tx_orgesab_ImportTask extends tx_scheduler_Task {
  * getAdditionalInformation( ) : This method returns the destination mail address as additional information
  *
  * @return	string		Information to display
- * @access      public
+ * @access public
  * @version       0.0.1
  * @since         0.0.1
  */
   public function getAdditionalInformation( )
   {
     $orgesabAdminEmail  = 'Admin'
-                        . ': ' 
-                        . $this->orgesab_orgesabAdminEmail 
+                        . ': '
+                        . $this->orgesab_orgesabAdminEmail
                         ;
     return $orgesabAdminEmail;
   }
@@ -314,10 +341,10 @@ class tx_orgesab_ImportTask extends tx_scheduler_Task {
    **********************************************/
 
 /**
- * convertContent( )  : 
+ * convertContent( )  :
  *
  * @return	boolean
- * @access      private 
+ * @access private
  * @version       0.0.1
  * @since         0.0.1
  */
@@ -331,14 +358,15 @@ class tx_orgesab_ImportTask extends tx_scheduler_Task {
     $success = true;
     $this->convertContentDrsMail( $success );
 
-    return $success;  
+    return $success;
   }
 
 /**
- * convertContentDrsMail( )  : 
+ * convertContentDrsMail( )  :
  *
+ * @param	[type]		$$success: ...
  * @return	void
- * @access      private 
+ * @access private
  * @version       0.0.1
  * @since         0.0.1
  */
@@ -359,10 +387,10 @@ class tx_orgesab_ImportTask extends tx_scheduler_Task {
   }
 
 /**
- * convertContentInstance( )  : 
+ * convertContentInstance( )  :
  *
  * @return	boolean
- * @access      private 
+ * @access private
  * @version       0.0.1
  * @since         0.0.1
  */
@@ -371,13 +399,13 @@ class tx_orgesab_ImportTask extends tx_scheduler_Task {
     $path2lib = t3lib_extMgm::extPath( $this->extKey ) . 'lib/';
 
     require_once( $path2lib . 'class.tx_orgesab_convert.php' );
-    
+
     $this->convert = t3lib_div::makeInstance( 'tx_orgesab_convert' );
     $this->convert->setPobj( $this );
   }
 
-  
-  
+
+
   /***********************************************
    *
    * DRS - Development Reporting System
@@ -391,7 +419,7 @@ class tx_orgesab_ImportTask extends tx_scheduler_Task {
  *
  * @param	integer		$level      : integer
  * @return	array		$arr_return : with elements class, method, line and prompt
- * @access      private 
+ * @access private
  * @version 0.0.1
  * @since   0.0.1
  */
@@ -437,7 +465,7 @@ class tx_orgesab_ImportTask extends tx_scheduler_Task {
  * @param	string		$subject     : ...
  * @param	string		$body        : ...
  * @return	array		$arr_return  : with elements class, method, line and prompt
- * @access      public 
+ * @access public
  * @version 0.0.1
  * @since   0.0.1
  */
@@ -468,7 +496,7 @@ class tx_orgesab_ImportTask extends tx_scheduler_Task {
       $site     = t3lib_div::getIndpEnv( 'TYPO3_SITE_URL' );
     }
       // Get call method
-    
+
     $subject  = 'Org +ESAB: '
               . $subject
               ;
@@ -481,9 +509,9 @@ class tx_orgesab_ImportTask extends tx_scheduler_Task {
     $interval = $exec->getInterval( );
     $multiple = $exec->getMultiple( );
     $cronCmd  = $exec->getCronCmd( );
-    $body     = $body 
+    $body     = $body
               . '
-                
+
 
 Org +ESAB
 - - - - - - - - - - - - - - - -
@@ -546,10 +574,10 @@ cronCmd:    ' . ( $cronCmd ? $cronCmd : 'not used' )
    **********************************************/
 
 /**
- * getContent( )  : 
+ * getContent( )  :
  *
  * @return	boolean
- * @access      private 
+ * @access private
  * @version       0.0.1
  * @since         0.0.1
  */
@@ -557,7 +585,7 @@ cronCmd:    ' . ( $cronCmd ? $cronCmd : 'not used' )
   {
       // Initiate the get class
     $this->getContentInstance( );
-    
+
       // RETURN true : proper content
     if( $this->get->main( ) )
     {
@@ -570,10 +598,10 @@ cronCmd:    ' . ( $cronCmd ? $cronCmd : 'not used' )
   }
 
 /**
- * getContentInstance( )  : 
+ * getContentInstance( )  :
  *
  * @return	boolean
- * @access      private 
+ * @access private
  * @version       0.0.1
  * @since         0.0.1
  */
@@ -582,7 +610,7 @@ cronCmd:    ' . ( $cronCmd ? $cronCmd : 'not used' )
     $path2lib = t3lib_extMgm::extPath( $this->extKey ) . 'lib/';
 
     require_once( $path2lib . 'class.tx_orgesab_get.php' );
-    
+
     $this->get        = t3lib_div::makeInstance( 'tx_orgesab_get' );
     $this->get->setPobj( $this );
   }
@@ -596,10 +624,10 @@ cronCmd:    ' . ( $cronCmd ? $cronCmd : 'not used' )
    **********************************************/
 
 /**
- * getAdminmail( ): 
+ * getAdminmail( ):
  *
  * @return	void
- * @access      public 
+ * @access public
  * @version       0.0.1
  * @since         0.0.1
  */
@@ -609,10 +637,10 @@ cronCmd:    ' . ( $cronCmd ? $cronCmd : 'not used' )
   }
 
 /**
- * getImportMode( ): 
+ * getImportMode( ):
  *
  * @return	void
- * @access      public 
+ * @access public
  * @version       0.0.1
  * @since         0.0.1
  */
@@ -622,10 +650,10 @@ cronCmd:    ' . ( $cronCmd ? $cronCmd : 'not used' )
   }
 
 /**
- * getImportUrl( ): 
+ * getImportUrl( ):
  *
  * @return	void
- * @access      public 
+ * @access public
  * @version       0.0.1
  * @since         0.0.1
  */
@@ -635,10 +663,10 @@ cronCmd:    ' . ( $cronCmd ? $cronCmd : 'not used' )
   }
 
 /**
- * getReportMode( ): 
+ * getReportMode( ):
  *
  * @return	void
- * @access      public 
+ * @access public
  * @version       0.0.1
  * @since         0.0.1
  */
@@ -656,10 +684,10 @@ cronCmd:    ' . ( $cronCmd ? $cronCmd : 'not used' )
    **********************************************/
 
 /**
- * init( )  : 
+ * init( )  :
  *
  * @return	boolean
- * @access      private
+ * @access private
  * @version       0.0.1
  * @since         0.0.1
  */
@@ -725,7 +753,7 @@ cronCmd:    ' . ( $cronCmd ? $cronCmd : 'not used' )
  * initRequirements( ) :
  *
  * @return	boolean
- * @access      private 
+ * @access private
  * @version       0.0.1
  * @since         0.0.1
  */
@@ -735,26 +763,26 @@ cronCmd:    ' . ( $cronCmd ? $cronCmd : 'not used' )
     {
       return false;
     }
-    
+
     if( ! $this->initRequirementsOs( ) )
     {
       return false;
     }
-    
+
     if( ! $this->initRequirementsAllowUrlFopen( ) )
     {
       return false;
     }
-    
+
     return true;
-    
+
   }
 
 /**
  * initRequirementsAdminmail( ) :
  *
  * @return	boolean
- * @access      private 
+ * @access private
  * @version       0.0.1
  * @since         0.0.1
  */
@@ -782,21 +810,21 @@ cronCmd:    ' . ( $cronCmd ? $cronCmd : 'not used' )
  * initRequirementsAllowUrlFopen( ) :
  *
  * @return	boolean
- * @access      private 
+ * @access private
  * @version       0.0.1
  * @since         0.0.1
  */
   private function initRequirementsAllowUrlFopen( )
   {
     $allow_url_fopen = ini_get( 'allow_url_fopen');
-    
+
       // RETURN : true. allow_url_fopen is enabled
     if( $allow_url_fopen )
     {
       return true;
     }
       // RETURN : true. allow_url_fopen is enabled
-    
+
       // DRS
     if( $this->drsModeError )
     {
@@ -804,16 +832,16 @@ cronCmd:    ' . ( $cronCmd ? $cronCmd : 'not used' )
       t3lib_div::devLog( '[tx_orgesab_ImportTask]: ' . $prompt, $this->extKey, 3 );
     }
       // DRS
-    
+
       // Send e-mail to admin
     $subject  = 'Failed';
     $body     = 'Sorry, but PHP ini property allow_url_fopen is disabled.' . PHP_EOL
               . PHP_EOL
               . __CLASS__ . '::' .  __METHOD__ . ' (' . __LINE__ . ')'
               ;
-    $this->pObj->drsMailToAdmin( $subject, $body );    
+    $this->pObj->drsMailToAdmin( $subject, $body );
       // Send e-mail to admin
-    
+
     return false;
   }
 
@@ -821,14 +849,14 @@ cronCmd:    ' . ( $cronCmd ? $cronCmd : 'not used' )
  * initRequirementsOs( ) :
  *
  * @return	boolean
- * @access      private 
+ * @access private
  * @version       0.0.1
  * @since         0.0.1
  */
   private function initRequirementsOs( )
   {
     $os = false;
-    
+
       // SWITCH : server OS
     switch( strtolower( PHP_OS ) )
     {
@@ -841,14 +869,14 @@ cronCmd:    ' . ( $cronCmd ? $cronCmd : 'not used' )
         $os = false;
     }
       // SWITCH : server OS
-    
+
       // RETURN : os is supported
     if( $os )
     {
       return true;
     }
       // RETURN : os is supported
-    
+
       // DRS
     if( $this->drsModeError )
     {
@@ -865,7 +893,7 @@ cronCmd:    ' . ( $cronCmd ? $cronCmd : 'not used' )
               ;
     $this->pObj->drsMailToAdmin( $subject, $body );
       // e-mail to admin
-    
+
     return $os;
   }
 
@@ -873,7 +901,7 @@ cronCmd:    ' . ( $cronCmd ? $cronCmd : 'not used' )
  * initTimetracking( ) :
  *
  * @return	boolean
- * @access      private 
+ * @access private
  * @version       0.0.1
  * @since         0.0.1
  */
@@ -894,10 +922,14 @@ cronCmd:    ' . ( $cronCmd ? $cronCmd : 'not used' )
 
 
   /**
- * sendMailWarning( )  : 
+ * sendMailWarning( )  :
  *
+ * @param	[type]		$$subject: ...
+ * @param	[type]		$body: ...
+ * @param	[type]		$to: ...
+ * @param	[type]		$cc: ...
  * @return	void
- * @access      private 
+ * @access private
  * @version       0.0.1
  * @since         0.0.1
  */
@@ -956,10 +988,10 @@ cronCmd:    ' . ( $cronCmd ? $cronCmd : 'not used' )
    **********************************************/
 
 /**
- * registryGet( ): 
+ * registryGet( ):
  *
  * @return	void
- * @access      public 
+ * @access public
  * @version       0.0.1
  * @since         0.0.1
  */
@@ -968,10 +1000,10 @@ cronCmd:    ' . ( $cronCmd ? $cronCmd : 'not used' )
   }
 
 /**
- * registrySet( ): 
+ * registrySet( ):
  *
  * @return	void
- * @access      public 
+ * @access public
  * @version       0.0.1
  * @since         0.0.1
  */
@@ -991,7 +1023,7 @@ cronCmd:    ' . ( $cronCmd ? $cronCmd : 'not used' )
  * timeTracking_init( ):  Init the timetracking object. Set the global $startTime.
  *
  * @return	void
- * @access      private 
+ * @access private
  * @version       0.0.1
  * @since         0.0.1
  */
@@ -1065,7 +1097,7 @@ cronCmd:    ' . ( $cronCmd ? $cronCmd : 'not used' )
  * @param	integer		$debugTrailLevel  : level for the debug trail
  * @param	string		$prompt: The prompt for devlog.
  * @return	void
- * @access      private 
+ * @access private
  * @version       0.0.1
  * @since         0.0.1
  */
@@ -1099,10 +1131,10 @@ cronCmd:    ' . ( $cronCmd ? $cronCmd : 'not used' )
    **********************************************/
 
 /**
- * updateDatabase( )  : 
+ * updateDatabase( )  :
  *
  * @return	boolean
- * @access      private 
+ * @access private
  * @version       0.0.1
  * @since         0.0.1
  */
@@ -1116,14 +1148,15 @@ cronCmd:    ' . ( $cronCmd ? $cronCmd : 'not used' )
     $success = true;
     $this->updateDatabaseDrsMail( $success );
 
-    return $success;  
+    return $success;
   }
 
 /**
- * updateDatabaseDrsMail( )  : 
+ * updateDatabaseDrsMail( )  :
  *
+ * @param	[type]		$$success: ...
  * @return	void
- * @access      private 
+ * @access private
  * @version       0.0.1
  * @since         0.0.1
  */
@@ -1144,10 +1177,10 @@ cronCmd:    ' . ( $cronCmd ? $cronCmd : 'not used' )
   }
 
 /**
- * updateDatabaseInstance( )  : 
+ * updateDatabaseInstance( )  :
  *
  * @return	boolean
- * @access      private 
+ * @access private
  * @version       0.0.1
  * @since         0.0.1
  */
@@ -1156,11 +1189,11 @@ cronCmd:    ' . ( $cronCmd ? $cronCmd : 'not used' )
     $path2lib = t3lib_extMgm::extPath( $this->extKey ) . 'lib/';
 
     require_once( $path2lib . 'class.tx_orgesab_update.php' );
-    
+
     $this->update = t3lib_div::makeInstance( 'tx_orgesab_update' );
     $this->update->setPobj( $this );
   }
-  
+
 }
 
 if (defined('TYPO3_MODE') && isset($GLOBALS['TYPO3_CONF_VARS'][TYPO3_MODE]['XCLASS']['ext/orgesab/lib/scheduler/class.tx_orgesab_importtask.php'])) {

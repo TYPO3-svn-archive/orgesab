@@ -28,33 +28,28 @@
  *
  *
  *
- *   70: class tx_orgesab_get_AdditionalFieldProvider implements tx_scheduler_AdditionalFieldProvider
+ *   66: class tx_orgesab_get
  *
- *              SECTION: Bulding the form
- *  101:     public function getAdditionalFields( array &$taskInfo, $task, tx_scheduler_Module $parentObject )
- *  131:     private function getFieldImportMode( array &$taskInfo, $task, $parentObject )
- *  204:     private function getFieldImportUrl( array &$taskInfo, $task, $parentObject )
- *  262:     private function getFieldOrgesabAdminEmail( array &$taskInfo, $task, $parentObject )
- *  320:     private function getFieldReportMode( array &$taskInfo, $task, $parentObject )
+ *              SECTION: Main
+ *  105:     public function main( )
  *
- *              SECTION: Saving
- *  393:     public function saveAdditionalFields( array $submittedData, tx_scheduler_Task $task )
- *  411:     private function saveFieldImportMode( array $submittedData, tx_scheduler_Task $task )
- *  426:     private function saveFieldImportUrl( array $submittedData, tx_scheduler_Task $task )
- *  442:     private function saveFieldOrgesabAdminEmail( array $submittedData, tx_scheduler_Task $task )
- *  457:     private function saveFieldReportMode( array $submittedData, tx_scheduler_Task $task )
+ *              SECTION: Init
+ *  143:     private function init( )
+ *  161:     private function initPobj( )
  *
- *              SECTION: Validating
- *  480:     public function validateAdditionalFields( array &$submittedData, tx_scheduler_Module $parentObject )
- *  536:     private function validateFieldFrequency( array &$submittedData, tx_scheduler_Module $parentObject )
- *  561:     private function validateFieldImportMode( array &$submittedData, tx_scheduler_Module $parentObject )
- *  601:     private function validateFieldImportUrl( array &$submittedData, tx_scheduler_Module $parentObject )
- *  632:     private function validateFieldOrgesabAdminEmail( array &$submittedData, tx_scheduler_Module $parentObject )
- *  658:     private function validateFieldReportMode( array &$submittedData, tx_scheduler_Module $parentObject )
- *  698:     private function validateFieldStart( array &$submittedData, tx_scheduler_Module $parentObject )
- *  726:     public function validateOS( tx_scheduler_Module $parentObject )
+ *              SECTION: Get
+ *  203:     private function getContent( )
+ *  231:     private function getContentIsNotEmpty( $content )
+ *  267:     private function getContentIsRessource( $handle )
+ *  302:     public function getContentIsUpToDate( )
+ *  316:     private function getMd5( $content )
+ *  331:     private function getMd5Comparision( $content )
  *
- * TOTAL FUNCTIONS: 18
+ *              SECTION: Set
+ *  363:     private function setContentIsUpdated( $content )
+ *  414:     public function setPobj( $pObj )
+ *
+ * TOTAL FUNCTIONS: 11
  * (This index is automatically created/updated by the extension "extdeveval")
  *
  */
@@ -83,7 +78,7 @@ class tx_orgesab_get {
     * @var object
     */
     private $pObj;
-    
+
   /**
     * Status of the xml file
     *
@@ -100,10 +95,10 @@ class tx_orgesab_get {
    **********************************************/
 
 /**
- * main( )  : 
+ * main( )  :
  *
  * @return	boolean
- * @access      public
+ * @access public
  * @version       0.0.1
  * @since         0.0.1
  */
@@ -116,15 +111,15 @@ class tx_orgesab_get {
     $content = $this->getContent( );
 
       // RETURN false : content isn't proper
-    if( ! $content ) 
+    if( ! $content )
     {
       return false;
     }
       // RETURN false : content isn't proper
-    
+
       // Set var $contentIsUpToDate
     $this->setContentIsUpdated( $content );
-    
+
       // RETURN true : content is proper
     return true;
   }
@@ -138,10 +133,10 @@ class tx_orgesab_get {
    **********************************************/
 
 /**
- * init( )  : 
+ * init( )  :
  *
  * @return	boolean
- * @access      private
+ * @access private
  * @version       0.0.1
  * @since         0.0.1
  */
@@ -151,15 +146,15 @@ class tx_orgesab_get {
     {
       return false;
     }
-    
+
     return true;
   }
 
 /**
- * initPobj( )  : 
+ * initPobj( )  :
  *
  * @return	boolean
- * @access      private
+ * @access private
  * @version       0.0.1
  * @since         0.0.1
  */
@@ -167,9 +162,9 @@ class tx_orgesab_get {
   {
     if( is_object( $this->pObj ) )
     {
-      return true; 
+      return true;
     }
-      
+
       // DRS
     if( $this->pObj->drsError )
     {
@@ -177,10 +172,10 @@ class tx_orgesab_get {
       t3lib_div::devLog( '[tx_orgesab_ImportTask]: ' . $prompt, $this->extKey, 3 );
     }
       // DRS
-    
+
       // e-mail to admin
     $subject  = 'Failed';
-    $body     = 'Sorry, but pObj isn\'t any object. ' . PHP_EOL 
+    $body     = 'Sorry, but pObj isn\'t any object. ' . PHP_EOL
               . PHP_EOL
               . __CLASS__ . '::' .  __METHOD__ . ' (' . __LINE__ . ')';
     $this->pObj->drsMailToAdmin( $subject, $body );
@@ -198,10 +193,10 @@ class tx_orgesab_get {
    **********************************************/
 
 /**
- * getContent( )  : 
+ * getContent( )  :
  *
  * @return	boolean
- * @access      private
+ * @access private
  * @version       0.0.1
  * @since         0.0.1
  */
@@ -220,15 +215,16 @@ class tx_orgesab_get {
       return false;
     }
     fclose( $handle );
-    
+
     return $content;
   }
 
 /**
- * getContentIsNotEmpty( )  : 
+ * getContentIsNotEmpty( )  :
  *
+ * @param	[type]		$$content: ...
  * @return	boolean
- * @access      private
+ * @access private
  * @version       0.0.1
  * @since         0.0.1
  */
@@ -238,7 +234,7 @@ class tx_orgesab_get {
     {
       return true;
     }
-    
+
       // DRS
     if( $this->pObj->drsError )
     {
@@ -246,10 +242,10 @@ class tx_orgesab_get {
       t3lib_div::devLog( '[tx_orgesab_ImportTask]: ' . $prompt, $this->extKey, 3 );
     }
       // DRS
-    
+
       // e-mail to admin
     $subject  = 'Failed';
-    $body     = 'Sorry, but content of URL is empty. ' . PHP_EOL 
+    $body     = 'Sorry, but content of URL is empty. ' . PHP_EOL
               . 'URL: ' . $this->pObj->getImportUrl( ) . PHP_EOL
               . PHP_EOL
               . __CLASS__ . '::' .  __METHOD__ . ' (' . __LINE__ . ')';
@@ -260,10 +256,11 @@ class tx_orgesab_get {
   }
 
 /**
- * getContentIsRessource( )  : 
+ * getContentIsRessource( )  :
  *
+ * @param	[type]		$$handle: ...
  * @return	boolean
- * @access      private
+ * @access private
  * @version       0.0.1
  * @since         0.0.1
  */
@@ -273,7 +270,7 @@ class tx_orgesab_get {
     {
       return true;
     }
-    
+
       // DRS
     if( $this->pObj->drsError )
     {
@@ -281,10 +278,10 @@ class tx_orgesab_get {
       t3lib_div::devLog( '[tx_orgesab_ImportTask]: ' . $prompt, $this->extKey, 3 );
     }
       // DRS
-    
+
       // e-mail to admin
     $subject  = 'Failed';
-    $body     = 'Sorry, but ressource of fopen( ) isn\'t proper. ' . PHP_EOL 
+    $body     = 'Sorry, but ressource of fopen( ) isn\'t proper. ' . PHP_EOL
               . 'URL: ' . $this->pObj->getImportUrl( ) . PHP_EOL
               . PHP_EOL
               . __CLASS__ . '::' .  __METHOD__ . ' (' . __LINE__ . ')';
@@ -295,10 +292,10 @@ class tx_orgesab_get {
   }
 
 /**
- * getContentIsUpToDate( )  : 
+ * getContentIsUpToDate( )  :
  *
  * @return	boolean
- * @access      public
+ * @access public
  * @version       0.0.1
  * @since         0.0.1
  */
@@ -308,10 +305,11 @@ class tx_orgesab_get {
   }
 
 /**
- * getMd5( )  : 
+ * getMd5( )  :
  *
+ * @param	[type]		$$content: ...
  * @return	boolean
- * @access      private
+ * @access private
  * @version       0.0.1
  * @since         0.0.1
  */
@@ -322,10 +320,11 @@ class tx_orgesab_get {
   }
 
 /**
- * getMd5Comparision( )  : 
+ * getMd5Comparision( )  :
  *
+ * @param	[type]		$$content: ...
  * @return	boolean
- * @access      private
+ * @access private
  * @version       0.0.1
  * @since         0.0.1
  */
@@ -335,7 +334,7 @@ class tx_orgesab_get {
 
     $md5CurrFile = $this->getMd5( $content );
     $md5LastFile = $this->pObj->registryGet( );
-    
+
     if( $md5CurrFile != $md5LastFile )
     {
       $contentIsUpToDate = false;
@@ -353,10 +352,11 @@ class tx_orgesab_get {
    **********************************************/
 
 /**
- * setContentIsUpdated( )  : 
+ * setContentIsUpdated( )  :
  *
+ * @param	[type]		$$content: ...
  * @return	boolean
- * @access      private
+ * @access private
  * @version       0.0.1
  * @since         0.0.1
  */
@@ -390,7 +390,7 @@ class tx_orgesab_get {
 
           // e-mail to admin
         $subject  = 'Failed';
-        $body     = 'Undefined value for import mode. ' . PHP_EOL 
+        $body     = 'Undefined value for import mode. ' . PHP_EOL
                   . PHP_EOL
                   . __CLASS__ . '::' .  __METHOD__ . ' (' . __LINE__ . ')';
         $this->pObj->drsMailToAdmin( $subject, $body );
@@ -403,10 +403,11 @@ class tx_orgesab_get {
   }
 
 /**
- * setPobj( )  : 
+ * setPobj( )  :
  *
+ * @param	[type]		$$pObj: ...
  * @return	boolean
- * @access      public
+ * @access public
  * @version       0.0.1
  * @since         0.0.1
  */
@@ -417,7 +418,7 @@ class tx_orgesab_get {
       $this->pObj = $pObj;
       return true;
     }
-    
+
       // DRS
     if( $this->pObj->drsError )
     {
@@ -428,7 +429,7 @@ class tx_orgesab_get {
 
       // e-mail to admin
     $subject  = 'Failed';
-    $body     = 'pObj isn\'t an object. ' . PHP_EOL 
+    $body     = 'pObj isn\'t an object. ' . PHP_EOL
               . PHP_EOL
               . __CLASS__ . '::' .  __METHOD__ . ' (' . __LINE__ . ')';
     $this->pObj->drsMailToAdmin( $subject, $body );

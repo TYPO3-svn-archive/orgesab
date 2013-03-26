@@ -30,28 +30,28 @@
  *   70: class tx_orgesab_ImportTask_AdditionalFieldProvider implements tx_scheduler_AdditionalFieldProvider
  *
  *              SECTION: Bulding the form
- *  101:     public function getAdditionalFields( array &$taskInfo, $task, tx_scheduler_Module $parentObject )
- *  131:     private function getFieldImportMode( array &$taskInfo, $task, $parentObject )
- *  204:     private function getFieldImportUrl( array &$taskInfo, $task, $parentObject )
- *  262:     private function getFieldOrgesabAdminEmail( array &$taskInfo, $task, $parentObject )
- *  320:     private function getFieldReportMode( array &$taskInfo, $task, $parentObject )
+ *  103:     public function getAdditionalFields( array &$taskInfo, $task, tx_scheduler_Module $parentObject )
+ *  133:     private function getFieldImportMode( array &$taskInfo, $task, $parentObject )
+ *  206:     private function getFieldImportUrl( array &$taskInfo, $task, $parentObject )
+ *  264:     private function getFieldOrgesabAdminEmail( array &$taskInfo, $task, $parentObject )
+ *  322:     private function getFieldReportMode( array &$taskInfo, $task, $parentObject )
  *
  *              SECTION: Saving
- *  393:     public function saveAdditionalFields( array $submittedData, tx_scheduler_Task $task )
- *  411:     private function saveFieldImportMode( array $submittedData, tx_scheduler_Task $task )
- *  426:     private function saveFieldImportUrl( array $submittedData, tx_scheduler_Task $task )
- *  442:     private function saveFieldOrgesabAdminEmail( array $submittedData, tx_scheduler_Task $task )
- *  457:     private function saveFieldReportMode( array $submittedData, tx_scheduler_Task $task )
+ *  398:     public function saveAdditionalFields( array $submittedData, tx_scheduler_Task $task )
+ *  416:     private function saveFieldImportMode( array $submittedData, tx_scheduler_Task $task )
+ *  431:     private function saveFieldImportUrl( array $submittedData, tx_scheduler_Task $task )
+ *  447:     private function saveFieldOrgesabAdminEmail( array $submittedData, tx_scheduler_Task $task )
+ *  462:     private function saveFieldReportMode( array $submittedData, tx_scheduler_Task $task )
  *
  *              SECTION: Validating
- *  480:     public function validateAdditionalFields( array &$submittedData, tx_scheduler_Module $parentObject )
- *  536:     private function validateFieldFrequency( array &$submittedData, tx_scheduler_Module $parentObject )
- *  561:     private function validateFieldImportMode( array &$submittedData, tx_scheduler_Module $parentObject )
- *  601:     private function validateFieldImportUrl( array &$submittedData, tx_scheduler_Module $parentObject )
- *  632:     private function validateFieldOrgesabAdminEmail( array &$submittedData, tx_scheduler_Module $parentObject )
- *  658:     private function validateFieldReportMode( array &$submittedData, tx_scheduler_Module $parentObject )
- *  698:     private function validateFieldStart( array &$submittedData, tx_scheduler_Module $parentObject )
- *  726:     public function validateOS( tx_scheduler_Module $parentObject )
+ *  485:     public function validateAdditionalFields( array &$submittedData, tx_scheduler_Module $parentObject )
+ *  541:     private function validateFieldFrequency( array &$submittedData, tx_scheduler_Module $parentObject )
+ *  566:     private function validateFieldImportMode( array &$submittedData, tx_scheduler_Module $parentObject )
+ *  606:     private function validateFieldImportUrl( array &$submittedData, tx_scheduler_Module $parentObject )
+ *  636:     private function validateFieldOrgesabAdminEmail( array &$submittedData, tx_scheduler_Module $parentObject )
+ *  662:     private function validateFieldReportMode( array &$submittedData, tx_scheduler_Module $parentObject )
+ *  706:     private function validateFieldStart( array &$submittedData, tx_scheduler_Module $parentObject )
+ *  737:     public function validateOS( tx_scheduler_Module $parentObject )
  *
  * TOTAL FUNCTIONS: 18
  * (This index is automatically created/updated by the extension "extdeveval")
@@ -71,7 +71,7 @@ class tx_orgesab_ImportTask_AdditionalFieldProvider implements tx_scheduler_Addi
 {
 
   public $msgPrefix = 'Org +ESAB Import';
-  
+
   private $defaultImportUrl = 'http://my-domain.com/my.xml';
 
 
@@ -713,8 +713,8 @@ class tx_orgesab_ImportTask_AdditionalFieldProvider implements tx_scheduler_Addi
 
     if( $submittedData['start'] < $inAnHour )
     {
-      $prompt = $this->msgPrefix 
-              . ': ' 
+      $prompt = $this->msgPrefix
+              . ': '
               . $GLOBALS['LANG']->sL( 'LLL:EXT:orgesab/lib/scheduler/locallang.xml:msg.enterStart' )
               ;
       $parentObject->addMessage( $prompt, t3lib_FlashMessage::ERROR );

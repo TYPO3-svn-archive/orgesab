@@ -28,33 +28,18 @@
  *
  *
  *
- *   70: class tx_orgesab_update_AdditionalFieldProvider implements tx_scheduler_AdditionalFieldProvider
+ *   56: class tx_orgesab_update
  *
- *              SECTION: Bulding the form
- *  101:     public function getAdditionalFields( array &$taskInfo, $task, tx_scheduler_Module $parentObject )
- *  131:     private function getFieldImportMode( array &$taskInfo, $task, $parentObject )
- *  204:     private function getFieldImportUrl( array &$taskInfo, $task, $parentObject )
- *  262:     private function getFieldOrgesabAdminEmail( array &$taskInfo, $task, $parentObject )
- *  320:     private function getFieldReportMode( array &$taskInfo, $task, $parentObject )
+ *              SECTION: Main
+ *   88:     public function main( )
  *
- *              SECTION: Saving
- *  393:     public function saveAdditionalFields( array $submittedData, tx_scheduler_Task $task )
- *  411:     private function saveFieldImportMode( array $submittedData, tx_scheduler_Task $task )
- *  426:     private function saveFieldImportUrl( array $submittedData, tx_scheduler_Task $task )
- *  442:     private function saveFieldOrgesabAdminEmail( array $submittedData, tx_scheduler_Task $task )
- *  457:     private function saveFieldReportMode( array $submittedData, tx_scheduler_Task $task )
+ *              SECTION: Init
+ *  118:     private function init( )
  *
- *              SECTION: Validating
- *  480:     public function validateAdditionalFields( array &$submittedData, tx_scheduler_Module $parentObject )
- *  536:     private function validateFieldFrequency( array &$submittedData, tx_scheduler_Module $parentObject )
- *  561:     private function validateFieldImportMode( array &$submittedData, tx_scheduler_Module $parentObject )
- *  601:     private function validateFieldImportUrl( array &$submittedData, tx_scheduler_Module $parentObject )
- *  632:     private function validateFieldOrgesabAdminEmail( array &$submittedData, tx_scheduler_Module $parentObject )
- *  658:     private function validateFieldReportMode( array &$submittedData, tx_scheduler_Module $parentObject )
- *  698:     private function validateFieldStart( array &$submittedData, tx_scheduler_Module $parentObject )
- *  726:     public function validateOS( tx_scheduler_Module $parentObject )
+ *              SECTION: Set
+ *  146:     public function setPobj( $pObj )
  *
- * TOTAL FUNCTIONS: 18
+ * TOTAL FUNCTIONS: 3
  * (This index is automatically created/updated by the extension "extdeveval")
  *
  */
@@ -93,17 +78,17 @@ class tx_orgesab_update {
    **********************************************/
 
   /**
- * main( )  : 
+ * main( )  :
  *
  * @return	boolean
- * @access      public
+ * @access public
  * @version       0.0.1
  * @since         0.0.1
  */
   public function main( )
   {
     $success = false;
-    
+
     $this->init( );
 
     $subject  = 'Failed';
@@ -123,10 +108,10 @@ class tx_orgesab_update {
    **********************************************/
 
 /**
- * init( )  : 
+ * init( )  :
  *
  * @return	boolean
- * @access      private
+ * @access private
  * @version       0.0.1
  * @since         0.0.1
  */
@@ -150,10 +135,11 @@ class tx_orgesab_update {
    **********************************************/
 
 /**
- * setPobj( )  : 
+ * setPobj( )  :
  *
+ * @param	[type]		$$pObj: ...
  * @return	boolean
- * @access      public
+ * @access public
  * @version       0.0.1
  * @since         0.0.1
  */

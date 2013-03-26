@@ -38,8 +38,9 @@
  *
  *
  *
- *   49: class tx_org_extmanager
- *   67:     function promptQuickstart()
+ *   49: class tx_orgesab_extmanager
+ *   62:     public function promptQuickstart()
+ *  122:     public function zz_getExtConfiguration()
  *
  * TOTAL FUNCTIONS: 2
  * (This index is automatically created/updated by the extension "extdeveval")
@@ -53,8 +54,8 @@ class tx_orgesab_extmanager
 /**
  * promptQuickstart(): Displays the quick start message.
  *
- * @return  string    message wrapped in HTML
- * @access  public 
+ * @return	string		message wrapped in HTML
+ * @access public
  * @since 0.4.2
  * @version 0.4.4
  */
@@ -70,13 +71,13 @@ class tx_orgesab_extmanager
 
     $confArrRpt = $this->zz_getExtConfiguration( );
     $confArrOrg = unserialize($GLOBALS['TYPO3_CONF_VARS']['EXT']['extConf']['org']);
-    
+
     if($confArrRpt['store_records'] != $confArrOrg['store_records'])
     {
       $str_phrase = $GLOBALS['LANG']->sL('LLL:EXT:orgesab/lib/locallang.xml:promptStoreRecordWarn');
       $str_phrase = str_replace('###RPT_STORERECORD###', $confArrRpt['store_records'], $str_phrase);
       $str_phrase = str_replace('###ORG_STORERECORD###', $confArrOrg['store_records'], $str_phrase);
-      
+
       $str_prompt = $str_prompt.'
 <div class="typo3-message message-information">
   <div class="message-body">
@@ -89,7 +90,7 @@ class tx_orgesab_extmanager
     {
       $str_phrase = $GLOBALS['LANG']->sL('LLL:EXT:orgesab/lib/locallang.xml:promptStoreRecordOk');
       $str_phrase = str_replace('###RPT_STORERECORD###', $confArrRpt['store_records'], $str_phrase);
-      
+
       $str_prompt = $str_prompt.'
 <div class="typo3-message message-ok">
   <div class="message-body">
@@ -98,7 +99,7 @@ class tx_orgesab_extmanager
 </div>
 ';
     }
-    
+
     $str_prompt = $str_prompt.'
 <div class="typo3-message message-information">
   <div class="message-body">
@@ -113,8 +114,8 @@ class tx_orgesab_extmanager
 /**
  * zz_getExtConfiguration( ): Displays the quick start message.
  *
- * @return  string    message wrapped in HTML
- * @access  public 
+ * @return	string		message wrapped in HTML
+ * @access public
  * @since 0.4.2
  * @version 0.4.4
  */
@@ -136,7 +137,7 @@ class tx_orgesab_extmanager
         $extConfiguration = unserialize($GLOBALS['TYPO3_CONF_VARS']['EXT']['extConf']['orgesab']);
         break;
     }
-    
+
     return $extConfiguration;
   }
 
