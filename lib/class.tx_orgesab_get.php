@@ -214,7 +214,9 @@ class tx_orgesab_get {
       // RETURN false : unproper pointer
 
       // get the content of the ressource
+t3lib_div::devLog( 'TEST', $this->extKey, 3 );
     $content  = stream_get_contents( $handle );
+t3lib_div::devLog( 'TEST', $this->extKey, 3 );
 
       // RETURN false : unproper content
     if( ! $this->getContentIsNotEmpty( $content ) )
@@ -224,6 +226,7 @@ class tx_orgesab_get {
     }
       // RETURN false : unproper content
 
+t3lib_div::devLog( 'TEST', $this->extKey, 3 );
     fclose( $handle );
 
     return $content;
@@ -240,10 +243,13 @@ class tx_orgesab_get {
  */
   private function getContentIsNotEmpty( $content )
   {
+t3lib_div::devLog( 'TEST', $this->extKey, 3 );
     if( $content )
     {
+t3lib_div::devLog( 'TEST', $this->extKey, 3 );
       return true;
     }
+t3lib_div::devLog( 'TEST', $this->extKey, 3 );
 
       // DRS
     if( $this->pObj->drsModeError )
@@ -276,10 +282,13 @@ class tx_orgesab_get {
  */
   private function getContentIsRessource( $handle )
   {
+t3lib_div::devLog( 'TEST', $this->extKey, 3 );
     if( is_resource( $handle ) )
     {
+t3lib_div::devLog( 'TEST', $this->extKey, 3 );
       return true;
     }
+t3lib_div::devLog( 'TEST', $this->extKey, 3 );
 
       // DRS
     if( $this->pObj->drsModeError )
