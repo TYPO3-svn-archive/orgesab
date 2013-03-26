@@ -224,7 +224,6 @@ class tx_orgesab_get {
     }
       // RETURN false : unproper content
 
-t3lib_div::devLog( 'TEST', $this->extKey, 3 );
       // RETURN false : unproper content
     if( ! $this->getContentIsNotXml( $content ) )
     {
@@ -232,8 +231,8 @@ t3lib_div::devLog( 'TEST', $this->extKey, 3 );
     }
       // RETURN false : unproper content
 
- t3lib_div::devLog( implode( ( array ) $content ), $this->extKey, 3 );
-t3lib_div::devLog( 'TEST', $this->extKey, 3 );
+//t3lib_div::devLog( implode( ( array ) $content ), $this->extKey, 3 );
+//t3lib_div::devLog( 'TEST', $this->extKey, 3 );
 
     return $content;
   }
@@ -285,22 +284,25 @@ t3lib_div::devLog( 'TEST', $this->extKey, 3 );
  */
   private function getContentIsNotXml( $content )
   {
-    if( $content )
+    $firstLine = trim( $content[0] );
+    
+    if( substr( $firstLine, 0, 5) == '<?xml' )
     {
-//      return true;
+      return true;
     }
 
       // DRS
     if( $this->pObj->drsModeError )
     {
-      $prompt = 'content is not XML: ' . $this->pObj->getImportUrl( );
+      $prompt = 'content doesn\'t seem not to be in XML format: ' . $this->pObj->getImportUrl( );
       t3lib_div::devLog( '[tx_orgesab_ImportTask]: ' . $prompt, $this->extKey, 3 );
     }
       // DRS
 
       // e-mail to admin
     $subject  = 'Failed';
-    $body     = 'Sorry, but content of URL is empty. ' . PHP_EOL
+    $body     = 'Sorry, but content of the URL doens\'t seem to be in XML format. ' . PHP_EOL
+              . 'First line: ' . $firstLine . PHP_EOL
               . 'URL: ' . $this->pObj->getImportUrl( ) . PHP_EOL
               . PHP_EOL
               . __CLASS__ . '::' .  __METHOD__ . ' (' . __LINE__ . ')';
