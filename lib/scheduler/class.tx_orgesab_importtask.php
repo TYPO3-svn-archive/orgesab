@@ -967,7 +967,8 @@ cronCmd:    ' . ( $cronCmd ? $cronCmd : 'not used' )
       // RETURN null  : key is unproper
 
       // Get value from registry
-    $value = $this->registry->get( $this->extKey, $key );
+    $namespace = 'tx_' . $this->extKey;
+    $value = $this->registry->get( $namespace, $key );
 
     return $value;
   }
@@ -977,11 +978,11 @@ cronCmd:    ' . ( $cronCmd ? $cronCmd : 'not used' )
  *
  * @param	[type]		$$key: ...
  * @return	void
- * @access public
+ * @access private
  * @version       0.0.1
  * @since         0.0.1
  */
-  public function registryKey( $key )
+  private function registryKey( $key )
   {
     switch( $key )
     {
@@ -1039,7 +1040,8 @@ cronCmd:    ' . ( $cronCmd ? $cronCmd : 'not used' )
     }
 
       // Update registry
-    $this->registry->set( $this->extKey, $key, $value );
+    $namespace = 'tx_' . $this->extKey;
+    $this->registry->set( $namespace, $key, $value );
   }
 
 
