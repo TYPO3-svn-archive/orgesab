@@ -216,6 +216,7 @@ class tx_orgesab_get {
       // get the content of the ressource
 t3lib_div::devLog( 'TEST', $this->extKey, 3 );
     $content  = stream_get_contents( $handle );
+t3lib_div::devLog( implode( ( array ) $content ), $this->extKey, 3 );
 t3lib_div::devLog( 'TEST', $this->extKey, 3 );
 
       // RETURN false : unproper content
