@@ -284,7 +284,8 @@ class tx_orgesab_get {
  */
   private function getContentIsNotXml( $content )
   {
-    $firstLine = trim( $content[0] );
+    list( $firstLine ) = explode( PHP_EOL, $content );
+    $firstLine  = trim( $firstLine );
     
     if( substr( $firstLine, 0, 5) == '<?xml' )
     {
