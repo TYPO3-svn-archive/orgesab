@@ -38,78 +38,106 @@ class tx_orgesab_ImportTask extends tx_scheduler_Task {
     *
     * @var string $extKey
     */
-    var $extKey = 'orgesab';
+    public $extKey = 'orgesab';
 
   /**
     * Extension configuration by the extension manager
     *
     * @var array $extConf
     */
-    var $extConf;
+    private $extConf;
 
   /**
     * DRS mode: display prompt in every case
     *
     * @var boolean $drsModeAll
     */
-    var $drsModeAll;
+    private $drsModeAll;
 
   /**
     * DRS mode: display prompt in error case only
     *
     * @var boolean $drsModeError
     */
-    var $drsModeError;
+    private $drsModeError;
 
   /**
     * DRS mode: display prompt in warning case only
     *
     * @var boolean $drsModeWarn
     */
-    var $drsModeWarn;
+    private $drsModeWarn;
 
   /**
     * DRS mode: display prompt in info case only
     *
     * @var boolean $drsModeInfo
     */
-    var $drsModeInfo;
+    private $drsModeInfo;
 
   /**
     * DRS mode: display prompt in performance case
     *
     * @var boolean $drsModePerformance
     */
-    var $drsModePerformance;
+    private $drsModePerformance;
 
   /**
     * DRS mode: display prompt in importTask case
     *
     * @var boolean $drsModeImportTask
     */
-    var $drsModeImportTask;
+    private $drsModeImportTask;
 
   /**
     * DRS mode: display prompt in sql case
     *
     * @var boolean $drsModeSql
     */
-    var $drsModeSql;
+    private $drsModeSql;
 
   /**
     * An email address to be used during the process
     *
     * @var string $orgesab_orgesabAdminEmail
     */
-    var $orgesab_orgesabAdminEmail;
+    private $orgesab_orgesabAdminEmail;
 
   /**
-    * All Org +ESAB mailboxes returned from database
+    * t3lib_timeTrack object
     *
-    * @var array $mailboxesData
+    * @var object
     */
-    var $mailboxesData;
+    private $TT;
 
+   /**
+    * Endtime of previous process
+    *
+    * @var integer
+    */
+    private $tt_prevEndTime;
+
+  /**
+    * Level of warning
+    *
+    * @var integer
+    */
+    private $tt_prevPrompt;
+
+  /**
+    * Startime of the script
+    *
+    * @var integer
+    */
+    private $tt_startTime;
+
+
+
+  /***********************************************
+   *
+   * Main
+   *
+   **********************************************/
 
   /**
  * execute( )  : Function executed from the Scheduler.
@@ -132,7 +160,11 @@ class tx_orgesab_ImportTask extends tx_scheduler_Task {
       return $success;
     }
 
-    $this->drsMailToAdmin( );
+    $subject  = 'Success';
+    $body     = __METHOD__ . ' (' . __LINE__ . ')';
+    $this->drsMailToAdmin( $subject, $body );
+    
+    $this->xmlImport( );
     
       // RETURN : the success
     $debugTrailLevel = 1;
@@ -340,7 +372,7 @@ class tx_orgesab_ImportTask extends tx_scheduler_Task {
  * @version 3.9.9
  * @since   3.9.9
  */
-  private function drsMailToAdmin( $subject=null, $body=null )
+  private function drsMailToAdmin( $subject='Org +ESAB: information', $body=null )
   {
       // Get call method
     if( basename( PATH_thisScript ) == 'cli_dispatch.phpsh' )
@@ -354,6 +386,9 @@ class tx_orgesab_ImportTask extends tx_scheduler_Task {
       $site     = t3lib_div::getIndpEnv( 'TYPO3_SITE_URL' );
     }
       // Get call method
+    
+    $subject  = $subject
+              .
 
       // Get execution information
     $exec = $this->getExecution( );
@@ -363,30 +398,33 @@ class tx_orgesab_ImportTask extends tx_scheduler_Task {
     $interval = $exec->getInterval( );
     $multiple = $exec->getMultiple( );
     $cronCmd  = $exec->getCronCmd( );
-    $mailBody = $body . PHP_EOL. PHP_EOL .
-      'ORGESAB IMPORT' . PHP_EOL .
-      '- - - - - - - - - - - - - - - -' . PHP_EOL .
-      'UID: '       . $this->taskUid . PHP_EOL .
-      'Sitename: '  . $GLOBALS['TYPO3_CONF_VARS']['SYS']['sitename'] . PHP_EOL .
-      'Site: ' . $site . PHP_EOL .
-      'Called by: ' . $calledBy . PHP_EOL .
-      'tstamp: ' . date( 'Y-m-d H:i:s' ) . ' [' . time( ) . ']' . PHP_EOL .
-      'start: ' . date( 'Y-m-d H:i:s', $start ) . ' [' . $start . ']' . PHP_EOL .
-      'end: ' . ( ( empty( $end ) ) ? '-' : ( date( 'Y-m-d H:i:s', $end ) . ' [' . $end . ']') ) . PHP_EOL .
-      'interval: ' . $interval . PHP_EOL .
-      'multiple: ' . ( $multiple ? 'yes' : 'no' ) . PHP_EOL .
-      'cronCmd: ' . ( $cronCmd ? $cronCmd : 'not used' ) . PHP_EOL .
-      '';
+    $body     = $body 
+              . '
+                
+
+Org +ESAB
+- - - - - - - - - - - - - - - -
+UID:        ' . $this->taskUid . '
+Sitename:   ' . $GLOBALS['TYPO3_CONF_VARS']['SYS']['sitename'] . '
+Site:       ' . $site . '
+Called by:  ' . $calledBy . '
+tstamp:     ' . date( 'Y-m-d H:i:s' ) . ' [' . time( ) . ']
+start:      ' . date( 'Y-m-d H:i:s', $start ) . ' [' . $start . ']
+end:        ' . ( ( empty( $end ) ) ? '-' : ( date( 'Y-m-d H:i:s', $end ) . ' [' . $end . ']') ) . '
+interval:   ' . $interval . '
+multiple:   ' . ( $multiple ? 'yes' : 'no' ) . '
+cronCmd:    ' . ( $cronCmd ? $cronCmd : 'not used' )
+              ;
 
       // Prepare mailer and send the mail
     try
     {
       /** @var $mailer t3lib_mail_message */
       $mailer = t3lib_div::makeInstance( 't3lib_mail_message' );
-      $mailer->setFrom( array( $this->orgesab_orgesabAdminEmail => 'ORGESAB IMPORT' ) );
-      $mailer->setReplyTo( array( $this->orgesab_orgesabAdminEmail => 'ORGESAB IMPORT' ) );
-      $mailer->setSubject( 'ORGESAB IMPORT: ' . $subject );
-      $mailer->setBody( $mailBody );
+      $mailer->setFrom( array( $this->orgesab_orgesabAdminEmail => 'Org +ESAB' ) );
+      $mailer->setReplyTo( array( $this->orgesab_orgesabAdminEmail => 'Org +ESAB' ) );
+      $mailer->setSubject( 'Org +ESAB: ' . $subject );
+      $mailer->setBody( $body );
       $mailer->setTo( $this->orgesab_orgesabAdminEmail );
 
       $mailsSend  = $mailer->send( );
@@ -431,13 +469,12 @@ class tx_orgesab_ImportTask extends tx_scheduler_Task {
  * @version       0.0.1
  * @since         0.0.1
  */
-  private function sendMailWarning( )
+  private function sendMailWarning( $subject=null, $body=null, $to=null, $cc=null )
   {
-
-    $subject  = null;
-    $body     = null;
-    $to       = null;
-    $cc       = null;
+    if( empty( $to ) )
+    {
+      $to = $this->orgesab_orgesabAdminEmail;
+    }
 
     try
     {
