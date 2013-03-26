@@ -466,11 +466,11 @@ class tx_orgesab_ImportTask extends tx_scheduler_Task {
  * @param	string		$subject     : ...
  * @param	string		$body        : ...
  * @return	array		$arr_return  : with elements class, method, line and prompt
- * @access      private 
+ * @access      public 
  * @version 0.0.1
  * @since   0.0.1
  */
-  private function drsMailToAdmin( $subject='Information', $body=null )
+  public function drsMailToAdmin( $subject='Information', $body=null )
   {
     switch( true )
     {
