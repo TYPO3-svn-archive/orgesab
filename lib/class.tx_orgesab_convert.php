@@ -189,13 +189,12 @@ class tx_orgesab_convert {
       'programm_ende'         => $xml->Programm->programm_ende
     );
     
-    if( $programm )
-    {
-      return $programm;
-    }
-    
-    $this->promptAndMail( 'Programm', $programm );
-    return false; 
+    //$this->promptAndMail( 'Programm', $programm );
+
+    $prompt = implode( ';' . $programm );
+    t3lib_div::devLog( '[tx_orgesab_ImportTask]: ' . $prompt, $this->extKey, 3 );
+
+    return $programm;
   }
 
 
