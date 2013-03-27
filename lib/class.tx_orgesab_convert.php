@@ -96,7 +96,7 @@ class tx_orgesab_convert {
     
     $content = '<<<XML' . PHP_EOL . $content . PHP_EOL . 'XML;';
     
-    $xml = simplexml_load_string( '<<<XML' . PHP_EOL . $content . PHP_EOL . 'XML;' );
+    $xml = simplexml_load_string( $content );
     if( ! $xml )
     {
       if( strlen( $content ) > 1000 )
