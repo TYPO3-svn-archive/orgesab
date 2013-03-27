@@ -94,7 +94,7 @@ class tx_orgesab_convert {
   {
     $this->init( );
     
-    $content = '<<<XML' . PHP_EOL . $content . PHP_EOL . 'XML;';
+    $content = '<<<XML' . PHP_EOL . trim( $content ) . PHP_EOL . 'XML;';
     
     $xml = simplexml_load_string( $content );
     if( ! $xml )

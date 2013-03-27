@@ -363,10 +363,8 @@ class tx_orgesab_ImportTask extends tx_scheduler_Task {
  */
   private function convertContent( $content )
   {
-t3lib_div::devLog( '[tx_orgesab_ImportTask]: ' . $content, $this->extKey, 3 );
     $this->convertContentInstance( );
     $content = $this->convert->main( $content );
-t3lib_div::devLog( '[tx_orgesab_ImportTask]: ' . $content, $this->extKey, 3 );
 
     return $content;
   }
