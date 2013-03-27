@@ -94,7 +94,7 @@ class tx_orgesab_convert {
   {
     $this->init( );
     
-    $xml = new SimpleXMLElement( $content );
+    $xml = new SimpleXMLElement( '<<<XML' . PHP_EOL . $content . PHP_EOL . 'XML;' );
     
       // programm data
     $programm = $this->getProgramm( $xml );
