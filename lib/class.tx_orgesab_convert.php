@@ -97,6 +97,7 @@ class tx_orgesab_convert {
     $content = '<<<XML' . PHP_EOL . trim( $content ) . PHP_EOL . 'XML;';
     
     $xml = simplexml_load_string( $content );
+    $xml = simplexml_load_string( $this->pObj->getImportUrl( ) );
     if( ! $xml )
     {
       if( strlen( $content ) > 1000 )

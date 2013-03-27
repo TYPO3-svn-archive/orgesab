@@ -6305,8 +6305,8 @@ $xml = simplexml_load_string( $content );
 $xml = simplexml_load_file( 'https://www.buchsys.de/esab/cgi/xml_export.pl' );
 
 
-echo 'X' . $xml->Programm . 'Y' . PHP_EOL;
-echo 'X' . $xml->programm_bezeichnung . 'Y' . PHP_EOL;
+echo 'X' . $xml->Programm . 'Y<br />' . PHP_EOL;
+echo 'X' . $xml->programm_bezeichnung . 'Y<br />' . PHP_EOL;
 
 if( $xml ) 
 {
