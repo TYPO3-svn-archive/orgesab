@@ -133,39 +133,39 @@ class tx_orgesab_convert {
       {
         $angebote[] = array
         (
-          'bereich_zuordnung'     => $bereich->bereich_zuordnung,  
-          'angebot_nr'            => $angebot->angebot_nr,
-          'angebot_nr'            => $angebot->angebot_nr,
-          'angebot_ausgebucht'    => $angebot->angebot_ausgebucht,
-          'angebot_bereich'       => $angebot->angebot_bereich,
-          'angebot_beschreibung'  => $angebot->angebot_beschreibung,
-          'angebot_details'       => $angebot->angebot_details,
-          'angebot_inhalte'       => $angebot->angebot_inhalte,
-          'angebot_keywords'      => $angebot->angebot_keywords,
-          'angebot_kursleiter1'   => $angebot->angebot_kursleiter1,
-          'angebot_kursleiter2'   => $angebot->angebot_kursleiter2,
-          'angebot_link'          => $angebot->angebot_link,
-          'angebot_name'          => $angebot->angebot_name,
-          'angebot_nr'            => $angebot->angebot_nr,
-          'angebot_ort1'          => $angebot->angebot_ort1,
-          'angebot_ort2'          => $angebot->angebot_ort2,
-          'angebot_ort3'          => $angebot->angebot_ort3,
-          'angebot_ort4'          => $angebot->angebot_ort4,
-          'angebot_ort5'          => $angebot->angebot_ort5,
-          'angebot_preis_1'       => $angebot->angebot_preis_1,
-          'angebot_preis_2'       => $angebot->angebot_preis_2,
-          'angebot_preis_3'       => $angebot->angebot_preis_3,
-          'angebot_tag1'          => $angebot->angebot_tag1,
-          'angebot_tag2'          => $angebot->angebot_tag2,
-          'angebot_tag3'          => $angebot->angebot_tag3,
-          'angebot_tag4'          => $angebot->angebot_tag4,
-          'angebot_tag5'          => $angebot->angebot_tag5,
-          'angebot_uhrzeit1'      => $angebot->angebot_uhrzeit1,
-          'angebot_uhrzeit2'      => $angebot->angebot_uhrzeit2,
-          'angebot_uhrzeit3'      => $angebot->angebot_uhrzeit3,
-          'angebot_uhrzeit4'      => $angebot->angebot_uhrzeit4,
-          'angebot_uhrzeit5'      => $angebot->angebot_uhrzeit5,
-          'angebot_zeitraum'      => $angebot->angebot_zeitraum,
+          'bereich_zuordnung'     => ( string ) $bereich->bereich_zuordnung,  
+          'angebot_nr'            => ( string ) $angebot->angebot_nr,
+          'angebot_nr'            => ( string ) $angebot->angebot_nr,
+          'angebot_ausgebucht'    => ( string ) $angebot->angebot_ausgebucht,
+          'angebot_bereich'       => ( string ) $angebot->angebot_bereich,
+          'angebot_beschreibung'  => ( string ) $angebot->angebot_beschreibung,
+          'angebot_details'       => ( string ) $angebot->angebot_details,
+          'angebot_inhalte'       => ( string ) $angebot->angebot_inhalte,
+          'angebot_keywords'      => ( string ) $angebot->angebot_keywords,
+          'angebot_kursleiter1'   => ( string ) $angebot->angebot_kursleiter1,
+          'angebot_kursleiter2'   => ( string ) $angebot->angebot_kursleiter2,
+          'angebot_link'          => ( string ) $angebot->angebot_link,
+          'angebot_name'          => ( string ) $angebot->angebot_name,
+          'angebot_nr'            => ( string ) $angebot->angebot_nr,
+          'angebot_ort1'          => ( string ) $angebot->angebot_ort1,
+          'angebot_ort2'          => ( string ) $angebot->angebot_ort2,
+          'angebot_ort3'          => ( string ) $angebot->angebot_ort3,
+          'angebot_ort4'          => ( string ) $angebot->angebot_ort4,
+          'angebot_ort5'          => ( string ) $angebot->angebot_ort5,
+          'angebot_preis_1'       => ( string ) $angebot->angebot_preis_1,
+          'angebot_preis_2'       => ( string ) $angebot->angebot_preis_2,
+          'angebot_preis_3'       => ( string ) $angebot->angebot_preis_3,
+          'angebot_tag1'          => ( string ) $angebot->angebot_tag1,
+          'angebot_tag2'          => ( string ) $angebot->angebot_tag2,
+          'angebot_tag3'          => ( string ) $angebot->angebot_tag3,
+          'angebot_tag4'          => ( string ) $angebot->angebot_tag4,
+          'angebot_tag5'          => ( string ) $angebot->angebot_tag5,
+          'angebot_uhrzeit1'      => ( string ) $angebot->angebot_uhrzeit1,
+          'angebot_uhrzeit2'      => ( string ) $angebot->angebot_uhrzeit2,
+          'angebot_uhrzeit3'      => ( string ) $angebot->angebot_uhrzeit3,
+          'angebot_uhrzeit4'      => ( string ) $angebot->angebot_uhrzeit4,
+          'angebot_uhrzeit5'      => ( string ) $angebot->angebot_uhrzeit5,
+          'angebot_zeitraum'      => ( string ) $angebot->angebot_zeitraum,
         );
       }
         // LOOP : Angebote
@@ -214,7 +214,7 @@ class tx_orgesab_convert {
     
     foreach( $xml->Bereich as $bereich )
     {
-      $bereiche[] = $bereich->bereich_zuordnung;
+      $bereiche[] = ( string ) $bereich->bereich_zuordnung;
 
     } 
     
@@ -253,9 +253,9 @@ class tx_orgesab_convert {
     
     $programm = array
     (
-      'programm_bezeichnung'  => $xml->programm_bezeichnung,
-      'programm_beginn'       => $xml->programm_beginn,
-      'programm_ende'         => $xml->programm_ende
+      'programm_bezeichnung'  => ( string ) $xml->programm_bezeichnung,
+      'programm_beginn'       => ( string ) $xml->programm_beginn,
+      'programm_ende'         => ( string ) $xml->programm_ende
     );
     
       // DRS
