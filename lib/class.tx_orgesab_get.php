@@ -121,7 +121,7 @@ class tx_orgesab_get {
     $this->setContentIsUpdated( $content );
 
       // RETURN true : content is proper
-    return true;
+    return $content;
   }
 
 
