@@ -97,7 +97,7 @@ class tx_orgesab_get {
 /**
  * main( )  :
  *
- * @return	boolean
+ * @return	object    $xml  : the xml object
  * @access public
  * @version       0.0.1
  * @since         0.0.1
@@ -108,20 +108,20 @@ class tx_orgesab_get {
     $this->init( );
 
       // Get the content
-    $content = $this->getContent( );
+    $xml = $this->getContent( );
 
       // RETURN false : content isn't proper
-    if( ! $content )
+    if( ! $xml )
     {
       return false;
     }
       // RETURN false : content isn't proper
 
       // Set var $contentIsUpToDate
-    $this->setContentIsUpdated( $content );
+    $this->setContentIsUpdated( $xml );
 
       // RETURN true : content is proper
-    return $content;
+    return $xml;
   }
 
 
@@ -195,162 +195,26 @@ class tx_orgesab_get {
 /**
  * getContent( )  :
  *
- * @return	boolean
+ * @return	object      $xml : xml object
  * @access private
  * @version       0.0.1
  * @since         0.0.1
  */
   private function getContent( )
   {
-      // get the pointer for the URL file 
-    $handle = fopen( $this->pObj->getImportUrl( ), 'r' );
-
-      // RETURN false : unproper pointer
-    if( ! $this->getContentIsRessource( $handle ) )
+    $xml = simplexml_load_file( $this->pObj->getImportUrl( ) );
+    if( $xml )
     {
-      fclose( $handle );
-      return false;
+      return $xml;
     }
-      // RETURN false : unproper pointer
-
-      // get the content of the ressource
-    $content  = stream_get_contents( $handle );
-    fclose( $handle );
-
-      // RETURN false : unproper content
-    if( ! $this->getContentIsNotEmpty( $content ) )
-    {
-      return false;
-    }
-      // RETURN false : unproper content
-
-      // RETURN false : unproper content
-    if( ! $this->getContentIsNotXml( $content ) )
-    {
-      return false;
-    }
-      // RETURN false : unproper content
-
-//t3lib_div::devLog( implode( ( array ) $content ), $this->extKey, 3 );
-//t3lib_div::devLog( 'TEST', $this->extKey, 3 );
-
-    return $content;
-  }
-
-/**
- * getContentIsNotEmpty( )  :
- *
- * @param	[type]		$$content: ...
- * @return	boolean
- * @access private
- * @version       0.0.1
- * @since         0.0.1
- */
-  private function getContentIsNotEmpty( $content )
-  {
-    if( $content )
-    {
-      return true;
-    }
-
-      // DRS
-    if( $this->pObj->drsModeError )
-    {
-      $prompt = 'content is empty: ' . $this->pObj->getImportUrl( );
-      t3lib_div::devLog( '[tx_orgesab_ImportTask]: ' . $prompt, $this->extKey, 3 );
-    }
-      // DRS
-
-      // e-mail to admin
-    $subject  = 'Failed';
-    $body     = 'Sorry, but content of URL is empty. ' . PHP_EOL
-              . 'URL: ' . $this->pObj->getImportUrl( ) . PHP_EOL
-              . PHP_EOL
-              . __CLASS__ . '::' .  __METHOD__ . ' (' . __LINE__ . ')';
-    $this->pObj->drsMailToAdmin( $subject, $body );
-      // e-mail to admin
-
-    return false;
-  }
-
-/**
- * getContentIsNotXml( )  :
- *
- * @param	[type]		$$content: ...
- * @return	boolean
- * @access private
- * @version       0.0.1
- * @since         0.0.1
- */
-  private function getContentIsNotXml( $content )
-  {
-    list( $firstLine ) = explode( PHP_EOL, $content );
-    $firstLine  = trim( $firstLine );
     
-    if( substr( $firstLine, 0, 5) == '<?xml' )
-    {
-      return true;
-    }
-
-      // DRS
-    if( $this->pObj->drsModeError )
-    {
-      $prompt = 'content doesn\'t seem to be in XML format. ' 
-              . 'Url: ' . $this->pObj->getImportUrl( ) . ' '
-              . 'First line: ' . $firstLine
-              ;
-      t3lib_div::devLog( '[tx_orgesab_ImportTask]: ' . $prompt, $this->extKey, 3 );
-    }
-      // DRS
-
-      // e-mail to admin
     $subject  = 'Failed';
-    $body     = 'Sorry, but content of the URL doens\'t seem to be in XML format. ' . PHP_EOL
-              . 'First line: ' . $firstLine . PHP_EOL
-              . 'URL: ' . $this->pObj->getImportUrl( ) . PHP_EOL
+    $body     = 'XML file could not open.' . PHP_EOL
+              . PHP_EOL
+              . 'Url : ' . $this->pObj->getImportUrl( ) . PHP_EOL
               . PHP_EOL
               . __CLASS__ . '::' .  __METHOD__ . ' (' . __LINE__ . ')';
     $this->pObj->drsMailToAdmin( $subject, $body );
-      // e-mail to admin
-
-    return false;
-  }
-
-/**
- * getContentIsRessource( )  :
- *
- * @param	[type]		$$handle: ...
- * @return	boolean
- * @access private
- * @version       0.0.1
- * @since         0.0.1
- */
-  private function getContentIsRessource( $handle )
-  {
-t3lib_div::devLog( 'TEST', $this->extKey, 3 );
-    if( is_resource( $handle ) )
-    {
-t3lib_div::devLog( 'TEST', $this->extKey, 3 );
-      return true;
-    }
-t3lib_div::devLog( 'TEST', $this->extKey, 3 );
-
-      // DRS
-    if( $this->pObj->drsModeError )
-    {
-      $prompt = 'Can\'t get a ressource for  ' . $this->pObj->getImportUrl( );
-      t3lib_div::devLog( '[tx_orgesab_ImportTask]: ' . $prompt, $this->extKey, 3 );
-    }
-      // DRS
-
-      // e-mail to admin
-    $subject  = 'Failed';
-    $body     = 'Sorry, but ressource of fopen( ) isn\'t proper. ' . PHP_EOL
-              . 'URL: ' . $this->pObj->getImportUrl( ) . PHP_EOL
-              . PHP_EOL
-              . __CLASS__ . '::' .  __METHOD__ . ' (' . __LINE__ . ')';
-    $this->pObj->drsMailToAdmin( $subject, $body );
-      // e-mail to admin
 
     return false;
   }
@@ -419,14 +283,18 @@ t3lib_div::devLog( 'TEST', $this->extKey, 3 );
 /**
  * setContentIsUpdated( )  :
  *
- * @param	[type]		$$content: ...
+ * @param       object		$xml  : the xml object
  * @return	boolean
  * @access private
  * @version       0.0.1
  * @since         0.0.1
  */
-  private function setContentIsUpdated( $content )
+  private function setContentIsUpdated( $xml )
   {
+    $prompt = 'TODO: setContentIsUpdated( $xml )';
+    t3lib_div::devLog( '[tx_orgesab_ImportTask]: ' . $prompt, $this->extKey, 3 );
+    return false;
+
     $success = false;
 
     switch( $this->pObj->getImportMode( ) )

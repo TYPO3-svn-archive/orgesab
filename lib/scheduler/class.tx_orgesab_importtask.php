@@ -277,8 +277,8 @@ class tx_orgesab_ImportTask extends tx_scheduler_Task {
       // RETURN false : init is unproper
 
       // RETURN false : content is unproper
-    $content = $this->getContent( );
-    if( ! $content )
+    $xml = $this->getContent( );
+    if( ! $xml )
     {
       $this->timeTracking_log( $debugTrailLevel, 'END' );
       return false;
@@ -293,10 +293,12 @@ class tx_orgesab_ImportTask extends tx_scheduler_Task {
     }
       // RETURN true : content is up to date
 
-    $md5 = md5( $content );
+    $prompt = 'TODO: $md5 = md5( $xml )';
+    t3lib_div::devLog( '[tx_orgesab_ImportTask]: ' . $prompt, $this->extKey, 3 );
+    $md5 = md5( $xml );
 
       // RETURN false : content is unproper
-    $content = $this->convertContent( $content );
+    $content = $this->convertContent( $xml );
     if( ! $content )
     {
       $this->timeTracking_log( $debugTrailLevel, 'END' );

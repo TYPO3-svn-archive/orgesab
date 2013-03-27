@@ -85,39 +85,15 @@ class tx_orgesab_convert {
 /**
  * main( )  :
  *
- * @return	boolean
+ * @param       object      $xml      : the xml object
+ * @return	array       $content  : 
  * @access public
  * @version       0.0.1
  * @since         0.0.1
  */
-  public function main( $content )
+  public function main( $xml )
   {
     $this->init( );
-    
-    $content = '<<<XML' . PHP_EOL . trim( $content ) . PHP_EOL . 'XML;';
-    
-    //$xml = simplexml_load_string( $content );
-    $xml = simplexml_load_file( $this->pObj->getImportUrl( ) );
-    if( ! $xml )
-    {
-      if( strlen( $content ) > 1000 )
-      {
-        $content  = substr( $content, 0, 1000 )
-                  . ' ...';
-      }
-      $subject  = 'Failed';
-      // $body     = 'XML string could not open.' . PHP_EOL
-//                . PHP_EOL
-//                . 'Content : ' . $content . PHP_EOL
-      $body     = 'XML file could not open.' . PHP_EOL
-                . PHP_EOL
-                . 'Url : ' . $this->pObj->getImportUrl( ) . PHP_EOL
-                . PHP_EOL
-                . __CLASS__ . '::' .  __METHOD__ . ' (' . __LINE__ . ')';
-      $this->pObj->drsMailToAdmin( $subject, $body );
-      
-      return false;
-    }
     
       // programm data
     $programm = $this->getProgramm( $xml );
