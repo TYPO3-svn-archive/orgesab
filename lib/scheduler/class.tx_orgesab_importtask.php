@@ -265,9 +265,6 @@ class tx_orgesab_ImportTask extends tx_scheduler_Task {
       // Init var for debug trail
     $debugTrailLevel = 1;
 
-      // Get the extension configuration by the extension manager
-    $this->extConf = unserialize( $GLOBALS['TYPO3_CONF_VARS']['EXT']['extConf']['orgesab'] );
-
       // RETURN false : init is unproper
     if( ! $this->init( ) )
     {
@@ -298,8 +295,8 @@ class tx_orgesab_ImportTask extends tx_scheduler_Task {
     $md5 = md5( $xml );
 
       // RETURN false : content is unproper
-    $content = $this->convertContent( $xml );
-    if( ! $content )
+    $xml = $this->convertContent( $xml );
+    if( ! $xml )
     {
       $this->timeTracking_log( $debugTrailLevel, 'END' );
       return false;
@@ -307,7 +304,7 @@ class tx_orgesab_ImportTask extends tx_scheduler_Task {
       // RETURN false : content is unproper
 
       // RETURN false : database could not updated
-    if( ! $this->updateDatabase( $content ) )
+    if( ! $this->updateDatabase( $xml ) )
     {
       return false;
     }
@@ -363,10 +360,10 @@ class tx_orgesab_ImportTask extends tx_scheduler_Task {
  * @version       0.0.1
  * @since         0.0.1
  */
-  private function convertContent( $content )
+  private function convertContent( $xml )
   {
     $this->convertContentInstance( );
-    $content = $this->convert->main( $content );
+    $content = $this->convert->main( $xml );
 
     return $content;
   }
@@ -597,15 +594,15 @@ cronCmd:    ' . ( $cronCmd ? $cronCmd : 'not used' )
     $this->getContentInstance( );
 
       // RETURN true : proper content
-    $content = $this->get->main( );
-    if( $content )
+    $xml = $this->get->main( );
+    if( $xml )
     {
-      return $content;
+      return $xml;
     }
       // RETURN true : proper content
 
     $subject  = 'Failed';
-    $body     = 'Content is empty.' . PHP_EOL
+    $body     = 'Unporper XML' . PHP_EOL
               . PHP_EOL
               . __CLASS__ . '::' .  __METHOD__ . ' (' . __LINE__ . ')';
     $this->pObj->drsMailToAdmin( $subject, $body );
@@ -710,6 +707,9 @@ cronCmd:    ' . ( $cronCmd ? $cronCmd : 'not used' )
   private function init( )
   {
     $success = true;
+
+      // Get the extension configuration by the extension manager
+    $this->extConf = unserialize( $GLOBALS['TYPO3_CONF_VARS']['EXT']['extConf']['orgesab'] );
 
     $this->initDRS( );
 

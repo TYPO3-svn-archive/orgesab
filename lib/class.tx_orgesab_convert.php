@@ -98,7 +98,7 @@ class tx_orgesab_convert {
       // programm data
     $programm = $this->getProgramm( $xml );
 
-    $prompt = implode( ';' . $programm );
+    $prompt = var_export( $programm, true );
     t3lib_div::devLog( '[tx_orgesab_ImportTask]: ' . $prompt, $this->extKey, 3 );
     
     if( ! $programm )
@@ -183,14 +183,14 @@ class tx_orgesab_convert {
     
     $programm = array
     (
-      'programm_bezeichnung'  => $xml->programm_bezeichnung,
-      'programm_beginn'       => $xml->programm_beginn,
-      'programm_ende'         => $xml->programm_ende
+      'programm_bezeichnung'  => 'A ' . $xml->programm_bezeichnung,
+      'programm_beginn'       => 'B ' . $xml->programm_beginn,
+      'programm_ende'         => 'C ' . $xml->programm_ende
     );
     
     //$this->promptAndMail( 'Programm', $programm );
 
-    $prompt = implode( ';' . $programm );
+    $prompt = var_export( $programm, true );
     t3lib_div::devLog( '[tx_orgesab_ImportTask]: ' . $prompt, $this->extKey, 3 );
 
     return $programm;
