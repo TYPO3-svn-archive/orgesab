@@ -25,7 +25,7 @@ foreach( $xml->Bereich as $bereich )
   {
     echo '<li><a href="detail.php?lgid='.$angebot->angebot_nr.'" title="Termin des Lehrgangs: '.$angebot->angebot_zeitraum.'">'.$angebot->angebot_name.'</a></li>';
     $angebote[] = array( 
-      'angebot_nr' => $angebot->angebot_nr,
+      'angebot_nr' => ( string ) $angebot->angebot_nr,
     );
   }
   echo '</ul>';
