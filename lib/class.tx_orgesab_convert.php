@@ -94,11 +94,15 @@ class tx_orgesab_convert {
   {
     $this->init( );
     
+    $content = '<<<XML' . PHP_EOL . $content . PHP_EOL . 'XML;';
+    
     $xml = simplexml_load_string( '<<<XML' . PHP_EOL . $content . PHP_EOL . 'XML;' );
     if( ! $xml )
     {
       $subject  = 'Failed';
-      $body     = 'XML string could not open.'
+      $body     = 'XML string could not open.' . PHP_EOL
+                . PHP_EOL
+                . 'Content : ' . $content . PHP_EOL
                 . PHP_EOL
                 . __CLASS__ . '::' .  __METHOD__ . ' (' . __LINE__ . ')';
       $this->pObj->drsMailToAdmin( $subject, $body );
