@@ -184,9 +184,9 @@ class tx_orgesab_convert {
     
     $programm = array
     (
-      'programm_bezeichnung'  => $xml->Programm->programm_bezeichnung,
-      'programm_beginn'       => $xml->Programm->programm_beginn,
-      'programm_ende'         => $xml->Programm->programm_ende
+      'programm_bezeichnung'  => $xml->programm_bezeichnung,
+      'programm_beginn'       => $xml->programm_beginn,
+      'programm_ende'         => $xml->programm_ende
     );
     
     //$this->promptAndMail( 'Programm', $programm );
