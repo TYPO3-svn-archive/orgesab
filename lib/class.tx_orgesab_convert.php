@@ -106,6 +106,8 @@ class tx_orgesab_convert {
                 . PHP_EOL
                 . __CLASS__ . '::' .  __METHOD__ . ' (' . __LINE__ . ')';
       $this->pObj->drsMailToAdmin( $subject, $body );
+      
+      return false;
     }
     
       // programm data

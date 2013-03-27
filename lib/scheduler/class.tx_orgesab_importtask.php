@@ -363,12 +363,10 @@ class tx_orgesab_ImportTask extends tx_scheduler_Task {
  */
   private function convertContent( $content )
   {
-    $success = false;
-
     $this->convertContentInstance( );
-    $success = $this->convert->main( $content );
+    $content = $this->convert->main( $content );
 
-    return $success;
+    return $content;
   }
 
 /**
