@@ -597,13 +597,19 @@ cronCmd:    ' . ( $cronCmd ? $cronCmd : 'not used' )
     $this->getContentInstance( );
 
       // RETURN true : proper content
-    if( $this->get->main( ) )
+    $content = $this->get->main( );
+    if( $content )
     {
-      return true;
+      return $content;
     }
       // RETURN true : proper content
 
-      // RETURN false : unproper content
+    $subject  = 'Failed';
+    $body     = 'Content is empty.' . PHP_EOL
+              . PHP_EOL
+              . __CLASS__ . '::' .  __METHOD__ . ' (' . __LINE__ . ')';
+    $this->pObj->drsMailToAdmin( $subject, $body );
+
     return false;
   }
 
