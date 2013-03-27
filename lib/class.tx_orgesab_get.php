@@ -235,33 +235,33 @@ class tx_orgesab_get {
 /**
  * getMd5( )  :
  *
- * @param	[type]		$$content: ...
- * @return	boolean
+ * @param       object		$xml  : the xml object
+ * @return	integer         $md5  :
  * @access private
  * @version       0.0.1
  * @since         0.0.1
  */
-  private function getMd5( $content )
+  private function getMd5( $xml )
   {
-    $md5 = md5( $content );
+    $md5 = md5( var_export( $xml, true ) );
     return $md5;
   }
 
 /**
  * getMd5Comparision( )  :
  *
- * @param	[type]		$$content: ...
- * @return	boolean
+ * @param       object		$xml                : the xml object
+ * @return	boolean         $contentIsUpToDate  :
  * @access private
  * @version       0.0.1
  * @since         0.0.1
  */
-  private function getMd5Comparision( $content )
+  private function getMd5Comparision( $xml )
   {
     $contentIsUpToDate  = false;
     $key                = 'md5LastContent';
 
-    $md5CurrFile = $this->getMd5( $content );
+    $md5CurrFile = $this->getMd5( $xml );
     $md5LastFile = $this->pObj->registryGet( $key );
 
     if( $md5CurrFile != $md5LastFile )
@@ -291,10 +291,6 @@ class tx_orgesab_get {
  */
   private function setContentIsUpdated( $xml )
   {
-    $prompt = 'TODO: setContentIsUpdated( $xml )';
-    t3lib_div::devLog( '[tx_orgesab_ImportTask]: ' . $prompt, $this->extKey, 3 );
-    return false;
-
     $success = false;
 
     switch( $this->pObj->getImportMode( ) )
@@ -308,7 +304,7 @@ class tx_orgesab_get {
         $success = true;
         break;
       case( 'update'):
-        $this->contentIsUpToDate = $this->getMd5Comparision( $content );
+        $this->contentIsUpToDate = $this->getMd5Comparision( $xml );
         $success = true;
         break;
       default:

@@ -95,32 +95,13 @@ class tx_orgesab_convert {
   {
     $this->init( );
     
-      // programm data
-    $programm = $this->getProgramm( $xml );
+    $content = array(
+      'programm' => $this->getProgramm( $xml ),
+      'bereiche' => $this->getBereiche( $xml ),
+      'angebote' => $this->getAngebote( $xml )
+    );
 
-    $prompt = var_export( $programm, true );
-    t3lib_div::devLog( '[tx_orgesab_ImportTask]: ' . $prompt, $this->extKey, 3 );
-    
-    if( ! $programm )
-    {
-      return false;
-    }
-
-    $prompt = implode( ';' . $programm );
-    t3lib_div::devLog( '[tx_orgesab_ImportTask]: ' . $prompt, $this->extKey, 3 );
-
-      // category data
-    $bereiche = $this->getBereiche( $xml );
-      // item data
-    $angebote = $this->getAngebote( $xml );
-
-    
-
-    $subject  = 'Failed';
-    $body     = __CLASS__ . '::' .  __METHOD__ . ' (' . __LINE__ . ')';
-    $this->pObj->drsMailToAdmin( $subject, $body );
-
-    return false;
+    return $content;
   }
 
 
@@ -142,8 +123,71 @@ class tx_orgesab_convert {
  */
   private function getAngebote( $xml )
   {
+    $angebote = array( );
 
-    return false;
+      // LOOP : Bereiche
+    foreach( $xml->Bereich as $bereich )
+    {
+        // LOOP : Angebote
+      foreach( $bereich->Angebot as $angebot )
+      {
+        $angebote[] = array
+        (
+          'bereich_zuordnung'     => $bereich->bereich_zuordnung,  
+          'angebot_nr'            => $angebot->angebot_nr,
+          'angebot_nr'            => $angebot->angebot_nr,
+          'angebot_ausgebucht'    => $angebot->angebot_ausgebucht,
+          'angebot_bereich'       => $angebot->angebot_bereich,
+          'angebot_beschreibung'  => $angebot->angebot_beschreibung,
+          'angebot_details'       => $angebot->angebot_details,
+          'angebot_inhalte'       => $angebot->angebot_inhalte,
+          'angebot_keywords'      => $angebot->angebot_keywords,
+          'angebot_kursleiter1'   => $angebot->angebot_kursleiter1,
+          'angebot_kursleiter2'   => $angebot->angebot_kursleiter2,
+          'angebot_link'          => $angebot->angebot_link,
+          'angebot_name'          => $angebot->angebot_name,
+          'angebot_nr'            => $angebot->angebot_nr,
+          'angebot_ort1'          => $angebot->angebot_ort1,
+          'angebot_ort2'          => $angebot->angebot_ort2,
+          'angebot_ort3'          => $angebot->angebot_ort3,
+          'angebot_ort4'          => $angebot->angebot_ort4,
+          'angebot_ort5'          => $angebot->angebot_ort5,
+          'angebot_preis_1'       => $angebot->angebot_preis_1,
+          'angebot_preis_2'       => $angebot->angebot_preis_2,
+          'angebot_preis_3'       => $angebot->angebot_preis_3,
+          'angebot_tag1'          => $angebot->angebot_tag1,
+          'angebot_tag2'          => $angebot->angebot_tag2,
+          'angebot_tag3'          => $angebot->angebot_tag3,
+          'angebot_tag4'          => $angebot->angebot_tag4,
+          'angebot_tag5'          => $angebot->angebot_tag5,
+          'angebot_uhrzeit1'      => $angebot->angebot_uhrzeit1,
+          'angebot_uhrzeit2'      => $angebot->angebot_uhrzeit2,
+          'angebot_uhrzeit3'      => $angebot->angebot_uhrzeit3,
+          'angebot_uhrzeit4'      => $angebot->angebot_uhrzeit4,
+          'angebot_uhrzeit5'      => $angebot->angebot_uhrzeit5,
+          'angebot_zeitraum'      => $angebot->angebot_zeitraum,
+        );
+      }
+        // LOOP : Angebote
+    } 
+      // LOOP : Bereiche
+    
+      // DRS
+    if( $this->pObj->drsModeConvert )
+    {
+      $number = count( $angebote );
+      $prompt = 'Programm contains #' . $number . ' Angebote.';
+      t3lib_div::devLog( '[tx_orgesab_ImportTask]: ' . $prompt, $this->extKey, 0 );
+      $prompt = 'The first and the last Angebote: ';
+      t3lib_div::devLog( '[tx_orgesab_ImportTask]: ' . $prompt, $this->extKey, 0 );
+      $prompt = var_export( $angebote[0], true);
+      t3lib_div::devLog( '[tx_orgesab_ImportTask]: ' . $prompt, $this->extKey, 0 );
+      $prompt = var_export( $angebote[ $number - 1 ], true);
+      t3lib_div::devLog( '[tx_orgesab_ImportTask]: ' . $prompt, $this->extKey, 0 );
+    }
+      // DRS
+
+    return $angebote;
   }
 
 /**
@@ -157,41 +201,70 @@ class tx_orgesab_convert {
  */
   private function getBereiche( $xml )
   {
+//      <Programm>
+//        <Bereich>
+//          <bereich_zuordnung></bereich_zuordnung>
+//          <Angebot>
+//            ...
+//          </Angebot>
+//        </Bereich>
+//      </Programm>
 
-    return false;
+    $bereiche = array( );
+    
+    foreach( $xml->Bereich as $bereich )
+    {
+      $bereiche[] = $bereich->bereich_zuordnung;
+
+    } 
+    
+    $bereiche = array_unique( $bereiche );
+    
+      // DRS
+    if( $this->pObj->drsModeConvert )
+    {
+      $prompt = 'Bereiche: ' . var_export( $bereiche, true );
+      t3lib_div::devLog( '[tx_orgesab_ImportTask]: ' . $prompt, $this->extKey, 0 );
+    }
+      // DRS
+
+    return $bereiche;
   }
 
 /**
  * getProgramm( )  :
  *
  * @param       object      $xml      : xml object
- * @return	array       $content  :
+ * @return	array       $programm :
  * @access private
  * @version       0.0.1
  * @since         0.0.1
  */
   private function getProgramm( $xml )
   {
-//<Programm>
-//  <programm_bezeichnung></programm_bezeichnung>
-//  <programm_beginn></programm_beginn>
-//  <programm_ende></programm_ende>
-//  <Bereich>
-//    ...
-//  </Bereich>
-//</Programm>
+//      <Programm>
+//        <programm_bezeichnung></programm_bezeichnung>
+//        <programm_beginn></programm_beginn>
+//        <programm_ende></programm_ende>
+//        <Bereich>
+//          ...
+//        </Bereich>
+//      </Programm>
     
     $programm = array
     (
-      'programm_bezeichnung'  => 'A ' . $xml->programm_bezeichnung,
-      'programm_beginn'       => 'B ' . $xml->programm_beginn,
-      'programm_ende'         => 'C ' . $xml->programm_ende
+      'programm_bezeichnung'  => $xml->programm_bezeichnung,
+      'programm_beginn'       => $xml->programm_beginn,
+      'programm_ende'         => $xml->programm_ende
     );
     
-    //$this->promptAndMail( 'Programm', $programm );
-
-    $prompt = var_export( $programm, true );
-    t3lib_div::devLog( '[tx_orgesab_ImportTask]: ' . $prompt, $this->extKey, 3 );
+      // DRS
+    if( $this->pObj->drsModeConvert )
+    {
+      $prompt = 'Programm: ' . var_export( $programm, true );
+      t3lib_div::devLog( '[tx_orgesab_ImportTask]: ' . $prompt, $this->extKey, 0 );
+    }
+      // DRS
 
     return $programm;
   }

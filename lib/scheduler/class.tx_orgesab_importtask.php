@@ -146,6 +146,13 @@ class tx_orgesab_ImportTask extends tx_scheduler_Task {
     public $drsModeInfo;
 
   /**
+    * DRS mode: display prompt in warning case only
+    *
+    * @var boolean $drsModeConvert
+    */
+    public $drsModeConvert;
+
+  /**
     * DRS mode: display prompt in performance case
     *
     * @var boolean $drsModePerformance
@@ -165,6 +172,13 @@ class tx_orgesab_ImportTask extends tx_scheduler_Task {
     * @var boolean $drsModeSql
     */
     public $drsModeSql;
+
+  /**
+    * DRS mode: display prompt in warning case only
+    *
+    * @var boolean $drsModeXml
+    */
+    public $drsModeXml;
 
   /**
     * An email address to be used during the process
@@ -290,13 +304,11 @@ class tx_orgesab_ImportTask extends tx_scheduler_Task {
     }
       // RETURN true : content is up to date
 
-    $prompt = 'TODO: $md5 = md5( $xml )';
-    t3lib_div::devLog( '[tx_orgesab_ImportTask]: ' . $prompt, $this->extKey, 3 );
-    $md5 = md5( $xml );
+    $md5 = md5( var_export( $xml, true ) );
 
       // RETURN false : content is unproper
-    $xml = $this->convertContent( $xml );
-    if( ! $xml )
+    $content = $this->convertContent( $xml );
+    if( ! $content )
     {
       $this->timeTracking_log( $debugTrailLevel, 'END' );
       return false;
@@ -304,7 +316,7 @@ class tx_orgesab_ImportTask extends tx_scheduler_Task {
       // RETURN false : content is unproper
 
       // RETURN false : database could not updated
-    if( ! $this->updateDatabase( $xml ) )
+    if( ! $this->updateDatabase( $content ) )
     {
       return false;
     }
@@ -313,7 +325,7 @@ class tx_orgesab_ImportTask extends tx_scheduler_Task {
       // Set registry
     $key    = 'md5LastContent';
     $value  = $md5;
-    $this->registrySet($key, $value);
+    $this->registrySet( $key, $value );
       // Set registry
 
     return true;
@@ -752,15 +764,19 @@ cronCmd:    ' . ( $cronCmd ? $cronCmd : 'not used' )
     switch( $this->extConf['debuggingDrs'] )
     {
       case( 'Enabled (for debugging only!)' ):
-        $this->drsModePerformance = true;
+        $this->drsModeConvert     = true;
         $this->drsModeImportTask  = true;
+        $this->drsModePerformance = true;
         $this->drsModeSql         = true;
+        $this->drsModeXml         = true;
         break;
       default:
           // :TODO: Error msg per email to admin
-        $this->drsModePerformance = true;
+        $this->drsModeConvert     = true;
         $this->drsModeImportTask  = true;
+        $this->drsModePerformance = true;
         $this->drsModeSql         = true;
+        $this->drsModeXml         = true;
         $prompt = 'DRS mode isn\'t defined.';
         t3lib_div::devlog( '[tx_orgesab_ImportTask] ' . $prompt, $this->extKey, 3 );
         break;
