@@ -96,8 +96,8 @@ class tx_orgesab_convert {
     
     $content = '<<<XML' . PHP_EOL . trim( $content ) . PHP_EOL . 'XML;';
     
-    $xml = simplexml_load_string( $content );
-    $xml = simplexml_load_string( $this->pObj->getImportUrl( ) );
+    //$xml = simplexml_load_string( $content );
+    $xml = simplexml_load_file( $this->pObj->getImportUrl( ) );
     if( ! $xml )
     {
       if( strlen( $content ) > 1000 )
@@ -106,9 +106,12 @@ class tx_orgesab_convert {
                   . ' ...';
       }
       $subject  = 'Failed';
-      $body     = 'XML string could not open.' . PHP_EOL
+      // $body     = 'XML string could not open.' . PHP_EOL
+//                . PHP_EOL
+//                . 'Content : ' . $content . PHP_EOL
+      $body     = 'XML file could not open.' . PHP_EOL
                 . PHP_EOL
-                . 'Content : ' . $content . PHP_EOL
+                . 'Url : ' . $this->pObj->getImportUrl( ) . PHP_EOL
                 . PHP_EOL
                 . __CLASS__ . '::' .  __METHOD__ . ' (' . __LINE__ . ')';
       $this->pObj->drsMailToAdmin( $subject, $body );
