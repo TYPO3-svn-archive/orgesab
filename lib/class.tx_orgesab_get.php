@@ -215,7 +215,6 @@ class tx_orgesab_get {
 
       // get the content of the ressource
     $content  = stream_get_contents( $handle );
-t3lib_div::devLog( '[tx_orgesab_ImportTask]: ' . $content, $this->extKey, 3 );
     fclose( $handle );
 
       // RETURN false : unproper content

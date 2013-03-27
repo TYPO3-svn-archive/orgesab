@@ -278,6 +278,7 @@ class tx_orgesab_ImportTask extends tx_scheduler_Task {
 
       // RETURN false : content is unproper
     $content = $this->getContent( );
+t3lib_div::devLog( '[tx_orgesab_ImportTask]: ' . $content, $this->extKey, 3 );
     if( ! $content )
     {
       $this->timeTracking_log( $debugTrailLevel, 'END' );
@@ -296,6 +297,7 @@ class tx_orgesab_ImportTask extends tx_scheduler_Task {
     $md5 = md5( $content );
 
       // RETURN false : content is unproper
+t3lib_div::devLog( '[tx_orgesab_ImportTask]: ' . $content, $this->extKey, 3 );
     $content = $this->convertContent( $content );
     if( ! $content )
     {
