@@ -234,7 +234,6 @@ class tx_orgesab_get {
 //t3lib_div::devLog( implode( ( array ) $content ), $this->extKey, 3 );
 //t3lib_div::devLog( 'TEST', $this->extKey, 3 );
 
-t3lib_div::devLog( '[tx_orgesab_ImportTask]: ' . $content, $this->extKey, 3 );
     return $content;
   }
 
