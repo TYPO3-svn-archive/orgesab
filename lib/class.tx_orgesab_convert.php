@@ -90,11 +90,19 @@ class tx_orgesab_convert {
  * @version       0.0.1
  * @since         0.0.1
  */
-  public function main( )
+  public function main( $content )
   {
     $this->init( );
     
     $xml = simplexml_load_string( '<<<XML' . PHP_EOL . $content . PHP_EOL . 'XML;' );
+    if( ! $xml )
+    {
+      $subject  = 'Failed';
+      $body     = 'XML string could not open.'
+                . PHP_EOL
+                . __CLASS__ . '::' .  __METHOD__ . ' (' . __LINE__ . ')';
+      $this->pObj->drsMailToAdmin( $subject, $body );
+    }
     
       // programm data
     $programm = $this->getProgramm( $xml );
