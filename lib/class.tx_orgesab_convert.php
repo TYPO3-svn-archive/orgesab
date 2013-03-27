@@ -211,10 +211,12 @@ class tx_orgesab_convert {
 //      </Programm>
 
     $bereiche = array( );
+    $id = 0;
     
     foreach( $xml->Bereich as $bereich )
     {
-      $bereiche[] = ( string ) $bereich->bereich_zuordnung;
+      $id++;
+      $bereiche[$id] = ( string ) $bereich->bereich_zuordnung;
 
     } 
     
