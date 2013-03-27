@@ -32,8 +32,7 @@ foreach( $xml->Bereich as $bereich )
   echo '</div>';
 } 
 
-var_export( $angebote );
-var_dump( $angebote );
+print_r( $angebote );
 echo $angebote[0]['angebot_nr'];
 
 
