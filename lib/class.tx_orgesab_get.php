@@ -295,7 +295,10 @@ class tx_orgesab_get {
       // DRS
     if( $this->pObj->drsModeError )
     {
-      $prompt = 'content doesn\'t seem not to be in XML format: ' . $this->pObj->getImportUrl( );
+      $prompt = 'content doesn\'t seem to be in XML format. ' 
+              . 'Url: ' . $this->pObj->getImportUrl( ) . ' '
+              . 'First line: ' . $firstLine
+              ;
       t3lib_div::devLog( '[tx_orgesab_ImportTask]: ' . $prompt, $this->extKey, 3 );
     }
       // DRS

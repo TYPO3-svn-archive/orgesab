@@ -92,32 +92,36 @@ class tx_orgesab_convert {
  */
   public function main( )
   {
-    $success = false;
-    $this->updateDatabase = false;
-
     $this->init( );
+    
+    $xml = new SimpleXMLElement( $content );
+    
+      // programm data
+    $programm = $this->getProgramm( $xml );
 
-    if( ! $this->convertContent( ) )
+    $prompt = implode( ';' . $programm );
+    t3lib_div::devLog( '[tx_orgesab_ImportTask]: ' . $prompt, $this->extKey, 3 );
+    
+    if( ! $programm )
     {
-      return $success;
+      return false;
     }
 
-    if( ! $this->xmlIsUpdated( ) )
-    {
-      $success = true;
-      return $success;
-    }
+    $prompt = implode( ';' . $programm );
+    t3lib_div::devLog( '[tx_orgesab_ImportTask]: ' . $prompt, $this->extKey, 3 );
 
-    if( ! $this->xmlForDatabase( ) )
-    {
-      return $success;
-    }
+      // category data
+    $bereiche = $this->getBereiche( $xml );
+      // item data
+    $angebote = $this->getAngebote( $xml );
+
+    
 
     $subject  = 'Failed';
     $body     = __CLASS__ . '::' .  __METHOD__ . ' (' . __LINE__ . ')';
     $this->pObj->drsMailToAdmin( $subject, $body );
 
-    return $success;
+    return false;
   }
 
 
@@ -125,6 +129,80 @@ class tx_orgesab_convert {
   /***********************************************
    *
    * Init
+   *
+   **********************************************/
+
+/**
+ * getAngebote( )  :
+ *
+ * @param       object      $xml      : xml object
+ * @return	array       $content  :
+ * @access private
+ * @version       0.0.1
+ * @since         0.0.1
+ */
+  private function getAngebote( $xml )
+  {
+
+    return false;
+  }
+
+/**
+ * getBereiche( )  :
+ *
+ * @param       object      $xml      : xml object
+ * @return	array       $content  :
+ * @access private
+ * @version       0.0.1
+ * @since         0.0.1
+ */
+  private function getBereiche( $xml )
+  {
+
+    return false;
+  }
+
+/**
+ * getProgramm( )  :
+ *
+ * @param       object      $xml      : xml object
+ * @return	array       $content  :
+ * @access private
+ * @version       0.0.1
+ * @since         0.0.1
+ */
+  private function getProgramm( $xml )
+  {
+//<Programm>
+//  <programm_bezeichnung></programm_bezeichnung>
+//  <programm_beginn></programm_beginn>
+//  <programm_ende></programm_ende>
+//  <Bereich>
+//    ...
+//  </Bereich>
+//</Programm>
+    
+    $programm = array
+    (
+      'programm_bezeichnung'  => $xml->Programm->programm_bezeichnung,
+      'programm_beginn'       => $xml->Programm->programm_beginn,
+      'programm_ende'         => $xml->Programm->programm_ende
+    );
+    
+    if( $programm )
+    {
+      return $programm;
+    }
+    
+    $this->promptAndMail( 'Programm', $programm );
+    return false; 
+  }
+
+
+
+  /***********************************************
+   *
+   * Get
    *
    **********************************************/
 
@@ -138,13 +216,72 @@ class tx_orgesab_convert {
  */
   private function init( )
   {
-    if( ! is_object( $this->pObj ) )
+    if( ! $this->initPobj( ) )
     {
-      $prompt = 'pObj isn\'t an object' . PHP_EOL
-              . __METHOD__ . ' (' . __LINE__ . ')'
-              ;
-      die( $prompt );
+      return false;
     }
+
+    return true;
+  }
+
+/**
+ * initPobj( )  :
+ *
+ * @return	boolean
+ * @access private
+ * @version       0.0.1
+ * @since         0.0.1
+ */
+  private function initPobj( )
+  {
+    if( is_object( $this->pObj ) )
+    {
+      return true;
+    }
+
+      // DRS
+    if( $this->pObj->drsModeError )
+    {
+      $prompt = 'pObj isn\'t any object';
+      t3lib_div::devLog( '[tx_orgesab_ImportTask]: ' . $prompt, $this->extKey, 3 );
+    }
+      // DRS
+
+      // e-mail to admin
+    $subject  = 'Failed';
+    $body     = 'Sorry, but pObj isn\'t any object. ' . PHP_EOL
+              . PHP_EOL
+              . __CLASS__ . '::' .  __METHOD__ . ' (' . __LINE__ . ')';
+    $this->pObj->drsMailToAdmin( $subject, $body );
+      // e-mail to admin
+
+    return false;
+  }
+
+
+
+  /***********************************************
+   *
+   * Prompt and Mail
+   *
+   **********************************************/
+
+/**
+ * promptAndMail( )
+ *
+ * @return	void
+ * @access      private
+ * @version       0.0.1
+ * @since         0.0.1
+ */
+  private function promptAndMail( $tag, $content )
+  {
+    $subject  = 'Failed';
+    $body     = 'XML tag: ' . $tag . PHP_EOL
+              . 'Content ' . implode( '; ' . $content )
+              . PHP_EOL
+              . __CLASS__ . '::' .  __METHOD__ . ' (' . __LINE__ . ')';
+    $this->pObj->drsMailToAdmin( $subject, $body );
   }
 
 
@@ -184,77 +321,26 @@ class tx_orgesab_convert {
    *
    **********************************************/
 
-
 /**
- * xmlForDatabase( )  :
+ * convertXmlToArray( )  :
  *
- * @return	boolean
+ * @return	array
  * @access private
  * @version       0.0.1
  * @since         0.0.1
  */
-  private function xmlForDatabase( )
+  private function convertXmlToArray( $content )
   {
-    $success = false;
-    $this->updateDatabase = false;
-
-    if( ! $this->xmlIsUpdated( ) )
-    {
-      $success = true;
-      return $success;
-    }
-
-    if( ! $this->xmlForDatabase( ) )
-    {
-      return $success;
-    }
-
+    $xml = new SimpleXMLElement( $content );
+    
+    $programm = $this-
     $subject  = 'Failed';
     $body     = __CLASS__ . '::' .  __METHOD__ . ' (' . __LINE__ . ')';
     $this->pObj->drsMailToAdmin( $subject, $body );
 
-    return $success;
+    return false;
   }
-
-/**
- * convertContent( )  :
- *
- * @return	boolean
- * @access private
- * @version       0.0.1
- * @since         0.0.1
- */
-  private function convertContent( )
-  {
-    $success = false;
-    $this->updateDatabase = false;
-
-    $subject  = 'Failed';
-    $body     = __CLASS__ . '::' .  __METHOD__ . ' (' . __LINE__ . ')';
-    $this->pObj->drsMailToAdmin( $subject, $body );
-
-    return $success;
-  }
-
-/**
- * xmlIsUpdated( )  :
- *
- * @return	boolean
- * @access private
- * @version       0.0.1
- * @since         0.0.1
- */
-  private function xmlIsUpdated( )
-  {
-    $success = false;
-    $this->updateDatabase = true;
-
-    $subject  = 'Failed';
-    $body     = __CLASS__ . '::' .  __METHOD__ . ' (' . __LINE__ . ')';
-    $this->pObj->drsMailToAdmin( $subject, $body );
-
-    return $success;
-  }
+  
 }
 
 if (defined('TYPO3_MODE') && isset($GLOBALS['TYPO3_CONF_VARS'][TYPO3_MODE]['XCLASS']['ext/orgesab/lib/class.tx_orgesab_convert.php'])) {

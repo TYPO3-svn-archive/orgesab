@@ -368,9 +368,6 @@ class tx_orgesab_ImportTask extends tx_scheduler_Task {
     $this->convertContentInstance( );
     $success = $this->convert->main( );
 
-    $success = true;
-    $this->convertContentDrsMail( $success );
-
     return $success;
   }
 
