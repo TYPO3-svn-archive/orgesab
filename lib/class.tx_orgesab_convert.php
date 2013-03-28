@@ -659,7 +659,7 @@ class tx_orgesab_convert {
     foreach( $tx_orgesab as $tx_orgesab_record )
     {
       $category     = $tx_orgesab_record['category'];
-      $uid_foreign  = $tx_orgesab_catFlipped[$category]:
+      $uid_foreign  = $tx_orgesab_catFlipped[$category];
         
       $recordsMm[] = array
       (
