@@ -653,6 +653,12 @@ class tx_orgesab_convert {
     $tx_orgesab_cat         = $records['tx_orgesab_cat']['records'];
     $tx_orgesab_catFlipped  = array_flip( $tx_orgesab_cat );
     
+$prompt = var_export( $tx_orgesab, true);
+t3lib_div::devLog( '[tx_orgesab_ImportTask]: ' . $prompt, $this->extKey, 0 );
+
+$prompt = var_export( $tx_orgesab_catFlipped, true);
+t3lib_div::devLog( '[tx_orgesab_ImportTask]: ' . $prompt, $this->extKey, 0 );
+
     $recordsMm = array( );
     
       // LOOP : Angebote
