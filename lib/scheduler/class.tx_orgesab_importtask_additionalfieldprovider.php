@@ -422,7 +422,7 @@ class tx_orgesab_ImportTask_AdditionalFieldProvider implements tx_scheduler_Addi
       // Write the code for the field
     $fieldID    = 'orgesab_sysfolderUid';
     $fieldValue = htmlspecialchars( $taskInfo['orgesab_sysfolderUid'] );
-    $fieldCode  = '<input type="text" name="tx_scheduler[orgesab_sysfolderUid]" id="' . $fieldID . '" value="' . $fieldValue . '" size="50" />';
+    $fieldCode  = '<input type="text" name="tx_scheduler[orgesab_sysfolderUid]" id="' . $fieldID . '" value="' . $fieldValue . '" size="5" />';
     $additionalFields = array( );
     $additionalFields[$fieldID] = array
     (
