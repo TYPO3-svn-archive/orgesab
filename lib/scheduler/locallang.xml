@@ -29,7 +29,7 @@
       <label index="msg.enterImportUrl">URL of the xml file: Please take care of a proper URL for the XML file.</label>
       <label index="msg.enterOrgesabAdminEmail">E-mail: Please enter the e-mail adress of the Org +ESAB  admin.</label>
       <label index="msg.enterStart">Start: Start must be one hour later than now at least. This is a security requirement. If you like to run Org +ESAB Quota earlier, please run it manually.</label>
-      <label index="msg.enterSysfolderUid">Id of Org +ESAB folder: Please enter the uid of the folder, which contains Org +ESAB records.</label>
+      <label index="msg.enterSysfolderUid">Id of Org +ESAB folder: Please take care of a proper uid of the folder, which contains Org +ESAB records.</label>
       <label index="msg.importMode.ever">Database Update: each time, when this job is running.</label>
       <label index="msg.importMode.never">Database Update: never</label>
       <label index="msg.importMode.update">Database Update: Update only, if the XML file was updated. Best performance.</label>
@@ -66,7 +66,7 @@
       <label index="msg.enterImportUrl">URL der XML-Datei: Gib bitte eine korrekte Adresse an.</label>
       <label index="msg.enterOrgesabAdminEmail">E-Mail: Bitte gib die Mail-Adresse des Org +ESAB Administrators an.</label>
       <label index="msg.enterStart">Start: Die Start-Zeit muss eine mindestens Stunde in der Zukunft liegen. Das ist eine Vorsichtsmaßnahme. Wenn dieser Job eher gestartet werden soll, starte ihn manuell.</label>
-      <label index="msg.enterSysfolderUid">Id des Org +ESAB-Ordners: Bitte gebe die Id des Ordners an, der die Org +ESAB-Datensätze enthält.</label>
+      <label index="msg.enterSysfolderUid">Id des Org +ESAB-Ordners: Bitte gebe die korrekte Id des Ordners an, der die Org +ESAB-Datensätze enthält.</label>
       <label index="msg.importMode.ever">Datenbank aktualisieren: jedes Mal, wenn dieser Job läuft.</label>
       <label index="msg.importMode.never">Datenbank aktualisieren: nie. Das macht keinen Sinn!</label>
       <label index="msg.importMode.update">Datenbank aktualisieren: wenn sich die XML-Datei geändert hat. Beste Performance.</label>
