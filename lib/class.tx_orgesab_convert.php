@@ -656,6 +656,9 @@ class tx_orgesab_convert {
 $prompt = var_export( $tx_orgesab, true);
 t3lib_div::devLog( '[tx_orgesab_ImportTask]: ' . $prompt, $this->extKey, 0 );
 
+$prompt = var_export( $tx_orgesab_cat, true);
+t3lib_div::devLog( '[tx_orgesab_ImportTask]: ' . $prompt, $this->extKey, 0 );
+
 $prompt = var_export( $tx_orgesab_catFlipped, true);
 t3lib_div::devLog( '[tx_orgesab_ImportTask]: ' . $prompt, $this->extKey, 0 );
 
