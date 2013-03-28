@@ -143,7 +143,7 @@ class tx_orgesab_update {
  */
   private function insert( $content )
   {
-$prompt = array_keys( $content );
+$prompt = implode( '; ', array_keys( $content ) );
 t3lib_div::devLog( '[tx_orgesab_ImportTask]: ' . $prompt, $this->extKey, 0 );
     
     foreach( $content as $tables => $table )
@@ -155,7 +155,7 @@ $prompt = $tableName;
 t3lib_div::devLog( '[tx_orgesab_ImportTask]: ' . $prompt, $this->extKey, 0 );
 $prompt = $truncate;
 t3lib_div::devLog( '[tx_orgesab_ImportTask]: ' . $prompt, $this->extKey, 0 );
-$prompt = $records;
+$prompt = implode( '; ', array_keys( $records ) );
 t3lib_div::devLog( '[tx_orgesab_ImportTask]: ' . $prompt, $this->extKey, 0 );
     }
   }
