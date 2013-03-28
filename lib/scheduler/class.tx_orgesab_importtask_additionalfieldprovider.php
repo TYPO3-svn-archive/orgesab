@@ -855,7 +855,7 @@ class tx_orgesab_ImportTask_AdditionalFieldProvider implements tx_scheduler_Addi
 
     if( $submittedData['orgesab_sysfolderUid'] < 1 )
     {
-      $prompt = $this->msgPrefix . ': ' . $GLOBALS['LANG']->sL( 'LLL:EXT:orgesab/lib/scheduler/locallang.xml:msg.enterSysfolderUid' );
+      $prompt = $this->msgPrefix . ': ' . $submittedData['orgesab_sysfolderUid'] . ' :: ' . $GLOBALS['LANG']->sL( 'LLL:EXT:orgesab/lib/scheduler/locallang.xml:msg.enterSysfolderUid' );
       $parentObject->addMessage( $prompt, t3lib_FlashMessage::ERROR );
       $bool_isValidatingSuccessful = false;
     }
