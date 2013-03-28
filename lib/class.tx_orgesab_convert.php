@@ -665,7 +665,7 @@ class tx_orgesab_convert {
     $recordsMm = array( );
     
       // LOOP : Angebote
-    foreach( $angebote as $angebot )
+    foreach( $angebote as $uid => $angebot )
     {
 $prompt = var_export( $tx_orgesab_record, true );
 t3lib_div::devLog( '[tx_orgesab_ImportTask]: ' . $prompt, $this->extKey, 0 );
@@ -674,7 +674,7 @@ t3lib_div::devLog( '[tx_orgesab_ImportTask]: ' . $prompt, $this->extKey, 0 );
         
       $recordsMm[] = array
       (
-        'uid_local'       => $tx_orgesab_record['uid'],
+        'uid_local'       => $uid,
         'uid_foreign'     => $uid_foreign,
         'tablenames'      => null,
         'sorting'         => null,
