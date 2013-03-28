@@ -403,7 +403,7 @@ class tx_orgesab_ImportTask_AdditionalFieldProvider implements tx_scheduler_Addi
     {
       if( $parentObject->CMD == 'add' )
       {
-          // In case of new task and if field is empty, set default email address
+          // In case of new task and if field is empty, set it to ...
         $taskInfo['orgesab_sysfolderUid'] = null;
       }
       elseif( $parentObject->CMD == 'edit' )
@@ -851,7 +851,7 @@ class tx_orgesab_ImportTask_AdditionalFieldProvider implements tx_scheduler_Addi
   {
     $bool_isValidatingSuccessful = true;
 
-    $submittedData['orgesab_sysfolderUid'] = ( int ) $submittedData['orgesab_sysfolderUid'];
+    //$submittedData['orgesab_sysfolderUid'] = ( int ) $submittedData['orgesab_sysfolderUid'];
 
     if( $submittedData['orgesab_sysfolderUid'] < 1 )
     {
