@@ -47,6 +47,7 @@ CREATE TABLE tx_orgesab (
   price2 tinytext,
   price3 tinytext,
   skills tinytext,
+  spaceoftime tinytext
   staff1 text,
   staff2 text,
   title tinytext,

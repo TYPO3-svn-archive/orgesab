@@ -401,7 +401,6 @@ class tx_orgesab_convert {
         'tstamp'    => time( ),
         'crdate'    => time( ),
         'cruser_id' => null,
-        'deleted'   => 0,
           
         'bodytext'    => $angebot['angebot_details'],
         'bookedup'    => $angebot['angebot_ausgebucht'],
@@ -429,15 +428,15 @@ class tx_orgesab_convert {
         'price2'      => $angebot['angebot_preis_2'],
         'price3'      => $angebot['angebot_preis_3'],
         'skills'      => $angebot['angebot_inhalte'],
+        'spaceoftime' => $angebot['angebot_zeitraum'],
         'staff1'      => $angebot['angebot_kursleiter1'],
         'staff2'      => $angebot['angebot_kursleiter2'],
         'title'       => $angebot['angebot_name'],
         
-        'tx_orgesab_cat'  => $angebot['1'],
-        'tx_org_cal'      => $angebot['null'],
+        'tx_orgesab_cat'  => 1,
+        'tx_org_cal'      => null,
         
-        'hidden'      => $angebot['0'],
-        'fe_group'    => $angebot['null'],
+        'fe_group'    => null,
 
         'keywords'    => $angebot['angebot_keywords'],
         'description' => $angebot['angebot_beschreibung'],
@@ -472,10 +471,41 @@ class tx_orgesab_convert {
  * @version       0.0.1
  * @since         0.0.1
  */
-  private function  setOrgesabCat( $content )
+  private function setOrgesabCat( $content )
   {
     $records = array( );
     
+      // LOOP : Angebote
+    foreach( $content['bereiche'] as $uid => $bereich_zuordnung )
+    {
+      $records[] = array
+      (
+        'uid'       => $uid,
+        'pid'       => $this->pObj->getSysfolderUid( ),
+        'tstamp'    => time( ),
+        'crdate'    => time( ),
+        'cruser_id' => null,
+          
+        'title'     => $bereich_zuordnung,
+      );
+    } 
+      // LOOP : Angebote
+    
+      // DRS
+    if( $this->pObj->drsModeConvert )
+    {
+      $number = count( $records );
+      $prompt = 'tx_orgesab_cat contains #' . $number . ' records';
+      t3lib_div::devLog( '[tx_orgesab_ImportTask]: ' . $prompt, $this->extKey, 0 );
+      $prompt = 'The second and the last record: ';
+      t3lib_div::devLog( '[tx_orgesab_ImportTask]: ' . $prompt, $this->extKey, 0 );
+      $prompt = var_export( $records[1], true);
+      t3lib_div::devLog( '[tx_orgesab_ImportTask]: ' . $prompt, $this->extKey, 0 );
+      $prompt = var_export( $records[ $number - 1 ], true);
+      t3lib_div::devLog( '[tx_orgesab_ImportTask]: ' . $prompt, $this->extKey, 0 );
+    }
+      // DRS
+
     return $records;
   }
 
@@ -525,7 +555,7 @@ class tx_orgesab_convert {
           $period = $angebot['angebot_zeitraum'];
           $hours  = $angebot['angebot_uhrzeit1'];
           $prompt = 'Unproper period in Angebot "' . $title . '" '
-                  . '(# ' . $uid . '): ' . $period . ' ' . $hours;
+                  . '(#' . $uid . '): "' . $period . ' ' . $hours .'"';
           t3lib_div::devLog( '[tx_orgesab_ImportTask]: ' . $prompt, $this->extKey, 3 );
         }
           // DRS
@@ -588,7 +618,7 @@ class tx_orgesab_convert {
           $period = $angebot['angebot_zeitraum'];
           $hours  = $angebot['angebot_uhrzeit1'];
           $prompt = 'Unproper period in Angebot "' . $title . '" '
-                  . '(# ' . $uid . '): ' . $period . ' ' . $hours;
+                  . '(#' . $uid . '): "' . $period . ' ' . $hours .'"';
           t3lib_div::devLog( '[tx_orgesab_ImportTask]: ' . $prompt, $this->extKey, 3 );
         }
           // DRS
