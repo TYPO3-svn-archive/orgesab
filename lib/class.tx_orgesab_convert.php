@@ -110,10 +110,11 @@ class tx_orgesab_convert {
         'truncate' => true,
         'records'  => $this->setOrgesabCat( $content ),
       ),
-      'tx_orgesab_mm_tx_orgesab_cat' => array(
-        'truncate' => true,
-        'records'  => $this->setOrgesabMmCat( $content ),
-      ),
+    );
+
+    $records['tx_orgesab_mm_tx_orgesab_cat'] = array(
+      'truncate' => true,
+      'records'  => $this->setOrgesabMmCat( $records ),
     );
 
     return $records;
@@ -228,6 +229,10 @@ class tx_orgesab_convert {
     
     foreach( $xml->Bereich as $bereich )
     {
+      if( empty( $bereich->bereich_zuordnung ) )
+      {
+        continue;
+      }
       $id++;
       $bereiche[$id] = ( string ) $bereich->bereich_zuordnung;
 
@@ -636,14 +641,53 @@ class tx_orgesab_convert {
 /**
  * setOrgesabFieldEventEnd( )  :
  *
- * @param       array       $content  : 
+ * @param       array       $records  : 
  * @return	array       $records  :
  * @access private
  * @version       0.0.1
  * @since         0.0.1
  */
-  private function  setOrgesabMmCat( $content )
+  private function  setOrgesabMmCat( $records )
   {
+    $tx_orgesab             = $records['tx_orgesab']['records'];
+    $tx_orgesab_cat         = $records['tx_orgesab_cat']['records'];
+    $tx_orgesab_catFlipped  = array_flip( $tx_orgesab_cat );
+    
+    $recordsMm = array( );
+    
+      // LOOP : Angebote
+    foreach( $tx_orgesab as $tx_orgesab_record )
+    {
+      $category     = $tx_orgesab_record['category'];
+      $uid_foreign  = $tx_orgesab_catFlipped[$category]:
+        
+      $recordsMm[] = array
+      (
+        'uid_local'       => $tx_orgesab_record['uid'],
+        'uid_foreign'     => $uid_foreign,
+        'tablenames'      => null,
+        'sorting'         => null,
+        'sorting_foreign' => null
+      );
+    } 
+      // LOOP : Angebote
+    
+      // DRS
+    if( $this->pObj->drsModeConvert )
+    {
+      $number = count( $recordsMm );
+      $prompt = 'tx_orgesab contains #' . $number . ' records';
+      t3lib_div::devLog( '[tx_orgesab_ImportTask]: ' . $prompt, $this->extKey, 0 );
+      $prompt = 'The second and the last record: ';
+      t3lib_div::devLog( '[tx_orgesab_ImportTask]: ' . $prompt, $this->extKey, 0 );
+      $prompt = var_export( $recordsMm[1], true);
+      t3lib_div::devLog( '[tx_orgesab_ImportTask]: ' . $prompt, $this->extKey, 0 );
+      $prompt = var_export( $recordsMm[ $number - 1 ], true);
+      t3lib_div::devLog( '[tx_orgesab_ImportTask]: ' . $prompt, $this->extKey, 0 );
+    }
+      // DRS
+
+    return $recordsMm;
   }
 
 
