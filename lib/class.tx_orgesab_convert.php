@@ -654,8 +654,8 @@ class tx_orgesab_convert {
     foreach( $tx_orgesab_cat as $category )
     {
       $uid    = $category['uid'];
-      $value  = $category['title'];
-      $tx_orgesab_catFlipped[$uid] = $value;
+      $title  = $category['title'];
+      $tx_orgesab_catFlipped[$title] = $uid;
     }
     
 $prompt = var_export( $tx_orgesab, true);
