@@ -625,7 +625,7 @@ cronCmd:    ' . ( $cronCmd ? $cronCmd : 'not used' )
     $body     = 'Unporper XML' . PHP_EOL
               . PHP_EOL
               . __CLASS__ . '::' .  __METHOD__ . ' (' . __LINE__ . ')';
-    $this->pObj->drsMailToAdmin( $subject, $body );
+    $this->drsMailToAdmin( $subject, $body );
 
     return false;
   }
