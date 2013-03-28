@@ -19,6 +19,7 @@
       <label index="label.reportMode.never">Never</label>
       <label index="label.reportMode.update">If database is updated (recommended)</label>
       <label index="label.reportMode.warn">In case of errors only</label>
+      <label index="label.sysfolderUid">Id of Org +ESAB folder</label>
       <label index="label.testMode">Test mode</label>
       <label index="label.testMode.disabled">Disabled (Warning message will sent, e-mails over quota will deleted)</label>
       <label index="label.testMode.enabled">Enabled (orgesab admin will get the report "Which will happen")</label>
@@ -28,6 +29,7 @@
       <label index="msg.enterImportUrl">URL of the xml file: Please take care of a proper URL for the XML file.</label>
       <label index="msg.enterOrgesabAdminEmail">E-mail: Please enter the e-mail adress of the Org +ESAB  admin.</label>
       <label index="msg.enterStart">Start: Start must be one hour later than now at least. This is a security requirement. If you like to run Org +ESAB Quota earlier, please run it manually.</label>
+      <label index="msg.enterSysfolderUid">Id of Org +ESAB folder: Please enter the uid of the folder, which contains Org +ESAB records.</label>
       <label index="msg.importMode.ever">Database Update: each time, when this job is running.</label>
       <label index="msg.importMode.never">Database Update: never</label>
       <label index="msg.importMode.update">Database Update: Update only, if the XML file was updated. Best performance.</label>
@@ -57,12 +59,14 @@
       <label index="label.reportMode.never">Nie</label>
       <label index="label.reportMode.update">Wenn die Datenbank aktualisiert wurde (empfohlen)</label>
       <label index="label.reportMode.warn">Nur im Fehlerfall</label>
+      <label index="label.sysfolderUid">Id des Org +ESAB-Ordners</label>
       <label index="label.testTask.name">Org +ESAB Test</label>
       <label index="label.testTask.description">Org +ESAB testet den Mail-Versand an den Org +ESAB Administrator. Der Test dient allein der Entwicklung von TYPO3-Org +ESAB.</label>
       <label index="msg.enterFrequency">Häufigkeit: Aufruf ist seltener als ein Mal am Tag (24 Stunden = 86.400 Sekunden). Bist Du sicher, dass Du den Wert richtig eingestellt hast?</label>
       <label index="msg.enterImportUrl">URL der XML-Datei: Gib bitte eine korrekte Adresse an.</label>
       <label index="msg.enterOrgesabAdminEmail">E-Mail: Bitte gib die Mail-Adresse des Org +ESAB Administrators an.</label>
       <label index="msg.enterStart">Start: Die Start-Zeit muss eine mindestens Stunde in der Zukunft liegen. Das ist eine Vorsichtsmaßnahme. Wenn dieser Job eher gestartet werden soll, starte ihn manuell.</label>
+      <label index="msg.enterSysfolderUid">Id des Org +ESAB-Ordners: Bitte gebe die Id des Ordners an, der die Org +ESAB-Datensätze enthält.</label>
       <label index="msg.importMode.ever">Datenbank aktualisieren: jedes Mal, wenn dieser Job läuft.</label>
       <label index="msg.importMode.never">Datenbank aktualisieren: nie. Das macht keinen Sinn!</label>
       <label index="msg.importMode.update">Datenbank aktualisieren: wenn sich die XML-Datei geändert hat. Beste Performance.</label>

@@ -105,6 +105,7 @@ class tx_orgesab_ImportTask_AdditionalFieldProvider implements tx_scheduler_Addi
     $additionalFields = array( )
                       + $this->getFieldOrgesabAdminEmail( $taskInfo, $task, $parentObject )
                       + $this->getFieldReportMode( $taskInfo, $task, $parentObject )
+                      + $this->getFieldSysfolderUid( $taskInfo, $task, $parentObject )
                       + $this->getFieldImportUrl( $taskInfo, $task, $parentObject )
                       + $this->getFieldImportMode( $taskInfo, $task, $parentObject )
                       ;
@@ -377,6 +378,64 @@ class tx_orgesab_ImportTask_AdditionalFieldProvider implements tx_scheduler_Addi
     return $additionalFields;
   }
 
+  /**
+ * getFieldSysfolderUid( )  : This method is used to define new fields for adding or editing a task
+ *                                           In this case, it adds an email field
+ *
+ *                    The array is multidimensional, keyed to the task class name and each field's id
+ *                    For each field it provides an associative sub-array with the following:
+ *                        ['code']        => The HTML code for the field
+ *                        ['label']        => The label of the field (possibly localized)
+ *                        ['cshKey']        => The CSH key for the field
+ *                        ['cshLabel']    => The code of the CSH label
+ *
+ * @param	array		$taskInfo Reference to the array containing the info used in the add/edit form
+ * @param	object		$task When editing, reference to the current task object. Null when adding.
+ * @param	tx_scheduler_Module		$parentObject Reference to the calling object (Scheduler's BE module)
+ * @return	array		Array containing all the information pertaining to the additional fields
+ * @version       0.0.1
+ * @since         0.0.1
+ */
+  private function getFieldSysfolderUid( array &$taskInfo, $task, $parentObject )
+  {
+      // IF : field is empty, initialize extra field value
+    if( empty( $taskInfo['orgesab_sysfolderUid'] ) )
+    {
+      if( $parentObject->CMD == 'add' )
+      {
+          // In case of new task and if field is empty, set default email address
+        $taskInfo['orgesab_sysfolderUid'] = null;
+      }
+      elseif( $parentObject->CMD == 'edit' )
+      {
+          // In case of edit, and editing a test task, set to internal value if not data was submitted already
+        $taskInfo['orgesab_sysfolderUid'] = $task->getSysfolderUid( );
+      }
+      else
+      {
+          // Otherwise set an empty value, as it will not be used anyway
+        $taskInfo['orgesab_sysfolderUid'] = null;
+      }
+    }
+      // IF : field is empty, initialize extra field value
+
+      // Write the code for the field
+    $fieldID    = 'orgesab_sysfolderUid';
+    $fieldValue = htmlspecialchars( $taskInfo['orgesab_sysfolderUid'] );
+    $fieldCode  = '<input type="text" name="tx_scheduler[orgesab_sysfolderUid]" id="' . $fieldID . '" value="' . $fieldValue . '" size="50" />';
+    $additionalFields = array( );
+    $additionalFields[$fieldID] = array
+    (
+      'code'     => $fieldCode,
+      'label'    => 'LLL:EXT:orgesab/lib/scheduler/locallang.xml:label.sysfolderUid',
+      'cshKey'   => '_MOD_tools_txschedulerM1',
+      'cshLabel' => $fieldID
+    );
+      // Write the code for the field
+
+    return $additionalFields;
+  }
+
 
 
   /***********************************************
@@ -397,10 +456,11 @@ class tx_orgesab_ImportTask_AdditionalFieldProvider implements tx_scheduler_Addi
  */
   public function saveAdditionalFields( array $submittedData, tx_scheduler_Task $task )
   {
+    $this->saveFieldImportMode( $submittedData, $task );
+    $this->saveFieldImportUrl( $submittedData, $task );
     $this->saveFieldOrgesabAdminEmail( $submittedData, $task );
     $this->saveFieldReportMode( $submittedData, $task );
-    $this->saveFieldImportUrl( $submittedData, $task );
-    $this->saveFieldImportMode( $submittedData, $task );
+    $this->saveFieldSysfolderUid( $submittedData, $task );
   }
 
   /**
@@ -466,6 +526,21 @@ class tx_orgesab_ImportTask_AdditionalFieldProvider implements tx_scheduler_Addi
     $task->setReportMode( $submittedData['orgesab_reportMode'] );
   }
 
+  /**
+ * saveFieldSysfolderUid( ) : This method is used to save any additional input into the current task object
+ *                           if the task class matches
+ *
+ * @param	array		$submittedData Array containing the data submitted by the user
+ * @param	tx_scheduler_Task		$task Reference to the current task object
+ * @return	void
+ * @version       0.0.1
+ * @since         0.0.1
+ */
+  private function saveFieldSysfolderUid( array $submittedData, tx_scheduler_Task $task )
+  {
+    $task->setAdminmail( $submittedData['orgesab_sysfolderUid'] );
+  }
+
 
 
   /***********************************************
@@ -523,6 +598,11 @@ class tx_orgesab_ImportTask_AdditionalFieldProvider implements tx_scheduler_Addi
     }
 
     if( ! $this->validateFieldStart( $submittedData, $parentObject ) )
+    {
+      $bool_isValidatingSuccessful = false;
+    }
+
+    if( ! $this->validateFieldSysfolderUid( $submittedData, $parentObject ) )
     {
       $bool_isValidatingSuccessful = false;
     }
@@ -652,6 +732,37 @@ class tx_orgesab_ImportTask_AdditionalFieldProvider implements tx_scheduler_Addi
   }
 
   /**
+ * validateOS( ) : This method checks any additional data that is relevant to the specific task
+ *                               If the task class is not relevant, the method is expected to return TRUE
+ *
+ * @param	array		$submittedData Reference to the array containing the data submitted by the user
+ * @param	tx_scheduler_Module		$parentObject Reference to the calling object (Scheduler's BE module)
+ * @return	boolean		TRUE if validation was ok (or selected class is not relevant), FALSE otherwise
+ * @version       0.0.1
+ * @since         0.0.1
+ */
+  public function validateOS( tx_scheduler_Module $parentObject )
+  {
+    $bool_isValidatingSuccessful = true;
+
+      // SWITCH : OS of the server
+    switch( strtolower( PHP_OS ) )
+    {
+      case( 'linux' ):
+          // Linux is proper: Follow the workflow
+        break;
+      default:
+        $bool_isValidatingSuccessful = false;
+        $prompt = $this->msgPrefix . ': ' . $GLOBALS['LANG']->sL( 'LLL:EXT:orgesab/lib/scheduler/locallang.xml:msg.osIsNotSupported' );
+        $prompt = str_replace( '###PHP_OS###', PHP_OS, $prompt );
+        $parentObject->addMessage( $prompt, t3lib_FlashMessage::ERROR );
+    }
+      // SWITCH : OS of the server
+
+    return $bool_isValidatingSuccessful;
+  }
+
+  /**
  * validateFieldReportMode( )  : This method checks any additional data that is relevant to the specific task
  *                                     If the task class is not relevant, the method is expected to return TRUE
  *
@@ -727,8 +838,8 @@ class tx_orgesab_ImportTask_AdditionalFieldProvider implements tx_scheduler_Addi
   }
 
   /**
- * validateOS( ) : This method checks any additional data that is relevant to the specific task
- *                               If the task class is not relevant, the method is expected to return TRUE
+ * validateFieldSysfolderUid( )  : This method checks any additional data that is relevant to the specific task
+ *                                     If the task class is not relevant, the method is expected to return TRUE
  *
  * @param	array		$submittedData Reference to the array containing the data submitted by the user
  * @param	tx_scheduler_Module		$parentObject Reference to the calling object (Scheduler's BE module)
@@ -736,23 +847,18 @@ class tx_orgesab_ImportTask_AdditionalFieldProvider implements tx_scheduler_Addi
  * @version       0.0.1
  * @since         0.0.1
  */
-  public function validateOS( tx_scheduler_Module $parentObject )
+  private function validateFieldSysfolderUid( array &$submittedData, tx_scheduler_Module $parentObject )
   {
     $bool_isValidatingSuccessful = true;
 
-      // SWITCH : OS of the server
-    switch( strtolower( PHP_OS ) )
+    $submittedData['orgesab_sysfolderUid'] = ( int ) $submittedData['orgesab_sysfolderUid'];
+
+    if( empty( $submittedData['orgesab_sysfolderUid'] ) )
     {
-      case( 'linux' ):
-          // Linux is proper: Follow the workflow
-        break;
-      default:
-        $bool_isValidatingSuccessful = false;
-        $prompt = $this->msgPrefix . ': ' . $GLOBALS['LANG']->sL( 'LLL:EXT:orgesab/lib/scheduler/locallang.xml:msg.osIsNotSupported' );
-        $prompt = str_replace( '###PHP_OS###', PHP_OS, $prompt );
-        $parentObject->addMessage( $prompt, t3lib_FlashMessage::ERROR );
+      $prompt = $this->msgPrefix . ': ' . $GLOBALS['LANG']->sL( 'LLL:EXT:orgesab/lib/scheduler/locallang.xml:msg.enterSysfolderUid' );
+      $parentObject->addMessage( $prompt, t3lib_FlashMessage::ERROR );
+      $bool_isValidatingSuccessful = false;
     }
-      // SWITCH : OS of the server
 
     return $bool_isValidatingSuccessful;
   }

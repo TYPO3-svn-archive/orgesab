@@ -209,6 +209,14 @@ class tx_orgesab_ImportTask extends tx_scheduler_Task {
     private $orgesab_reportMode;
 
   /**
+    * Report mode: ever, never, update, warn
+    *
+    * @var uid
+    */
+    private $orgesab_sysfolderUid;
+
+
+  /**
     * registry object
     *
     * @var object
@@ -698,6 +706,19 @@ cronCmd:    ' . ( $cronCmd ? $cronCmd : 'not used' )
   public function getReportMode( )
   {
     return $this->orgesab_reportMode;
+  }
+
+/**
+ * getAdminmail( ):
+ *
+ * @return	void
+ * @access public
+ * @version       0.0.1
+ * @since         0.0.1
+ */
+  public function getSysfolderUid( )
+  {
+    return $this->orgesab_sysfolderUid;
   }
 
 

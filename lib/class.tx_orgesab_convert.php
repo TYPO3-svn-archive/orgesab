@@ -100,15 +100,30 @@ class tx_orgesab_convert {
       'bereiche' => $this->getBereiche( $xml ),
       'angebote' => $this->getAngebote( $xml )
     );
+    
+    $records = array(
+      'tx_orgesab' => array(
+        'truncate' => true,
+        'records'  => $this->setOrgesab( $content ),
+      ),
+      'tx_orgesab_cat' => array(
+        'truncate' => true,
+        'records'  => $this->setOrgesabCat( $content ),
+      ),
+      'tx_orgesab_mm_tx_orgesab_cat' => array(
+        'truncate' => true,
+        'records'  => $this->setOrgesabMmCat( $content ),
+      ),
+    );
 
-    return $content;
+    return $records;
   }
 
 
 
   /***********************************************
    *
-   * Init
+   * Get
    *
    **********************************************/
 
@@ -134,8 +149,6 @@ class tx_orgesab_convert {
         $angebote[] = array
         (
           'bereich_zuordnung'     => ( string ) $bereich->bereich_zuordnung,  
-          'angebot_nr'            => ( string ) $angebot->angebot_nr,
-          'angebot_nr'            => ( string ) $angebot->angebot_nr,
           'angebot_ausgebucht'    => ( string ) $angebot->angebot_ausgebucht,
           'angebot_bereich'       => ( string ) $angebot->angebot_bereich,
           'angebot_beschreibung'  => ( string ) $angebot->angebot_beschreibung,
@@ -178,9 +191,9 @@ class tx_orgesab_convert {
       $number = count( $angebote );
       $prompt = 'Programm contains #' . $number . ' Angebote.';
       t3lib_div::devLog( '[tx_orgesab_ImportTask]: ' . $prompt, $this->extKey, 0 );
-      $prompt = 'The first and the last Angebote: ';
+      $prompt = 'The second and the last Angebot: ';
       t3lib_div::devLog( '[tx_orgesab_ImportTask]: ' . $prompt, $this->extKey, 0 );
-      $prompt = var_export( $angebote[0], true);
+      $prompt = var_export( $angebote[1], true);
       t3lib_div::devLog( '[tx_orgesab_ImportTask]: ' . $prompt, $this->extKey, 0 );
       $prompt = var_export( $angebote[ $number - 1 ], true);
       t3lib_div::devLog( '[tx_orgesab_ImportTask]: ' . $prompt, $this->extKey, 0 );
@@ -275,7 +288,7 @@ class tx_orgesab_convert {
 
   /***********************************************
    *
-   * Get
+   * Init
    *
    **********************************************/
 
@@ -357,6 +370,251 @@ class tx_orgesab_convert {
     $this->pObj->drsMailToAdmin( $subject, $body );
   }
 
+
+
+  /***********************************************
+   *
+   * Set tables
+   *
+   **********************************************/
+
+/**
+ * setOrgesab( )  :
+ *
+ * @param       array       $content  : 
+ * @return	array       $records  :
+ * @access private
+ * @version       0.0.1
+ * @since         0.0.1
+ */
+  private function  setOrgesab( $content )
+  {
+    $records = array( );
+    
+      // LOOP : Angebote
+    foreach( $content['angebote'] as $uid => $angebot )
+    {
+      $records[] = array
+      (
+        'uid'       => $uid,
+        'pid'       => $this->pObj->getSysfolderUid( ),
+        'tstamp'    => time( ),
+        'crdate'    => time( ),
+        'cruser_id' => null,
+        'deleted'   => 0,
+          
+        'bodytext'    => $angebot['angebot_details'],
+        'bookedup'    => $angebot['angebot_ausgebucht'],
+        'bookingurl'  => $angebot['angebot_link'],
+        'category'    => $angebot['angebot_bereich'],
+        'day1'        => $angebot['angebot_tag1'],
+        'day2'        => $angebot['angebot_tag2'],
+        'day3'        => $angebot['angebot_tag3'],
+        'day4'        => $angebot['angebot_tag4'],
+        'day5'        => $angebot['angebot_tag5'],
+        'externalid'  => $angebot['angebot_nr'],
+        'eventbegin'  => $this->setOrgesabFieldEventBegin( $angebot ),
+        'eventend'    => $this->setOrgesabFieldEventEnd(   $angebot ),
+        'hours1'      => $angebot['angebot_uhrzeit1'],
+        'hours2'      => $angebot['angebot_uhrzeit2'],
+        'hours3'      => $angebot['angebot_uhrzeit3'],
+        'hours4'      => $angebot['angebot_uhrzeit4'],
+        'hours5'      => $angebot['angebot_uhrzeit5'],
+        'location1'   => $angebot['angebot_ort1'],
+        'location2'   => $angebot['angebot_ort2'],
+        'location3'   => $angebot['angebot_ort3'],
+        'location4'   => $angebot['angebot_ort4'],
+        'location5'   => $angebot['angebot_ort5'],
+        'price1'      => $angebot['angebot_preis_1'],
+        'price2'      => $angebot['angebot_preis_2'],
+        'price3'      => $angebot['angebot_preis_3'],
+        'skills'      => $angebot['angebot_inhalte'],
+        'staff1'      => $angebot['angebot_kursleiter1'],
+        'staff2'      => $angebot['angebot_kursleiter2'],
+        'title'       => $angebot['angebot_name'],
+        
+        'tx_orgesab_cat'  => $angebot['1'],
+        'tx_org_cal'      => $angebot['null'],
+        
+        'hidden'      => $angebot['0'],
+        'fe_group'    => $angebot['null'],
+
+        'keywords'    => $angebot['angebot_keywords'],
+        'description' => $angebot['angebot_beschreibung'],
+      );
+    } 
+      // LOOP : Angebote
+    
+      // DRS
+    if( $this->pObj->drsModeConvert )
+    {
+      $number = count( $records );
+      $prompt = 'tx_orgesab contains #' . $number . ' records';
+      t3lib_div::devLog( '[tx_orgesab_ImportTask]: ' . $prompt, $this->extKey, 0 );
+      $prompt = 'The second and the last record: ';
+      t3lib_div::devLog( '[tx_orgesab_ImportTask]: ' . $prompt, $this->extKey, 0 );
+      $prompt = var_export( $records[1], true);
+      t3lib_div::devLog( '[tx_orgesab_ImportTask]: ' . $prompt, $this->extKey, 0 );
+      $prompt = var_export( $records[ $number - 1 ], true);
+      t3lib_div::devLog( '[tx_orgesab_ImportTask]: ' . $prompt, $this->extKey, 0 );
+    }
+      // DRS
+
+    return $records;
+  }
+
+/**
+ * setOrgesabCat( )  :
+ *
+ * @param       array       $content  : 
+ * @return	array       $records  :
+ * @access private
+ * @version       0.0.1
+ * @since         0.0.1
+ */
+  private function  setOrgesabCat( $content )
+  {
+    $records = array( );
+    
+    return $records;
+  }
+
+/**
+ * setOrgesab( )  :
+ *
+ * @param       array       $content  : 
+ * @return	array       $records  :
+ * @access private
+ * @version       0.0.1
+ * @since         0.0.1
+ */
+  private function  setOrgesabFieldEventBegin( $angebot )
+  {
+    $second = 0;
+
+    // 09:30-17:00
+    list( $timeBegin ) = explode( '-', $angebot['angebot_uhrzeit1'] );
+
+    // 23.06. - 28.06.2013 || Herbst 2013 || 28.09.2013
+    list( $periodBegin, $periodEnd ) = explode( '-', $angebot['angebot_zeitraum'] );
+    $periodBegin = trim( $periodBegin );
+    
+    list( $hour, $minute )      = explode( ':', $timeBegin );
+    $hour   = ( int ) $hour;
+    $minute = ( int ) $minute;
+    list( $day, $month, $year ) = explode( '.', $periodBegin );
+    $day    = ( int ) $day;
+    $month  = ( int ) $month;
+    $year   = ( int ) $year;
+    if( empty( $year ) )
+    {
+      list( $dummy, $dummy, $year ) = explode( '.', $periodEnd );
+      $year = ( int ) $year;
+    }
+    
+    switch (true )
+    {
+      case( empty( $day   ) ):
+      case( empty( $month ) ):
+      case( empty( $year  ) ):
+          // DRS
+        if( $this->pObj->drsModeError )
+        {
+          $uid    = $angebot['angebot_nr'];
+          $title  = $angebot['angebot_name'];
+          $period = $angebot['angebot_zeitraum'];
+          $hours  = $angebot['angebot_uhrzeit1'];
+          $prompt = 'Unproper period in Angebot "' . $title . '" '
+                  . '(# ' . $uid . '): ' . $period . ' ' . $hours;
+          t3lib_div::devLog( '[tx_orgesab_ImportTask]: ' . $prompt, $this->extKey, 3 );
+        }
+          // DRS
+        break;
+      default:
+        // Result is proper
+        break;
+    }
+
+    $timestamp = mktime( $hour, $minute, $second, $month, $day, $year );
+    
+    return $timestamp;
+  }
+
+/**
+ * setOrgesabFieldEventEnd( )  :
+ *
+ * @param       array       $content  : 
+ * @return	array       $records  :
+ * @access private
+ * @version       0.0.1
+ * @since         0.0.1
+ */
+  private function  setOrgesabFieldEventEnd( $angebot )
+  {
+    $second = 0;
+
+    // 09:30-17:00
+    list( $timeBegin, $timeEnd ) = explode( '-', $angebot['angebot_uhrzeit1'] );
+    if( empty ( $timeEnd ) )
+    {
+      $timeEnd = $timeBegin;
+    }
+    // 23.06. - 28.06.2013 || Herbst 2013 || 28.09.2013
+    list( $periodBegin, $periodEnd ) = explode( '-', $angebot['angebot_zeitraum'] );
+    if( empty ( $periodEnd ) )
+    {
+      $periodEnd = $periodBegin;
+    }
+    $periodEnd = trim( $periodEnd );
+    
+    list( $hour, $minute )      = explode( ':', $timeEnd );
+    $hour   = ( int ) $hour;
+    $minute = ( int ) $minute;
+    list( $day, $month, $year ) = explode( '.', $periodEnd );
+    $day    = ( int ) $day;
+    $month  = ( int ) $month;
+    $year   = ( int ) $year;
+    
+    switch (true )
+    {
+      case( empty( $day   ) ):
+      case( empty( $month ) ):
+      case( empty( $year  ) ):
+          // DRS
+        if( $this->pObj->drsModeError )
+        {
+          $uid    = $angebot['angebot_nr'];
+          $title  = $angebot['angebot_name'];
+          $period = $angebot['angebot_zeitraum'];
+          $hours  = $angebot['angebot_uhrzeit1'];
+          $prompt = 'Unproper period in Angebot "' . $title . '" '
+                  . '(# ' . $uid . '): ' . $period . ' ' . $hours;
+          t3lib_div::devLog( '[tx_orgesab_ImportTask]: ' . $prompt, $this->extKey, 3 );
+        }
+          // DRS
+        break;
+      default:
+        // Result is proper
+        break;
+    }
+
+    $timestamp = mktime( $hour, $minute, $second, $month, $day, $year );
+    
+    return $timestamp;
+  }
+
+/**
+ * setOrgesabFieldEventEnd( )  :
+ *
+ * @param       array       $content  : 
+ * @return	array       $records  :
+ * @access private
+ * @version       0.0.1
+ * @since         0.0.1
+ */
+  private function  setOrgesabMmCat( $content )
+  {
+  }
 
 
   /***********************************************
