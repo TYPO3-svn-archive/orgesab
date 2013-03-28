@@ -658,22 +658,16 @@ class tx_orgesab_convert {
       $tx_orgesab_catFlipped[$title] = $uid;
     }
     
-$prompt = var_export( $tx_orgesab, true);
-t3lib_div::devLog( '[tx_orgesab_ImportTask]: ' . $prompt, $this->extKey, 0 );
-
-$prompt = var_export( $tx_orgesab_cat, true);
-t3lib_div::devLog( '[tx_orgesab_ImportTask]: ' . $prompt, $this->extKey, 0 );
-
-$prompt = var_export( $tx_orgesab_catFlipped, true);
-t3lib_div::devLog( '[tx_orgesab_ImportTask]: ' . $prompt, $this->extKey, 0 );
+//$prompt = var_export( $tx_orgesab_catFlipped, true );
+//t3lib_div::devLog( '[tx_orgesab_ImportTask]: ' . $prompt, $this->extKey, 0 );
 
     $recordsMm = array( );
     
       // LOOP : Angebote
     foreach( $tx_orgesab as $tx_orgesab_record )
     {
-      $category     = $tx_orgesab_record['category'];
-      $uid_foreign  = $tx_orgesab_catFlipped[$category];
+      $bereich_zuordnung  = $tx_orgesab_record['bereich_zuordnung'];
+      $uid_foreign        = $tx_orgesab_catFlipped[$bereich_zuordnung];
         
       $recordsMm[] = array
       (
