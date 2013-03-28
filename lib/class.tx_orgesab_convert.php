@@ -392,7 +392,7 @@ class tx_orgesab_convert {
  * @version       0.0.1
  * @since         0.0.1
  */
-  private function  setOrgesab( $content )
+  private function setOrgesab( $content )
   {
     $records = array( );
     
@@ -523,7 +523,7 @@ class tx_orgesab_convert {
  * @version       0.0.1
  * @since         0.0.1
  */
-  private function  setOrgesabFieldEventBegin( $angebot )
+  private function setOrgesabFieldEventBegin( $angebot )
   {
     $second = 0;
 
@@ -584,7 +584,7 @@ class tx_orgesab_convert {
  * @version       0.0.1
  * @since         0.0.1
  */
-  private function  setOrgesabFieldEventEnd( $angebot )
+  private function setOrgesabFieldEventEnd( $angebot )
   {
     $second = 0;
 
@@ -648,7 +648,7 @@ class tx_orgesab_convert {
  * @version       0.0.1
  * @since         0.0.1
  */
-  private function  setOrgesabMmCat( $content, $records )
+  private function setOrgesabMmCat( $content, $records )
   {
     $angebote       = $content['angebote'];
     $tx_orgesab_cat = $records['tx_orgesab_cat']['records'];
@@ -659,16 +659,11 @@ class tx_orgesab_convert {
       $tx_orgesab_catFlipped[$title] = $uid;
     }
     
-//$prompt = var_export( $tx_orgesab_catFlipped, true );
-//t3lib_div::devLog( '[tx_orgesab_ImportTask]: ' . $prompt, $this->extKey, 0 );
-
     $recordsMm = array( );
     
       // LOOP : Angebote
     foreach( $angebote as $uid => $angebot )
     {
-$prompt = var_export( $tx_orgesab_record, true );
-t3lib_div::devLog( '[tx_orgesab_ImportTask]: ' . $prompt, $this->extKey, 0 );
       $bereich_zuordnung  = $angebot['bereich_zuordnung'];
       $uid_foreign        = $tx_orgesab_catFlipped[$bereich_zuordnung];
         
