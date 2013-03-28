@@ -77,25 +77,22 @@ class tx_orgesab_update {
    *
    **********************************************/
 
-  /**
+/**
  * main( )  :
  *
+ * @param       array     $content  :        
  * @return	boolean
  * @access public
  * @version       0.0.1
  * @since         0.0.1
  */
-  public function main( )
+  public function main( $content )
   {
     $success = false;
 
     $this->init( );
-
-    $subject  = 'Failed';
-    $body     = __METHOD__ . ' (' . __LINE__ . ')';
-    $this->pObj->drsMailToAdmin( $subject, $body );
-
-    $success = true;
+    $this->insert( $content );
+    
     return $success;
   }
 
@@ -123,6 +120,43 @@ class tx_orgesab_update {
               . __METHOD__ . ' (' . __LINE__ . ')'
               ;
       die( $prompt );
+    }
+  }
+
+
+
+
+  /***********************************************
+   *
+   * Insert
+   *
+   **********************************************/
+
+/**
+ * insert( )  :
+ *
+ * @param       array     $content  :        
+ * @return	boolean
+ * @access private
+ * @version       0.0.1
+ * @since         0.0.1
+ */
+  private function insert( $content )
+  {
+$prompt = array_keys( $content );
+t3lib_div::devLog( '[tx_orgesab_ImportTask]: ' . $prompt, $this->extKey, 0 );
+    
+    foreach( $content as $tables => $table )
+    {
+      $tableName  = $tables;
+      $truncate   = $table['truncate'];
+      $records    = $table['records'];
+$prompt = $tableName;
+t3lib_div::devLog( '[tx_orgesab_ImportTask]: ' . $prompt, $this->extKey, 0 );
+$prompt = $truncate;
+t3lib_div::devLog( '[tx_orgesab_ImportTask]: ' . $prompt, $this->extKey, 0 );
+$prompt = $records;
+t3lib_div::devLog( '[tx_orgesab_ImportTask]: ' . $prompt, $this->extKey, 0 );
     }
   }
 

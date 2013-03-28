@@ -1280,17 +1280,18 @@ cronCmd:    ' . ( $cronCmd ? $cronCmd : 'not used' )
 /**
  * updateDatabase( )  :
  *
+ * @param       array       $content  : 
  * @return	boolean
  * @access private
  * @version       0.0.1
  * @since         0.0.1
  */
-  private function updateDatabase( )
+  private function updateDatabase( $content )
   {
     $success = false;
 
     $this->updateDatabaseInstance( );
-    $success = $this->update->main( );
+    $success = $this->update->main( $content );
 
     $success = true;
     $this->updateDatabaseDrsMail( $success );
