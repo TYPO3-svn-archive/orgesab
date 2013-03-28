@@ -651,7 +651,12 @@ class tx_orgesab_convert {
   {
     $tx_orgesab             = $records['tx_orgesab']['records'];
     $tx_orgesab_cat         = $records['tx_orgesab_cat']['records'];
-    $tx_orgesab_catFlipped  = array_flip( $tx_orgesab_cat );
+    foreach( $tx_orgesab_cat as $category )
+    {
+      $uid    = $category['uid'];
+      $value  = $category['title'];
+      $tx_orgesab_catFlipped[$uid] = $value;
+    }
     
 $prompt = var_export( $tx_orgesab, true);
 t3lib_div::devLog( '[tx_orgesab_ImportTask]: ' . $prompt, $this->extKey, 0 );
