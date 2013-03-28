@@ -538,7 +538,7 @@ class tx_orgesab_ImportTask_AdditionalFieldProvider implements tx_scheduler_Addi
  */
   private function saveFieldSysfolderUid( array $submittedData, tx_scheduler_Task $task )
   {
-    $task->setAdminmail( $submittedData['orgesab_sysfolderUid'] );
+    $task->setSysfolderUid( $submittedData['orgesab_sysfolderUid'] );
   }
 
 
@@ -851,11 +851,11 @@ class tx_orgesab_ImportTask_AdditionalFieldProvider implements tx_scheduler_Addi
   {
     $bool_isValidatingSuccessful = true;
 
-    //$submittedData['orgesab_sysfolderUid'] = ( int ) $submittedData['orgesab_sysfolderUid'];
+    $submittedData['orgesab_sysfolderUid'] = ( int ) $submittedData['orgesab_sysfolderUid'];
 
     if( $submittedData['orgesab_sysfolderUid'] < 1 )
     {
-      $prompt = $this->msgPrefix . ': ' . $submittedData['orgesab_sysfolderUid'] . ' :: ' . $GLOBALS['LANG']->sL( 'LLL:EXT:orgesab/lib/scheduler/locallang.xml:msg.enterSysfolderUid' );
+      $prompt = $this->msgPrefix . ': ' . $GLOBALS['LANG']->sL( 'LLL:EXT:orgesab/lib/scheduler/locallang.xml:msg.enterSysfolderUid' );
       $parentObject->addMessage( $prompt, t3lib_FlashMessage::ERROR );
       $bool_isValidatingSuccessful = false;
     }

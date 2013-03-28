@@ -1144,6 +1144,20 @@ cronCmd:    ' . ( $cronCmd ? $cronCmd : 'not used' )
     $this->orgesab_reportMode = $value;
   }
 
+/**
+ * setSysfolderUid( ):
+ *
+ * @return	void
+ * @access public
+ * @version       0.0.1
+ * @since         0.0.1
+ */
+  public function setSysfolderUid( $value )
+  {
+    $this->orgesab_sysfolderUid = $value;
+  }
+
+
 
 
   /***********************************************
