@@ -658,8 +658,8 @@ class tx_orgesab_convert {
       $tx_orgesab_catFlipped[$title] = $uid;
     }
     
-//$prompt = var_export( $tx_orgesab_catFlipped, true );
-//t3lib_div::devLog( '[tx_orgesab_ImportTask]: ' . $prompt, $this->extKey, 0 );
+$prompt = var_export( $tx_orgesab_catFlipped, true );
+t3lib_div::devLog( '[tx_orgesab_ImportTask]: ' . $prompt, $this->extKey, 0 );
 
     $recordsMm = array( );
     
@@ -684,7 +684,7 @@ class tx_orgesab_convert {
     if( $this->pObj->drsModeConvert )
     {
       $number = count( $recordsMm );
-      $prompt = 'tx_orgesab contains #' . $number . ' records';
+      $prompt = 'tx_orgesab_mm_tx_orgesab_cat contains #' . $number . ' records';
       t3lib_div::devLog( '[tx_orgesab_ImportTask]: ' . $prompt, $this->extKey, 0 );
       $prompt = 'The second and the last record: ';
       t3lib_div::devLog( '[tx_orgesab_ImportTask]: ' . $prompt, $this->extKey, 0 );
