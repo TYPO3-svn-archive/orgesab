@@ -67,7 +67,7 @@ plugin.tx_browser_pi1 {
               wrap = <span class="selectbox">|</span>
               order.field = uid
               area < plugin.tx_browser_pi1.displayList.master_templates.areas.sample_period
-              area {
+              XXX_area {
                 interval {
                   case = month
                   month {
