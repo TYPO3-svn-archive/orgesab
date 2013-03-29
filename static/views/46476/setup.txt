@@ -232,7 +232,7 @@ plugin.tx_browser_pi1 {
           }
         }
         tx_orgesab {
-            // externalid, title, bodytext
+            // externalid, title, bodytext, skills
           bodytext = COA
           bodytext {
               // externalid
@@ -245,16 +245,35 @@ plugin.tx_browser_pi1 {
               // title
             20 = TEXT
             20 {
-              wrap = <h1 class="tx_orgesab_title title">|</h1>
+              wrap      = <h1 class="tx_orgesab_title title">|</h1>
               required  = 1
               value     = ###TX_ORGESAB.TITLE###
             }
               // bodytext
             30 = TEXT
             30 {
-              wrap = <div class="tx_orgesab_bodytext bodytext">|</div>
+              wrap      = <div class="tx_orgesab_bodytext bodytext">|</div>
               required  = 1
               value     = ###TX_ORGESAB.BODYTEXT###
+            }
+              // skills
+            40 = COA
+            40 {
+              if {
+                isTrue = ###TX_ORGESAB.SKILLS###
+              }
+                // header
+              10 = TEXT
+              10 {
+                wrap      = <h2 class="tx_orgesab_skills skills">|</h2>
+                value     = Inhalte
+              }
+                // content
+              20 = TEXT
+              20 {
+                wrap      = <p class="tx_orgesab_skills skills">|</p>
+                value     = ###TX_ORGESAB.SKILLS###
+              }
             }
               // eventbegin
             100 = TEXT
