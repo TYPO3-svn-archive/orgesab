@@ -6,7 +6,7 @@
 
   // plugin.tx_browser_pi1
   //    views
-  //      46476: +Org-Esab: Esab
+  //      46476: Org +ESAB
 
 
 
@@ -41,9 +41,9 @@ plugin.tx_browser_pi1 {
 
   views {
     list {
-      46476 = +Org-Esab: Esab
+      46476 = Org +ESAB
       46476 {
-        name    = +Org-Esab: Esab
+        name    = Org +ESAB
         showUid = {$plugin.orgesab.typo3browser.showUid}
         select (
           tx_orgesab.title,
@@ -129,7 +129,7 @@ plugin.tx_browser_pi1 {
       }
     }
     single {
-      46476 = +Org-Esab: Esab
+      46476 = Org +ESAB
       46476 {
         displaySingle < plugin.tx_browser_pi1.displaySingle
         displaySingle {
