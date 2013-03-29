@@ -546,9 +546,15 @@ $TCA['tx_orgesab_cat'] = array (
   'interface' => array (
     'showRecordFieldList' => '
         title
+      , uid_parent
       , hidden',
   ),
   'columns' => array (
+    'title' => array (
+      'exclude' => 0,
+      'label'   => 'LLL:EXT:orgesab/locallang_db.xml:tx_orgesab_cat.title',
+      'config'  => $conf_input_30_trimRequired,
+    ),
     'uid_parent' => array (
       'exclude'   => 0,
       'label'   => 'LLL:EXT:orgesab/locallang_db.xml:tx_orgesab_cat.uid_parent',
@@ -567,11 +573,6 @@ $TCA['tx_orgesab_cat'] = array (
         'trueMaxItems'  => 1,
       ),
     ),
-    'title' => array (
-      'exclude' => 0,
-      'label'   => 'LLL:EXT:orgesab/locallang_db.xml:tx_orgesab_cat.title',
-      'config'  => $conf_input_30_trimRequired,
-    ),
     'hidden'    => $conf_hidden,
   ),
   'types' => array
@@ -580,6 +581,7 @@ $TCA['tx_orgesab_cat'] = array (
     (
       'showitem' => '
           title
+        , uid_parent
         , hidden'
     ),
   ),
