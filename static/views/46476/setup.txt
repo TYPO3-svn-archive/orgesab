@@ -232,26 +232,41 @@ plugin.tx_browser_pi1 {
           }
         }
         tx_orgesab {
-          eventBegin = TEXT
-          eventBegin {
-            value = ###TX_ORGESAB.EVENTBEGIN###
-            strftime = %A, %d. %B, %H:%M Uhr
-          }
-          eventEnd = TEXT
-          eventEnd {
-            value = ###TX_ORGESAB.EVENTEND###
-            strftime = %A, %d. %B, %H:%M Uhr
-          }
-            // title, producer
-          title = TEXT
-          title {
-            wrap = <h2 class="esab_title">|</h2>
-            required  = 1
-            value     = ###TX_ORGESAB.TITLE###
-            typolink {
-              parameter         = {$plugin.orgesab.pages.orgesab} - linktosingle
-              additionalParams  = &tx_browser_pi1[{$plugin.orgesab.typo3browser.showUid}]=###TX_ORGESAB.UID###
-              useCacheHash      = 1
+            // externalid, title, bodytext
+          bodytext = COA
+          bodytext {
+              // externalid
+            10 = TEXT
+            10 {
+              wrap      = <p class="tx_orgesab_externalid externalid">|</p>
+              required  = 1
+              value     = Lehrgangs-Nummer ###TX_ORGESAB.EXTERNALID###
+            }
+              // title
+            20 = TEXT
+            20 {
+              wrap = <h1 class="tx_orgesab_title title">|</h1>
+              required  = 1
+              value     = ###TX_ORGESAB.TITLE###
+            }
+              // bodytext
+            30 = TEXT
+            30 {
+              wrap = <div class="tx_orgesab_bodytext bodytext">|</div>
+              required  = 1
+              value     = ###TX_ORGESAB.BODYTEXT###
+            }
+              // eventbegin
+            100 = TEXT
+            100 {
+              value = ###TX_ORGESAB.EVENTBEGIN###
+              strftime = %A, %d. %B, %H:%M Uhr
+            }
+              // eventend
+            110 = TEXT
+            110 {
+              value = ###TX_ORGESAB.EVENTEND###
+              strftime = %A, %d. %B, %H:%M Uhr
             }
           }
         }
@@ -272,13 +287,8 @@ plugin.tx_browser_pi1 {
               <div class="socialbookmarks">
                 ###SOCIALMEDIA_BOOKMARKS###
               </div>
-              <p>
-                ###TX_ORGESAB.EXTERNALID###
-              </p>
-              ###TX_ORGESAB.TITLE###
-              ###TX_ORGESAB.EVENTBEGIN###
-              ###TX_ORGESAB.EVENTEND###
               ###TX_ORGESAB.BODYTEXT###
+              
               <!-- ###SINGLEBODYROW### end --><!-- ###SINGLEBODY### end -->
             </div>
 <!-- ###AREA_FOR_AJAX_LIST_01### end -->
