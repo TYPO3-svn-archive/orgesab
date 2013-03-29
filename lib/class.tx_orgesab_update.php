@@ -368,7 +368,7 @@ class tx_orgesab_update {
       $query = $query
               . 'TRUNCATE ' . $table . '; ' 
               ;
-      continue 2;
+      break;
     }
     
     $GLOBALS['TYPO3_DB']->sql_query( $query );
