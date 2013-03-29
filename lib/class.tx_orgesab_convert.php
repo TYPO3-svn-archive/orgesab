@@ -492,16 +492,20 @@ class tx_orgesab_convert {
   private function setOrgesabCat( $content )
   {
     $records  = array( );
-
-    $records[1] = $this->setOrgesabCatValueAusbildung( );
-    $records[2] = $this->setOrgesabCatValueFortbildung( );
+    $id       = 0;
+    
+    $id = 1;
+    $records[$id] = $this->setOrgesabCatValueAusbildung( );
+    $id = 2;
+    $records[$id] = $this->setOrgesabCatValueFortbildung( );
 
       // LOOP : Angebote
     foreach( $content['bereiche'] as $bereich_zuordnung )
     {
-      $records[] = array
+      $id++;
+      $records[$id] = array
       (
-        'uid'         => null,
+        'uid'         => $id,
         'pid'         => $this->pObj->getSysfolderUid( ),
         'tstamp'      => time( ),
         'crdate'      => time( ),
