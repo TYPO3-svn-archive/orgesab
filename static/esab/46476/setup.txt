@@ -18,7 +18,7 @@ plugin.tx_browser_pi1 {
   
   template {
     extensions {
-      org {
+      orgesab {
         default {
           csvViews := addToList(46476)
         }
@@ -31,8 +31,8 @@ plugin.tx_browser_pi1 {
             // esabUid
           10 = TEXT
           10 {
-            dataWrap        = &tx_browser_pi1[esabUid]={GPvar:tx_browser_pi1|esabUid}&###CHASH###
-            if.isTrue.data  = GPvar:tx_browser_pi1|esabUid
+            dataWrap        = &tx_browser_pi1[esabUid]={GPvar:tx_browser_pi1|{$plugin.orgesab.typo3browser.showUid}}&###CHASH###
+            if.isTrue.data  = GPvar:tx_browser_pi1|{$plugin.orgesab.typo3browser.showUid}
           }
         }
       }
