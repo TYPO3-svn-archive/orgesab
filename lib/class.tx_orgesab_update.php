@@ -243,10 +243,10 @@ class tx_orgesab_update {
       return;
     }
 
-    $prompt = 'Query: ' . $query;
-    t3lib_div::devLog( '[tx_orgesab_ImportTask]: ' . $prompt, $this->extKey, 3 );
     $prompt = 'Error: ' . $error;
     t3lib_div::devLog( '[tx_orgesab_ImportTask]: ' . $prompt, $this->extKey, 3 );
+    $prompt = 'Query: ' . $query;
+    t3lib_div::devLog( '[tx_orgesab_ImportTask]: ' . $prompt, $this->extKey, 2 );
   }
 
 /**
@@ -366,7 +366,7 @@ class tx_orgesab_update {
         continue;
       }
       $query = $query
-              . 'TRUNCATE ' . $table .'; ' . PHP_EOL
+              . 'TRUNCATE ' . $table . '; ' . PHP_EOL
               ;
     }
     
