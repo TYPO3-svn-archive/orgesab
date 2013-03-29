@@ -348,6 +348,7 @@ $TCA['tx_orgesab'] = array (
       'disabled'  => 'hidden',
       'fe_group'  => 'fe_group',
     ),
+    'readOnly'          => $confArr['databaseReadonly'],
     'dividers2tabs'     => true,
     'hideAtCopy'        => false,
     'dynamicConfigFile' => t3lib_extMgm::extPath($_EXTKEY).'tca.php',
@@ -368,6 +369,7 @@ $TCA['tx_orgesab_cat'] = array (
     'enablecolumns'     => array (
       'disabled'  => 'hidden',
     ),
+    'readOnly'          => $confArr['databaseReadonly'],
     'dividers2tabs'     => true,
     'hideAtCopy'        => false,
     'dynamicConfigFile' => t3lib_extMgm::extPath($_EXTKEY).'tca.php',
