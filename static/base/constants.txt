@@ -1,3 +1,9 @@
+  // plugin.orgesab
+  // plugin.tx_browser_pi1
+
+
+
+  // plugin.orgesab
 plugin.orgesab {
 
   # cat=organiser esab - pages/enable/101;             type=int+;    label= Org +ESAB page uid:Uid of the page, which dispülays the Org +ESAB data. This page contains usually the TYPO3 Browser plugin/Flexform.
@@ -7,3 +13,12 @@ plugin.orgesab {
   typo3browser.showUid = orgesabUid
 
 }
+  // plugin.orgesab
+
+
+
+  // plugin.tx_browser_pi1
+plugin.tx_browser_pi1 {
+  jQuery.plugin.jstree.tablefield_01 = tx_orgesab_cat.title
+}
+  // plugin.tx_browser_pi1
