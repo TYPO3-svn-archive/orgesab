@@ -140,9 +140,7 @@ plugin.tx_browser_pi1 {
             value = Alle Aus- und Fortbildungen &raquo;
             typolink {
               parameter = {$plugin.orgesab.pages.orgesab}
-              title {
-                value = Alle Aus- und Fortbildungen der Europäischen Sportakademie (ESAB)
-              }
+              title     = Alle Aus- und Fortbildungen der Europäischen Sportakademie (ESAB)
             }
           }
         }
