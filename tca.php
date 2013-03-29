@@ -199,7 +199,7 @@ $TCA['tx_orgesab'] = array (
     'externalid' => array (
       'exclude' => 0,
       'label'   => 'LLL:EXT:orgesab/locallang_db.xml:tx_orgesab.externalid',
-      'config'  => $conf_input_30_trim,
+      'config'  => $conf_input_30_trimRequired,
     ),
     'title' => array (
       'exclude' => 0,
@@ -208,7 +208,7 @@ $TCA['tx_orgesab'] = array (
     ),
     'bookedup' => array (
       'exclude' => $bool_exclude_none,
-      'label'   => 'LLL:EXT:orgesab/locallang_db.xml:tx_orgesab.bookeddup',
+      'label'   => 'LLL:EXT:orgesab/locallang_db.xml:tx_orgesab.bookedup',
       'config' => array (
         'type' => 'check'
       )
