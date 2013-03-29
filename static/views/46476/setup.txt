@@ -112,16 +112,6 @@ plugin.tx_browser_pi1 {
           }
         }
         tx_orgesab {
-          eventBegin = TEXT
-          eventBegin {
-            value = ###TX_ORGESAB.EVENTBEGIN###
-            strftime = %A, %d. %B, %H:%M Uhr
-          }
-          eventEnd = TEXT
-          eventEnd {
-            value = ###TX_ORGESAB.EVENTEND###
-            strftime = %A, %d. %B, %H:%M Uhr
-          }
             // title, producer
           title = TEXT
           title {
