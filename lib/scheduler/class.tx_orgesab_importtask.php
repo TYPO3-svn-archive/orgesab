@@ -178,6 +178,13 @@ class tx_orgesab_ImportTask extends tx_scheduler_Task {
     *
     * @var boolean $drsModeXml
     */
+    public $drsModeUpdate;
+
+  /**
+    * DRS mode: display prompt in warning case only
+    *
+    * @var boolean $drsModeXml
+    */
     public $drsModeXml;
 
   /**
@@ -789,6 +796,7 @@ cronCmd:    ' . ( $cronCmd ? $cronCmd : 'not used' )
         $this->drsModeImportTask  = true;
         $this->drsModePerformance = true;
         $this->drsModeSql         = true;
+        $this->drsModeUpdate      = true;
         $this->drsModeXml         = true;
         break;
       default:
@@ -797,6 +805,7 @@ cronCmd:    ' . ( $cronCmd ? $cronCmd : 'not used' )
         $this->drsModeImportTask  = true;
         $this->drsModePerformance = true;
         $this->drsModeSql         = true;
+        $this->drsModeUpdate      = true;
         $this->drsModeXml         = true;
         $prompt = 'DRS mode isn\'t defined.';
         t3lib_div::devlog( '[tx_orgesab_ImportTask] ' . $prompt, $this->extKey, 3 );

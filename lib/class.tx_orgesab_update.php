@@ -88,12 +88,19 @@ class tx_orgesab_update {
  */
   public function main( $content )
   {
-    $success = false;
-
     $this->init( );
-    $this->insert( $content );
     
-    return $success;
+    if( ! $this->truncate( $content ) )
+    {
+      return false;
+    }
+
+    if( ! $this->insert( $content ) )
+    {
+      return false;
+    }
+    
+    return true;
   }
 
 
@@ -125,7 +132,6 @@ class tx_orgesab_update {
 
 
 
-
   /***********************************************
    *
    * Insert
@@ -143,21 +149,162 @@ class tx_orgesab_update {
  */
   private function insert( $content )
   {
-$prompt = implode( '; ', array_keys( $content ) );
-t3lib_div::devLog( '[tx_orgesab_ImportTask]: ' . $prompt, $this->extKey, 0 );
+    $recordCounter  = 0;
     
-    foreach( $content as $tables => $table )
+    foreach( $content as $table => $properties )
     {
-      $tableName  = $tables;
-      $truncate   = $table['truncate'];
-      $records    = $table['records'];
-$prompt = $tableName;
-t3lib_div::devLog( '[tx_orgesab_ImportTask]: ' . $prompt, $this->extKey, 0 );
-$prompt = $truncate;
-t3lib_div::devLog( '[tx_orgesab_ImportTask]: ' . $prompt, $this->extKey, 0 );
-$prompt = implode( '; ', array_keys( $records ) );
-t3lib_div::devLog( '[tx_orgesab_ImportTask]: ' . $prompt, $this->extKey, 0 );
+      foreach( $properties['records'] as $record )
+      {
+        if( ! $this->insertQuery( $table, $record, $recordCounter ) )
+        {
+          return false;
+        }
+        $recordCounter++;
+      }
     }
+
+    return true;
+  }
+
+/**
+ * insertQuery( )  :
+ *
+ * @param       string    $table          :
+ * @param       array     $record         :
+ * @param       array     $recordCounter  :
+ * @return	void
+ * @access private
+ * @version       0.0.1
+ * @since         0.0.1
+ */
+  private function insertQuery( $table, $record, $recordCounter )
+  {
+    $success = null;
+    
+    $query = $GLOBALS['TYPO3_DB']->INSERTquery( $table, $record );
+    $GLOBALS['TYPO3_DB']->exec_INSERTquery( $table, $record );
+    $error = $GLOBALS['TYPO3_DB']->sql_error( );
+
+    switch( $error )
+    {
+      case( true ):
+        $this->promptError( $query, $error );
+        $success = false;
+        break;
+      case( false ):
+      default:
+        $this->promptSuccess( $query, $recordCounter );
+        $success = true;
+        break;
+    }
+    return $success;
+  }
+
+
+
+  /***********************************************
+   *
+   * Prompts
+   *
+   **********************************************/
+
+/**
+ * promptError( )  :
+ *
+ * @param       string    $table          :
+ * @param       array     $record         :
+ * @param       array     $recordCounter  :
+ * @return	void
+ * @access private
+ * @version       0.0.1
+ * @since         0.0.1
+ */
+  private function promptError( $query, $error )
+  {
+    $this->promptErrorDrs(   $query, $error );
+    $this->promptErrorMail(  $query, $error );
+  }
+
+/**
+ * promptErrorDrs( )  :
+ *
+ * @param       string    $table          :
+ * @param       array     $record         :
+ * @param       array     $recordCounter  :
+ * @return	void
+ * @access private
+ * @version       0.0.1
+ * @since         0.0.1
+ */
+  private function promptErrorDrs( $query, $error )
+  {
+    if( ! $this->pObj->drsModeSql )
+    {
+      return;
+    }
+
+    $prompt = 'Query: ' . $query;
+    t3lib_div::devLog( '[tx_orgesab_ImportTask]: ' . $prompt, $this->extKey, 3 );
+    $prompt = 'Error: ' . $error;
+    t3lib_div::devLog( '[tx_orgesab_ImportTask]: ' . $prompt, $this->extKey, 3 );
+  }
+
+/**
+ * promptErrorMail( )  :
+ *
+ * @param       string    $table          :
+ * @param       array     $record         :
+ * @param       array     $recordCounter  :
+ * @return	void
+ * @access private
+ * @version       0.0.1
+ * @since         0.0.1
+ */
+  private function promptErrorMail( $query, $error )
+  {
+    $subject  = 'SQL query failed';
+    $body     = 'Sorry, but query isn\'t proper. ' . PHP_EOL
+              . PHP_EOL
+              . 'Error: ' . $error
+              . PHP_EOL
+              . 'Query: ' . $query . PHP_EOL
+              . PHP_EOL
+              . __CLASS__ . '::' .  __METHOD__ . ' (' . __LINE__ . ')';
+    $this->pObj->drsMailToAdmin( $subject, $body );
+  }
+
+/**
+ * promptSuccess( )  :
+ *
+ * @param       string    $table          :
+ * @param       array     $record         :
+ * @param       array     $recordCounter  :
+ * @return	void
+ * @access private
+ * @version       0.0.1
+ * @since         0.0.1
+ */
+  private function promptSuccess( $query, $recordCounter )
+  {
+      // RETURN : no DRS
+    if( ! $this->pObj->drsModeSql )
+    {
+      return;
+    }
+      // RETURN : no DRS
+
+    switch( true )
+    {
+      case( $recordCounter >= 1 ):
+          // Prompt nothing
+        break;
+      case( $recordCounter == 0 ):
+      default:
+        $prompt = $query;
+        t3lib_div::devLog( '[tx_orgesab_ImportTask]: ' . $prompt, $this->extKey, -1 );
+        break;
+    }
+    unset( $recordCounter );
   }
 
 
@@ -187,6 +334,59 @@ t3lib_div::devLog( '[tx_orgesab_ImportTask]: ' . $prompt, $this->extKey, 0 );
       die( $prompt );
     }
     $this->pObj = $pObj;
+  }
+
+
+
+
+  /***********************************************
+   *
+   * Truncate
+   *
+   **********************************************/
+
+/**
+ * truncate( )  :
+ *
+ * @param       array     $content  :        
+ * @return	array     $truncate :
+ * @access private
+ * @version       0.0.1
+ * @since         0.0.1
+ */
+  private function truncate( $content )
+  {
+    $success  = null;
+    $query    = null;
+    
+    foreach( $content as $table => $properties )
+    {
+      if( ! $properties['truncate'] )
+      {
+        continue;
+      }
+      $$query = $query
+              . 'TRUNCATE ' . $table .'; ' . PHP_EOL
+              ;
+    }
+    
+    $GLOBALS['TYPO3_DB']->sql_query( $query );
+    $error = $GLOBALS['TYPO3_DB']->sql_error( );
+
+    switch( $error )
+    {
+      case( true ):
+        $this->promptError( $query, $error );
+        $success = false;
+        break;
+      case( false ):
+      default:
+        $recordCounter = 0;
+        $this->promptSuccess( $query, $recordCounter );
+        $success = true;
+        break;
+    }
+    return $success;
   }
 }
 
