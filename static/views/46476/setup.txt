@@ -150,8 +150,6 @@ plugin.tx_browser_pi1 {
                 ###SOCIALMEDIA_BOOKMARKS###
               </div>
                 ###TX_ORGESAB.TITLE###
-                ###TX_ORGESAB.EVENTBEGIN###
-                ###TX_ORGESAB.EVENTEND###
               <div class="cleaner">&nbsp;</div><!-- ###LISTBODYITEM### end --><!-- ###LISTBODY### end -->
             </div> <!-- /listview -->
 )
@@ -178,10 +176,40 @@ plugin.tx_browser_pi1 {
         }
         select (
           tx_orgesab.title,
-          tx_orgesab.eventBegin,
-          tx_orgesab.eventEnd,
+          tx_orgesab.bodytext,
+          tx_orgesab.bookedup,
+          tx_orgesab.bookingurl,
+          tx_orgesab.category,
+          tx_orgesab.day1,
+          tx_orgesab.day2,
+          tx_orgesab.day3,
+          tx_orgesab.day4,
+          tx_orgesab.day5,
           tx_orgesab.description,
+          tx_orgesab.details,
+          tx_orgesab.externalid,
+          tx_orgesab.eventbegin,
+          tx_orgesab.eventend,
+          tx_orgesab.fe_group,
+          tx_orgesab.hidden,
+          tx_orgesab.hours1,
+          tx_orgesab.hours2,
+          tx_orgesab.hours3,
+          tx_orgesab.hours4,
+          tx_orgesab.hours5,
           tx_orgesab.keywords,
+          tx_orgesab.location1,
+          tx_orgesab.location2,
+          tx_orgesab.location3,
+          tx_orgesab.location4,
+          tx_orgesab.location5,
+          tx_orgesab.price1,
+          tx_orgesab.price2,
+          tx_orgesab.price3,
+          tx_orgesab.skills,
+          tx_orgesab.spaceoftime,
+          tx_orgesab.staff1,
+          tx_orgesab.staff2,
           tx_orgesab_cat.title
         )
         //andWhere = tx_orgesab.eventBegin > UNIX_TIMESTAMP() 
@@ -244,9 +272,13 @@ plugin.tx_browser_pi1 {
               <div class="socialbookmarks">
                 ###SOCIALMEDIA_BOOKMARKS###
               </div>
+              <p>
+                ###TX_ORGESAB.EXTERNALID###
+              </p>
               ###TX_ORGESAB.TITLE###
               ###TX_ORGESAB.EVENTBEGIN###
               ###TX_ORGESAB.EVENTEND###
+              ###TX_ORGESAB.BODYTEXT###
               <!-- ###SINGLEBODYROW### end --><!-- ###SINGLEBODY### end -->
             </div>
 <!-- ###AREA_FOR_AJAX_LIST_01### end -->

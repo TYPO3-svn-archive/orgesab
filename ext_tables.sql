@@ -30,15 +30,19 @@ CREATE TABLE tx_orgesab (
   day3 tinytext,
   day4 tinytext,
   day5 tinytext,
+  description text,
   details tinytext,
   externalid tinytext,
   eventbegin int(11) unsigned DEFAULT '0' NOT NULL,
   eventend int(11) unsigned DEFAULT '0' NOT NULL,
+  fe_group int(11) DEFAULT '0' NOT NULL,
+  hidden tinyint(4) unsigned DEFAULT '0' NOT NULL,
   hours1 tinytext,
   hours2 tinytext,
   hours3 tinytext,
   hours4 tinytext,
   hours5 tinytext,
+  keywords text,
   location1 tinytext,
   location2 tinytext,
   location3 tinytext,
@@ -52,15 +56,8 @@ CREATE TABLE tx_orgesab (
   staff1 text,
   staff2 text,
   title tinytext,
-
   tx_orgesab_cat text,
   tx_org_cal tinytext,
-
-  hidden tinyint(4) unsigned DEFAULT '0' NOT NULL,
-  fe_group int(11) DEFAULT '0' NOT NULL,
-
-  keywords text,
-  description text,
   
   PRIMARY KEY (uid),
   KEY parent (pid)
