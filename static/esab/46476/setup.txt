@@ -133,6 +133,19 @@ plugin.tx_browser_pi1 {
       46476 {
         name    = Org +ESAB
         showUid = {$plugin.orgesab.typo3browser.showUid}
+        marker < plugin.tx_browser_pi1.marker
+        marker {
+          my_listview_page = TEXT
+          my_listview_page {
+            value = Alle Aus- und Fortbildungen &raquo;
+            typolink {
+              parameter = {$plugin.orgesab.pages.orgesab}
+              title {
+                value = Alle Aus- und Fortbildungen der Europäischen Sportakademie (ESAB)
+              }
+            }
+          }
+        }
         select (
           tx_orgesab.title,
           tx_orgesab.eventBegin,
