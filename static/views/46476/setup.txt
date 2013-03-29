@@ -48,8 +48,7 @@ plugin.tx_browser_pi1 {
         select (
           tx_orgesab.title,
           tx_orgesab.eventBegin,
-          tx_orgesab.eventEnd,
-          tx_orgesab_cat.title
+          tx_orgesab.eventEnd
         )
         //andWhere = tx_orgesab.eventBegin > UNIX_TIMESTAMP() 
         csvLinkToSingleView = tx_orgesab.title
