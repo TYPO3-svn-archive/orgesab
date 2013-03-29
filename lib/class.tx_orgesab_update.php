@@ -149,10 +149,11 @@ class tx_orgesab_update {
  */
   private function insert( $content )
   {
-    $recordCounter  = 0;
+    $recordCounter = null;
     
     foreach( $content as $table => $properties )
     {
+      $recordCounter = 0;
       foreach( $properties['records'] as $record )
       {
         if( ! $this->insertQuery( $table, $record, $recordCounter ) )
@@ -304,6 +305,8 @@ class tx_orgesab_update {
         break;
       case( $recordCounter == 0 ):
       default:
+        $prompt = 'INSERT: only one record will prompted.';
+        t3lib_div::devLog( '[tx_orgesab_ImportTask]: ' . $prompt, $this->extKey, -1 );
         $prompt = $query;
         t3lib_div::devLog( '[tx_orgesab_ImportTask]: ' . $prompt, $this->extKey, -1 );
         break;
