@@ -1,7 +1,7 @@
 plugin.orgesab {
 
   # cat=typo3 browser/enable/101; type=string; label= Alias for show Uid:Alias for the showUid, which is used by the TYPO3 Browser.
-  typo3browser.showuid = orgesabUid
+  typo3browser.showUid = orgesabUid
   # cat=typo3 browser/enable/102; type=string; label= gpVar phrase:gpVar phrase with the alias for the showUid, which is used by the TYPO3 Browser.
   typo3browser.gpVar = GPvar:tx_browser_pi1|orgesabUid
 
