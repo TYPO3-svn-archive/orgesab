@@ -131,483 +131,54 @@ plugin.tx_browser_pi1 {
     single {
       46476 = Org +ESAB
       46476 {
-        displaySingle < plugin.tx_browser_pi1.displaySingle
-        displaySingle {
-          image.file >
-        }
-        marker < plugin.tx_browser_pi1.marker
-        marker {
-          my_listview_page = TEXT
-          my_listview_page {
-            value = All Esab &raquo;
-            lang.de = Alle St&uuml;cke &raquo;
-            typolink {
-              parameter = {$plugin.org.pages.esab}
-              title {
-                value = All Esab
-                lang.de = Esab und alle St&uuml;cke
-              }
-            }
-          }
-          my_singleview_title = TEXT
-          my_singleview_title {
-            value   = Esab
-            lang.de = Esab
-            wrap    = <div class="header01">|</div>
-          }
-          my_content_div_begin = COA
-          my_content_div_begin {
-              // With datesheet
-            10 = TEXT
-            10 {
-              if.isTrue   = ###TX_ORG_CAL.DATETIME###
-              value       = <div class="esab_content esab_content_wi_datesheet" style="padding-left:70px;">
-            }
-              // Without datesheet
-            20 = TEXT
-            20 {
-              if.isFalse  = ###TX_ORG_CAL.DATETIME###
-              value       = <div class="esab_content esab_content_wo_datesheet">
-            }
-          }
-          my_content_div_end = TEXT
-          my_content_div_end {
-            value     = </div>
-          }
-          my_datesheet_div_begin = TEXT
-          my_datesheet_div_begin {
-            if.isTrue = ###TX_ORG_CAL.DATETIME###
-            value     = <div class="my_datesheet_box">
-          }
-          my_datesheet_div_end = TEXT
-          my_datesheet_div_end {
-            if.isTrue = ###TX_ORG_CAL.DATETIME###
-            value     = </div>
-          }
-        }
-        advanced < plugin.tx_browser_pi1.advanced
-        advanced.sql.devider.childrenRecords >
+        name    = Org +ESAB
+        showUid = {$plugin.orgesab.typo3browser.showUid}
         select (
           tx_orgesab.title,
-          tx_orgesab.subtitle,
-          tx_orgesab.tx_org_cal,
-          tx_orgesab.deleted,
-          tx_orgesab.producer,
-
-          tx_orgesab.actor,
-          tx_orgesab.puppeteer,
-          tx_orgesab.dancer,
-          tx_orgesab.vocals,
-          tx_orgesab.musician,
-          tx_orgesab.video,
-          tx_orgesab.narrator,
-          tx_orgesab.director,
-          tx_orgesab.advisor,
-          tx_orgesab.assistant,
-          tx_orgesab.stage_design,
-          tx_orgesab.tailoring,
-          tx_orgesab.requisite,
-          tx_orgesab.garment,
-          tx_orgesab.makeup,
-          tx_orgesab.stage_manager,
-          tx_orgesab.technical_manager,
-          tx_orgesab.technique,
-          tx_orgesab.light,
-          tx_orgesab.sound,
-          tx_orgesab.otherslabel,
-          tx_orgesab.others,
-
-          tx_orgesab.length,
-          tx_orgesab.bodytext,
-          tx_orgesab.staff,
-
-          tx_orgesab.image,
-          tx_orgesab.imagecaption,
-          tx_orgesab.imageseo,
-          tx_orgesab.imagewidth,
-          tx_orgesab.imageheight,
-          tx_orgesab.imageorient,
-          tx_orgesab.imagecols,
-          tx_orgesab.imageborder,
-          tx_orgesab.image_frames,
-          tx_orgesab.image_link,
-          tx_orgesab.image_zoom,
-          tx_orgesab.image_noRows,
-          tx_orgesab.image_effects,
-          tx_orgesab.image_compression,
-
-          tx_orgesab.embeddedcode,
-          tx_orgesab.print,
-          tx_orgesab.printcaption,
-          tx_orgesab.printseo,
-          tx_orgesab.documents_from_path,
-          tx_orgesab.documents,
-          tx_orgesab.documentslayout,
-          tx_orgesab.documentscaption,
-          tx_orgesab.documentssize, 
-          
-          tx_orgesab.keywords,
-          tx_orgesab.description,
-          tx_org_cal.uid,
-          tx_org_cal.datetime
+          tx_orgesab.eventBegin,
+          tx_orgesab.eventEnd,
+          tx_orgesab_cat.title
         )
-        orderBy {
-          tx_org_cal (
-            SELECT    tx_org_cal.uid      AS 'uid', 
-                      tx_org_cal.datetime AS 'datetime'
-            FROM      tx_org_cal,
-                      tx_orgesab_mm_tx_org_cal
-            WHERE     tx_orgesab_mm_tx_org_cal.uid_local    = ###UID_LOCAL###
-              AND     tx_orgesab_mm_tx_org_cal.uid_foreign  = tx_org_cal.uid
-            ORDER BY  tx_org_cal.datetime DESC
-)
-        }
-        tx_org_cal {
-            // Date isn't expired, date is expired
-          datetime = COA
-          datetime {
-            if.isTrue = ###TX_ORG_CAL.DATETIME###
-              // 10: date isn't expired 
-            10 = COA
-            10 {
-              required  = 1
-              wrap      = <div class="my_datesheet">|</div>
-              if {
-                value.data = date : U
-                isGreaterThan = ###TX_ORG_CAL.DATETIME###
-              }
-                // day (01 ... 31)
-              10 = TEXT
-              10 {
-                wrap      = <div class="day">|</div>
-                value     = ###TX_ORG_CAL.DATETIME###
-                  // %d (01 ... 31)
-                strftime = %d
-                typolink {
-                  parameter = {$plugin.org.pages.calendar}
-                  parameter {
-                    insertData = 1
+        //andWhere = tx_orgesab.eventBegin > UNIX_TIMESTAMP() 
+        csvLinkToSingleView = tx_orgesab.title
+        filter {
+          tx_orgesab {
+            eventBegin < plugin.tx_browser_pi1.displayList.master_templates.selectbox
+            eventBegin {
+              first_item {
+                cObject {
+                  20 {
+                    data = LLL:EXT:orgesab/locallang_db.xml:filter_phrase.schedule
                   }
-                  additionalParams = &tx_browser_pi1[calendarUid]=###TX_ORG_CAL.UID###&###CHASH###
                 }
               }
-                // month (Jan ... Dec) 
-              20 = TEXT
-              20 {
-                wrap      = <div class="month">|</div>
-                value     = ###TX_ORG_CAL.DATETIME###
-                  // %b (Jan ... Dec)
-                strftime = %b
-                typolink {
-                  parameter = {$plugin.org.pages.calendar}
-                  parameter {
-                    insertData = 1
-                  }
-                  additionalParams = &tx_browser_pi1[calendarUid]=###TX_ORG_CAL.UID###&###CHASH###
-                }
-              }
-                // year (i.e: 2011)
-              30 = TEXT
-              30 {
-                wrap      = <div class="year">|</div>
-                value     = ###TX_ORG_CAL.DATETIME###
-                  // %Y (11)
-                strftime = %Y
-                typolink {
-                  parameter = {$plugin.org.pages.calendar}
-                  parameter {
-                    insertData = 1
-                  }
-                  additionalParams = &tx_browser_pi1[calendarUid]=###TX_ORG_CAL.UID###&###CHASH###
-                }
-              }
-            }
-              // 20: date is expired 
-            20 < .10
-            20 {
-              if {
-                isGreaterThan >
-                isLessThan    = ###TX_ORG_CAL.DATETIME###
-              }
-              wrap      = <div class="my_datesheet my_datesheet_expired">|</div>
+              wrap = <span class="selectbox">|</span>
+              order.field = uid
+              area < plugin.tx_browser_pi1.displayList.master_templates.areas.sample_period
             }
           }
         }
         tx_orgesab {
-          actor = COA
-          actor {
-            wrap     = <table class="esab">|<table>
-            if {
-              isTrue = ###TX_ORG_REPERTOIRE.ACTOR###
-            }
-            10 = TEXT
-            10 {
-              data = LLL:EXT:orgesab/locallang_db.xml:tx_orgesab.actor
-              wrap = <tr><td>|</td>
-            }
-            11 = COA
-            11 {
-              wrap = <td>|</td></tr>
-              10 = TEXT
-              10 {
-                browser {
-                  handleRelation  = 1
-                  orderBy         = fe_users.last_name
-                  devider = TEXT
-                  devider {
-                    value       = ,
-                    noTrimWrap  = || |
-                  }
-                }
-                value = ###FE_USERS.FIRST_NAME### ###FE_USERS.LAST_NAME###
-                typolink {
-                  parameter = {$plugin.org.pages.staff}
-                  parameter {
-                    insertData = 1
-                  }
-                  additionalParams = &tx_browser_pi1[staffUid]=###FE_USERS.UID###&###CHASH###
-                }
-              }
-            }
+          eventBegin = TEXT
+          eventBegin {
+            value = ###TX_ORGESAB.EVENTBEGIN###
+            strftime = %A, %d. %B, %H:%M Uhr
           }
-            // bodytext, staff and image
-          bodytext < tt_content.image.20
-          bodytext {
-            imgList.field >
-            imgList = ###TX_ORG_REPERTOIRE.IMAGE###
-            imgPath = uploads/tx_org/
-            1 {
-              file {
-                width.field >
-                width   = ###TX_ORG_REPERTOIRE.IMAGEWIDTH###
-                height  = ###TX_ORG_REPERTOIRE.IMAGEHEIGHT###
-              }
-                // #43983, 4-
-              //altText.field                 >
-              //altText                       = ###TX_ORG_REPERTOIRE.IMAGESEO###
-              //titleText.field               >
-              //titleText                     = ###TX_ORG_REPERTOIRE.IMAGESEO###
-              imageLinkWrap {
-                ifEmpty {
-                  typolink.parameter.field  >
-                  typolink.parameter        = ###TX_ORG_REPERTOIRE.IMAGE_LINK###
-                }
-                typolink.parameter.field    >
-                typolink.parameter          = ###TX_ORG_REPERTOIRE.IMAGE_LINK###
-                enable.field                >
-                enable                      = ###TX_ORG_REPERTOIRE.IMAGE_ZOOM###
-                width                       = 1000;
-                height                      = 800m;
-                //JSwindow = 0
-              }
-            }
-            textPos.field           >
-            textPos                 = ###TX_ORG_REPERTOIRE.IMAGEORIENT###
-            equalH                  >
-            image_compression.field >
-            image_compression       = ###TX_ORG_REPERTOIRE.IMAGE_COMPRESSION###
-            image_effects.field     >
-            image_effects           = ###TX_ORG_REPERTOIRE.IMAGE_EFFECTS###
-            noRows.field            >
-            noRows                  = ###TX_ORG_REPERTOIRE.IMAGE_NOROWS###
-            cols.field              >
-            cols                    = ###TX_ORG_REPERTOIRE.IMAGECOLS###
-            border.field            >
-            border                  = ###TX_ORG_REPERTOIRE.IMAGEBORDER###
-                // #43979
-            caption.1.1.field         >
-            caption.1.1.value         = ###TX_ORG_REPERTOIRE.IMAGECAPTION###
-            captionAlign.field      >
-            captionAlign            = ###TX_ORG_REPERTOIRE.IMAGECAPTION_POSITION###
-            layout {
-              key.field        >
-              key              = ###TX_ORG_REPERTOIRE.IMAGEORIENT###
-              default.value    = <div class="csc-textpic csc-textpic-center csc-textpic-above###CLASSES###">###IMAGES###</div><div class="csc-textpic-clear"><!-- --></div>###TEXT###
-            }
-            stdWrap {
-              prefixComment >
-            }
-              // #43979, #43982
-            rendering {
-              singleNoCaption {
-                allStdWrap {
-                  innerWrap {
-                    cObject {
-                      key = ###TX_ORG_REPERTOIRE.IMAGEORIENT###
-                      key {
-                        field > 
-                      }
-                    }
-                  }
-                }
-                fallbackRendering {
-                  10 {
-                    if {
-                      isTrue = ###TX_ORG_REPERTOIRE.IMAGECAPTION###
-                      isTrue {
-                        field >
-                      }
-                    }
-                  }
-                  20 {
-                    if {
-                      isTrue = ###TX_ORG_REPERTOIRE.IMAGECAPTION###
-                      isTrue {
-                        field >
-                      }
-                    }
-                  }
-                  30 {
-                    if {
-                      isTrue = ###TX_ORG_REPERTOIRE.IMAGECAPTION###
-                      isTrue {
-                        field >
-                      }
-                    }
-                  }
-                  40 {
-                    if {
-                      isFalse = ###TX_ORG_REPERTOIRE.IMAGECAPTION###
-                      isFalse {
-                        field >
-                      }
-                    }
-                  }
-                }
-              }
-              noCaption {
-                fallbackRendering {
-                  if {
-                    isTrue = ###TX_ORG_REPERTOIRE.IMAGECAPTION###
-                    isTrue {
-                      field >
-                    }
-                  }
-                }
-              }
-              singleCaption {
-                fallbackRendering {
-                  if {
-                    isTrue = ###TX_ORG_REPERTOIRE.IMAGECAPTION###
-                    isTrue {
-                      field >
-                    }
-                  }
-                }
-              }
-              splitCaption {
-                fallbackRendering {
-                  if {
-                    isTrue = ###TX_ORG_REPERTOIRE.IMAGECAPTION###
-                    isTrue {
-                      field >
-                    }
-                  }
-                }
-              }
-              globalCaption {
-                fallbackRendering {
-                  if {
-                    isTrue = ###TX_ORG_REPERTOIRE.IMAGECAPTION###
-                    isTrue {
-                      field >
-                    }
-                  }
-                }
-              }
-            }
-              // bodytext, staff
-            text = COA
-            text {
-              required  = 1
-                // #43980
-              wrap = <div class="csc-textpic-text">|</div>
-                // bodytext
-              10 = TEXT
-              10 {
-                required  = 1
-                value     = ###TX_ORG_REPERTOIRE.BODYTEXT###
-                wrap      = <div class="esab_bodytext">|</div>
-                stdWrap {
-                  parseFunc < lib.parseFunc_RTE
-                }
-              }
-                // staff
-              20 = TEXT
-              20 {
-                required  = 1
-                value     = ###TX_ORG_REPERTOIRE.STAFF###
-                wrap      = <div class="esab_staff">|</div>
-                stdWrap {
-                  parseFunc < lib.parseFunc_RTE
-                }
-              }
-            }
+          eventEnd = TEXT
+          eventEnd {
+            value = ###TX_ORGESAB.EVENTEND###
+            strftime = %A, %d. %B, %H:%M Uhr
           }
-          documents = COA
-          documents {
-              // title
-            10 = TEXT
-            10 {
-              if.isTrue = ###TX_ORG_REPERTOIRE.DOCUMENTS######TX_ORG_REPERTOIRE.DOCUMENTS_FROM_PATH###
-              value     = Documents
-              lang.de   = Dokumente
-              wrap      = <h2 class="esab_documents">|</h2>
-            }
-              // documents
-            20 < tt_content.uploads.20
-            20 {
-              userFunc = tx_browser_cssstyledcontent->render_uploads
-              filePath >
-              itemRendering {
-                10 {
-                  if {
-                    isPositive.field >
-                    isPositive = ###TX_ORG_REPERTOIRE.DOCUMENTSLAYOUT###
-                  }
-                }
-                30 {
-                  if {
-                    isTrue.field >
-                    isTrue = ###TX_ORG_REPERTOIRE.DOCUMENTSSIZE###
-                  }
-                }
-              }
-              tableField = tx_orgesab.documents
-              fields {
-                from_path = ###TX_ORG_REPERTOIRE.DOCUMENTS_FROM_PATH###
-                files     = ###TX_ORG_REPERTOIRE.DOCUMENTS###
-                caption   = ###TX_ORG_REPERTOIRE.DOCUMENTSCAPTION###
-                layout    = ###TX_ORG_REPERTOIRE.DOCUMENTSLAYOUT###
-              }
-              stdWrap {
-                if.isTrue = ###TX_ORG_REPERTOIRE.DOCUMENTS######TX_ORG_REPERTOIRE.DOCUMENTS_FROM_PATH###
-              }
-            }
-          }
-            // subtitle, title, producer
-          title = COA
+            // title, producer
+          title = TEXT
           title {
-              // subtitle
-            10 = TEXT
-            10 {
-              required  = 1
-              value     = ###TX_ORG_REPERTOIRE.SUBTITLE###
-              wrap      = <h2 class="esab_subtitle">|</h2>
-            }
-              // title
-            20 = TEXT
-            20 {
-              value = ###TX_ORG_REPERTOIRE.TITLE###
-              wrap  = <h1 class="esab_title">|</h1>
-            }
-              // producer
-            30 = TEXT
-            30 {
-              if.isTrue = ###TX_ORG_REPERTOIRE.PRODUCER###
-              value     = by ###TX_ORG_REPERTOIRE.PRODUCER###
-              lang.de   = von ###TX_ORG_REPERTOIRE.PRODUCER###
-              wrap      = <h2 class="esab_producer">|</h2>
+            wrap = <h2 class="esab_title">|</h2>
+            required  = 1
+            value     = ###TX_ORGESAB.TITLE###
+            typolink {
+              parameter         = {$plugin.orgesab.pages.orgesab} - linktosingle
+              additionalParams  = &tx_browser_pi1[{$plugin.orgesab.typo3browser.showUid}]=###TX_ORGESAB.UID###
+              useCacheHash      = 1
             }
           }
         }
@@ -615,9 +186,19 @@ plugin.tx_browser_pi1 {
           // #43981, 121214, dwildt
         htmlSnippets =
         htmlSnippets {
+          marker {
+            filter = TEXT
+            filter {
+              value (
+              <div class="filter">
+                ###TX_ORGESAB.EVENTBEGIN###
+              </div>
+)
+            }
+          }
           subparts {
-            singleview = TEXT
-            singleview {
+            listview = TEXT
+            listview {
               value (
 <!-- ###AREA_FOR_AJAX_LIST_01### begin -->
         <div id="c###TT_CONTENT.UID###-singleview-###MODE###" class="singleview singleview-###MODE###">
@@ -625,17 +206,12 @@ plugin.tx_browser_pi1 {
           <div class="ui-widget ui-corner-all">
             <div class="ui-widget-content ui-corner-all">
               <!-- ###SINGLEBODY### begin --><!-- ###SINGLEBODYROW### begin -->
-              ###MY_DATESHEET_DIV_BEGIN###
-              ###TX_ORG_CAL.DATETIME###
-              ###MY_DATESHEET_DIV_END###
               <div class="socialbookmarks">
                 ###SOCIALMEDIA_BOOKMARKS###
               </div>
-              ###MY_CONTENT_DIV_BEGIN###
-              ###TX_ORG_REPERTOIRE.TITLE###
-              ###TX_ORG_REPERTOIRE.BODYTEXT###
-              ###TX_ORG_REPERTOIRE.DOCUMENTS###
-              ###MY_CONTENT_DIV_END###
+              ###TX_ORGESAB.TITLE###
+              ###TX_ORGESAB.EVENTBEGIN###
+              ###TX_ORGESAB.EVENTEND###
               <!-- ###SINGLEBODYROW### end --><!-- ###SINGLEBODY### end -->
             </div>
 <!-- ###AREA_FOR_AJAX_LIST_01### end -->
