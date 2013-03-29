@@ -365,7 +365,7 @@ class tx_orgesab_update {
       {
         continue;
       }
-      $$query = $query
+      $query = $query
               . 'TRUNCATE ' . $table .'; ' . PHP_EOL
               ;
     }
