@@ -356,7 +356,6 @@ class tx_orgesab_update {
  */
   private function truncate( $content )
   {
-    $success  = null;
     $query    = null;
     
     foreach( $content as $table => $properties )
@@ -365,29 +364,25 @@ class tx_orgesab_update {
       {
         continue;
       }
-      $query = $query
-              . 'TRUNCATE ' . $table . '; ' 
-              ;
-      break;
-    }
-    
-    $GLOBALS['TYPO3_DB']->sql_query( $query );
-    $error = $GLOBALS['TYPO3_DB']->sql_error( );
+      $query = 'TRUNCATE ' . $table . ';';
 
-    switch( $error )
-    {
-      case( true ):
-        $this->promptError( $query, $error );
-        $success = false;
-        break;
-      case( false ):
-      default:
-        $recordCounter = 0;
-        $this->promptSuccess( $query, $recordCounter );
-        $success = true;
-        break;
+      $GLOBALS['TYPO3_DB']->sql_query( $query );
+      $error = $GLOBALS['TYPO3_DB']->sql_error( );
+
+      switch( $error )
+      {
+        case( true ):
+          $this->promptError( $query, $error );
+          return false;
+          break;
+        case( false ):
+        default:
+          $recordCounter = 0;
+          $this->promptSuccess( $query, $recordCounter );
+          break;
+      }
     }
-    return $success;
+    return true;
   }
 }
 
