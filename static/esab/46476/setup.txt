@@ -137,6 +137,8 @@ plugin.tx_browser_pi1 {
           tx_orgesab.title,
           tx_orgesab.eventBegin,
           tx_orgesab.eventEnd,
+          tx_orgesab.description,
+          tx_orgesab.keywords,
           tx_orgesab_cat.title
         )
         //andWhere = tx_orgesab.eventBegin > UNIX_TIMESTAMP() 
@@ -186,19 +188,9 @@ plugin.tx_browser_pi1 {
           // #43981, 121214, dwildt
         htmlSnippets =
         htmlSnippets {
-          marker {
-            filter = TEXT
-            filter {
-              value (
-              <div class="filter">
-                ###TX_ORGESAB.EVENTBEGIN###
-              </div>
-)
-            }
-          }
           subparts {
-            listview = TEXT
-            listview {
+            singleview = TEXT
+            singleview {
               value (
 <!-- ###AREA_FOR_AJAX_LIST_01### begin -->
         <div id="c###TT_CONTENT.UID###-singleview-###MODE###" class="singleview singleview-###MODE###">
@@ -234,20 +226,20 @@ plugin.tx_browser_pi1 {
   
   _LOCAL_LANG {
     default {
-      list_mode_46476_titleTag      = TYPO3 Organiser: Esab
-      list_mode_46476_keywords      = TYPO3, Organiser, Esab
-      list_mode_46476_summary       = TYPO3 Organiser: Esab
-      single_mode_46476_titleTag    = TYPO3 Organiser: ###TX_ORG_REPERTOIRE.TITLE###
-      single_mode_46476_keywords    = ###TX_ORG_REPERTOIRE.KEYWORDS###
-      single_mode_46476_summary     = ###TX_ORG_REPERTOIRE.DESCRIPTION###
+      list_mode_46476_titleTag      = European Sports Academy (ESAB): Programm
+      list_mode_46476_keywords      = European Sports Academy, ESAB, Programm
+      list_mode_46476_summary       = European Sports Academy (ESAB): Programm
+      single_mode_46476_titleTag    = European Sports Academy: ###TX_ORGESAB.TITLE###
+      single_mode_46476_keywords    = European Sports Academy, ESAB, ###TX_ORGESAB.KEYWORDS###
+      single_mode_46476_summary     = European Sports Academy (ESAB): ###TX_ORGESAB.DESCRIPTION###
     }
     de {
-      list_mode_46476_titleTag      = TYPO3 Organiser: Esab und St&uuml;cke
-      list_mode_46476_keywords      = TYPO3, Organiser, Esab, St&uuml;cke
-      list_mode_46476_summary       = TYPO3 Organiser: Esab und St&uuml;cke
-      single_mode_46476_titleTag    = TYPO3 Organiser: ###TX_ORG_REPERTOIRE.TITLE###
-      single_mode_46476_keywords    = ###TX_ORG_REPERTOIRE.KEYWORDS###
-      single_mode_46476_summary     = ###TX_ORG_REPERTOIRE.DESCRIPTION###
+      list_mode_46476_titleTag      = Europäische Sportakademie Brandenburg (ESAB): Jahresprogramm
+      list_mode_46476_keywords      = Europäische Sportakademie Brandenburg, ESAB, Jahresprogramm
+      list_mode_46476_summary       = Jahresprogramm der Europäischen Sportakademie Brandenburg (ESAB)
+      single_mode_46476_titleTag    = Europäischen Sportakademie Brandenburg (ESAB): ###TX_ORGESAB.TITLE###
+      single_mode_46476_keywords    = Europäische Sportakademie Brandenburg, ESAB, ###TX_ORGESAB.KEYWORDS###
+      single_mode_46476_summary     = Europäische Sportakademie Brandenburg (ESAB): ###TX_ORGESAB.DESCRIPTION###
     }
   }
 }
