@@ -19,7 +19,7 @@
   //    esabUid
 
   // page
-[globalVar = GP:tx_browser_pi1|esabUid > 0]
+[globalVar = GP:tx_browser_pi1|{$plugin.orgesab.typo3browser.showUid} > 0]
   page {
     config {
       noPageTitle = 2
@@ -61,7 +61,7 @@ plugin.tx_linkhandler {
     forceLink        = 0
     useCacheHash     = 1
     parameter        = {$plugin.org.pages.esab}
-    additionalParams = &tx_browser_pi1[esabUid]={field:uid}
+    additionalParams = &tx_browser_pi1[{$plugin.orgesab.typo3browser.showUid}]={field:uid}
     additionalParams {
       insertData = 1
     } 
