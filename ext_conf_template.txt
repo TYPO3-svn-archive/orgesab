@@ -1,7 +1,7 @@
   # cat=be language/enable/100;         type=options[English,German]; label= Localise special backend labels: Language for special backend labels like TypoScript static templates and the link handler.
 LLstatic = English
 
-  # cat=database/enable/100;             type=boolean; label= Read only: Records can't edited and can't removed (recommended). Backgorund: If you save an Org *ESAB record, you will lost all images abd some HTML tags in the bodytext.
+  # cat=database/enable/100;            type=boolean; label= Read only: Records can't edited and can't removed (recommended). Backgorund: If you save an Org +ESAB record, you will lost all images and some HTML tags in the bodytext.
 databaseReadonly      = 1
 
   # cat=debugging/enable/100;           type=options[Disabled,Enabled (for debugging only!)]; label= DRS - Development Reporting System: Messages will be written to DevLog (you need the extension devlog).
