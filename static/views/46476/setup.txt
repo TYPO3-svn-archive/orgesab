@@ -46,9 +46,7 @@ plugin.tx_browser_pi1 {
         name    = Org +ESAB
         showUid = {$plugin.orgesab.typo3browser.showUid}
         select (
-          tx_orgesab.title,
-          tx_orgesab.eventBegin,
-          tx_orgesab.eventEnd
+          tx_orgesab.title
         )
         //andWhere = tx_orgesab.eventBegin > UNIX_TIMESTAMP() 
         csvLinkToSingleView = tx_orgesab.title
