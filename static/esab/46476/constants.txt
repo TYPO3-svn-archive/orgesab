@@ -1,9 +1,0 @@
-plugin.orgesab {
-
-  # cat=pages/enable/101;             type=int+;    label= Org +ESAB page uid:Uid of the page, which dispülays the Org +ESAB data. This page contains usually the TYPO3 Browser plugin/Flexform.
-  pages.orgesab = 
-
-  # cat=typo3 browser/enable/101;     type=string;  label= Alias for show Uid:Alias for the showUid, which is used by the TYPO3 Browser.
-  typo3browser.showUid = orgesabUid
-
-}
