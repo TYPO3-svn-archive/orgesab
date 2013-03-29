@@ -140,6 +140,7 @@ class tx_orgesab_convert {
   private function getAngebote( $xml )
   {
     $angebote = array( );
+    $id  = 0;
 
       // LOOP : Bereiche
     foreach( $xml->Bereich as $bereich )
@@ -147,7 +148,8 @@ class tx_orgesab_convert {
         // LOOP : Angebote
       foreach( $bereich->Angebot as $angebot )
       {
-        $angebote[] = array
+        $id++;
+        $angebote[$id] = array
         (
           'bereich_zuordnung'     => ( string ) $bereich->bereich_zuordnung,  
           'angebot_ausgebucht'    => ( string ) $angebot->angebot_ausgebucht,
