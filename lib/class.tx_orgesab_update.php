@@ -293,6 +293,11 @@ class tx_orgesab_update {
     }
       // RETURN : no DRS
 
+    $prompt = $query;
+    t3lib_div::devLog( '[tx_orgesab_ImportTask]: ' . $prompt, $this->extKey, -1 );
+    
+    return;
+    
     switch( true )
     {
       case( $recordCounter >= 1 ):
