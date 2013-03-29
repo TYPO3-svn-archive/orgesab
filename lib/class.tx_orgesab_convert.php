@@ -456,7 +456,7 @@ class tx_orgesab_convert {
         'staff1'      => $angebot['angebot_kursleiter1'],
         'staff2'      => $angebot['angebot_kursleiter2'],
         'title'       => $angebot['angebot_name'],
-        'tx_orgesab_cat'  => 1,
+        'tx_orgesab_cat'  => 2,
         'tx_org_cal'      => null,
       );
     } 
@@ -787,13 +787,22 @@ class tx_orgesab_convert {
     {
       $bereich_zuordnung  = $angebot['bereich_zuordnung'];
       $uid_foreign        = $tx_orgesab_catFlipped[$bereich_zuordnung];
+      $uid_foreign_parent = $tx_orgesab_cat[$uid_foreign]['uid_parent'];
         
+      $recordsMm[] = array
+      (
+        'uid_local'       => $uid,
+        'uid_foreign'     => $uid_foreign_parent,
+        'tablenames'      => null,
+        'sorting'         => 256 * 1,
+        'sorting_foreign' => null
+      );
       $recordsMm[] = array
       (
         'uid_local'       => $uid,
         'uid_foreign'     => $uid_foreign,
         'tablenames'      => null,
-        'sorting'         => null,
+        'sorting'         => 256 * 2,
         'sorting_foreign' => null
       );
     } 
