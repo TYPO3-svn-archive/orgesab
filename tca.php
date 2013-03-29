@@ -185,7 +185,7 @@ $TCA['tx_orgesab'] = array (
   'ctrl' => $TCA['tx_orgesab']['ctrl'],
   'interface' => array (
     'showRecordFieldList' => '
-        title,bookedup,bookingurl,eventbegin,eventend,spaceoftime,staff1,staff2,price1,price2,price3,tx_orgesab_cat,bodytext,skills,details,category
+        externalid, title,bookedup,bookingurl,eventbegin,eventend,spaceoftime,staff1,staff2,price1,price2,price3,tx_orgesab_cat,bodytext,skills,details,category
       , tx_org_cal
       , tx_orgesab_cat
       , location1,location2,location3,location4,location5
@@ -196,6 +196,11 @@ $TCA['tx_orgesab'] = array (
   ),
   'feInterface' => $TCA['tx_orgesab']['feInterface'],
   'columns' => array (
+    'externalid' => array (
+      'exclude' => 0,
+      'label'   => 'LLL:EXT:orgesab/locallang_db.xml:tx_orgesab.externalid',
+      'config'  => $conf_input_30_trim,
+    ),
     'title' => array (
       'exclude' => 0,
       'label'   => 'LLL:EXT:orgesab/locallang_db.xml:tx_orgesab.title',
@@ -473,6 +478,7 @@ $TCA['tx_orgesab'] = array (
     (
       'showitem' => '
             --div--;LLL:EXT:orgesab/locallang_db.xml:tx_orgesab.div_event
+          , externalid
           , title 
           , bookedup
           , bookingurl

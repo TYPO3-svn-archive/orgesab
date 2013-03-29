@@ -35,6 +35,7 @@
       <label index="tx_orgesab.details">Details</label>
       <label index="tx_orgesab.eventbegin">Begin</label>
       <label index="tx_orgesab.eventend">End</label>
+      <label index="tx_orgesab.externalid">ID in the booking system</label>
       <label index="tx_orgesab.hours1">Hours 1</label>
       <label index="tx_orgesab.hours2">Hours 2</label>
       <label index="tx_orgesab.hours3">Hours 3</label>
@@ -92,6 +93,7 @@
       <label index="tx_orgesab.details">Details</label>
       <label index="tx_orgesab.eventbegin">Beginn</label>
       <label index="tx_orgesab.eventend">Ende</label>
+      <label index="tx_orgesab.externalid">ID im Buchungssystem</label>
       <label index="tx_orgesab.hours1">Stunden 1</label>
       <label index="tx_orgesab.hours2">Stunden 2</label>
       <label index="tx_orgesab.hours3">Stunden 3</label>
