@@ -60,7 +60,7 @@ plugin.tx_browser_pi1 {
               first_item {
                 cObject {
                   20 {
-                    data = LLL:EXT:orgesab/locallang_db.xml:filter_phrase.schedule
+                    data = LLL:EXT:orgesab/locallang_db.xml:filter_phrase.tx_orgesab.eventbegin
                   }
                 }
               }
@@ -126,6 +126,7 @@ plugin.tx_browser_pi1 {
             filter {
               value (
               <div class="filter">
+                ###TX_ORGESAB_CAT.TITLE###
                 ###TX_ORGESAB.EVENTBEGIN###
               </div>
 )

@@ -7,7 +7,7 @@
   <data type="array">
     <languageKey index="default" type="array">
       <label index="dummy.language">default</label>
-      <label index="filter_phrase.schedule">Playing schedule</label>
+      <label index="filter_phrase.tx_orgesab.eventbegin">Month</label>
       <label index="filter_phrase.tx_orgesab_cat">Category</label>
       <label index="tca_phrase.esab">ESAB</label>
 
@@ -66,7 +66,7 @@
     </languageKey>
     <languageKey index="de" type="array">
       <label index="dummy.language">de</label>
-      <label index="filter_phrase.schedule">Spielplan</label>
+      <label index="filter_phrase.tx_orgesab.eventbegin">Monat</label>
       <label index="filter_phrase.tx_orgesab_cat">Bereich</label>
       <label index="tca_phrase.esab">ESAB</label>
 
