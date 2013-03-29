@@ -375,6 +375,7 @@ $TCA['tx_orgesab_cat'] = array (
     'dynamicConfigFile' => t3lib_extMgm::extPath($_EXTKEY).'tca.php',
     'thumbnail'         => 'image',
     'iconfile'          => t3lib_extMgm::extRelPath($_EXTKEY).'ext_icon/esab.gif',
+    'treeParentField'   => 'uid_parent',
   ),
 );
   // esab ///////////////////////////////////////////////////////////////////

@@ -549,6 +549,24 @@ $TCA['tx_orgesab_cat'] = array (
       , hidden',
   ),
   'columns' => array (
+    'uid_parent' => array (
+      'exclude'   => 0,
+      'label'   => 'LLL:EXT:orgesab/locallang_db.xml:tx_orgesab_cat.uid_parent',
+      'config'    => array (
+        'type'          => 'select',
+        'form_type'     => 'user',
+        'userFunc'      => 'tx_cpstcatree->getTree',
+        'foreign_table' => 'tx_orgesab_cat',
+        'treeView'      => 1,
+        'expandable'    => 1,
+        'expandFirst'   => 0,
+        'expandAll'     => 0,
+        'size'          => 1,
+        'minitems'      => 0,
+        'maxitems'      => 2,
+        'trueMaxItems'  => 1,
+      ),
+    ),
     'title' => array (
       'exclude' => 0,
       'label'   => 'LLL:EXT:orgesab/locallang_db.xml:tx_orgesab_cat.title',
