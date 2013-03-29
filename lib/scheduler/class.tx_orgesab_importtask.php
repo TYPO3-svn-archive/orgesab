@@ -1302,9 +1302,6 @@ cronCmd:    ' . ( $cronCmd ? $cronCmd : 'not used' )
     $this->updateDatabaseInstance( );
     $success = $this->update->main( $content );
 
-    $success = true;
-    $this->updateDatabaseDrsMail( $success );
-
     return $success;
   }
 
