@@ -532,7 +532,7 @@ class tx_orgesab_convert {
                   . $angebot['angebot_inhalte']
                   ;
     
-    $description  = str_replace(PHP_EOL, ' ', $description ); 
+    $description  = str_replace(PHP_EOL, '; ', $description ); 
     
     return $description;
   }
