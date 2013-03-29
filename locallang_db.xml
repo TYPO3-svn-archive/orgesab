@@ -26,11 +26,13 @@
       <label index="tx_orgesab.bodytext">Bodytext</label>
       <label index="tx_orgesab.bookedup">Booked up</label>
       <label index="tx_orgesab.bookingurl">Booking URL</label>
+      <label index="tx_orgesab.category">Category 2nd level</label>
       <label index="tx_orgesab.day1">Day 1</label>
       <label index="tx_orgesab.day2">Day 2</label>
       <label index="tx_orgesab.day3">Day 3</label>
       <label index="tx_orgesab.day4">Day 4</label>
       <label index="tx_orgesab.day5">Day 5</label>
+      <label index="tx_orgesab.details">Details</label>
       <label index="tx_orgesab.eventbegin">Begin</label>
       <label index="tx_orgesab.eventend">End</label>
       <label index="tx_orgesab.hours1">Hours 1</label>
@@ -47,6 +49,7 @@
       <label index="tx_orgesab.price2">Price others</label>
       <label index="tx_orgesab.price3">Price 3</label>
       <label index="tx_orgesab.skills">Skills</label>
+      <label index="tx_orgesab.spaceoftime">Space of time</label>
       <label index="tx_orgesab.staff1">Course instructor 1</label>
       <label index="tx_orgesab.staff2">Course instructor 2</label>
       <label index="tx_orgesab.title">Title of the ESAB event</label>
@@ -80,11 +83,13 @@
       <label index="tx_orgesab.bodytext">Text</label>
       <label index="tx_orgesab.bookedup">Ausgebucht</label>
       <label index="tx_orgesab.bookingurl">Buchungs-URL</label>
+      <label index="tx_orgesab.category">Kategorie 2. Ebene</label>
       <label index="tx_orgesab.day1">Tag 1</label>
       <label index="tx_orgesab.day2">Tag 2</label>
       <label index="tx_orgesab.day3">Tag 3</label>
       <label index="tx_orgesab.day4">Tag 4</label>
       <label index="tx_orgesab.day5">Tag 5</label>
+      <label index="tx_orgesab.details">Details</label>
       <label index="tx_orgesab.eventbegin">Beginn</label>
       <label index="tx_orgesab.eventend">Ende</label>
       <label index="tx_orgesab.hours1">Stunden 1</label>
@@ -101,6 +106,7 @@
       <label index="tx_orgesab.price2">Preis Andere</label>
       <label index="tx_orgesab.price3">Preis 3</label>
       <label index="tx_orgesab.skills">Themen</label>
+      <label index="tx_orgesab.spaceoftime">Zeitraum</label>
       <label index="tx_orgesab.staff1">Kursleiter 1</label>
       <label index="tx_orgesab.staff2">Kursleiter 2</label>
       <label index="tx_orgesab.title">Bezeichnung der ESAB-Veranstaltung</label>
