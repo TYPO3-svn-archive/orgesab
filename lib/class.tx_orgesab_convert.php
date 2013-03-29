@@ -525,8 +525,10 @@ class tx_orgesab_convert {
  */
   private function setOrgesabFieldDescription( $angebot )
   {
-    $description  = $angebot['angebot_name']
+    $description  = $angebot['angebot_name'] 
+                  . ' | '
                   . $angebot['angebot_bereich']
+                  . ' | '
                   . $angebot['angebot_inhalte']
                   ;
     
