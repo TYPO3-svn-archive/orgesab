@@ -139,36 +139,36 @@ switch($confArr['store_records'])
 switch(true) {
   case($llStatic == 'de'):
       // German
-    t3lib_extMgm::addStaticFile($_EXTKEY,'static/base/',                  '+Org-Esab: Basis (immer einbinden!)');
-    t3lib_extMgm::addStaticFile($_EXTKEY,'static/esab/46476/',            '+Org-Esab: Views (immer einbinden!)');
-//    t3lib_extMgm::addStaticFile($_EXTKEY,'static/calendar/201/',          '+Org-Esab: Kalender');
-//    t3lib_extMgm::addStaticFile($_EXTKEY,'static/calendar/201/expired/',  '+Org-Esab: +Kalender Archiv');
-//    t3lib_extMgm::addStaticFile($_EXTKEY,'static/calendar/211/',          '+Org-Esab: Kalender - Rand');
+    t3lib_extMgm::addStaticFile($_EXTKEY,'static/base/',                  'Org +Esab: Basis (immer einbinden!)');
+    t3lib_extMgm::addStaticFile($_EXTKEY,'static/esab/46476/',            'Org +Esab: Views (immer einbinden!)');
+//    t3lib_extMgm::addStaticFile($_EXTKEY,'static/calendar/201/',          'Org +ESAB: Kalender');
+//    t3lib_extMgm::addStaticFile($_EXTKEY,'static/calendar/201/expired/',  'Org +ESAB: +Kalender Archiv');
+//    t3lib_extMgm::addStaticFile($_EXTKEY,'static/calendar/211/',          'Org +ESAB: Kalender - Rand');
     switch( true )
     {
       case( $typo3Version < 4007000 ):
-        t3lib_extMgm::addStaticFile($_EXTKEY,'static/base/typo3/4.6/',    '+Org-Esab: Basis fuer TYPO3 < 4.7 (einbinden!)');
+        t3lib_extMgm::addStaticFile($_EXTKEY,'static/base/typo3/4.6/',    'Org +ESAB: +Basis fuer TYPO3 < 4.7 (einbinden!)');
         break;
       default:
-        t3lib_extMgm::addStaticFile($_EXTKEY,'static/base/typo3/4.6/',    '+Org-Esab: Basis fuer TYPO3 < 4.7 (NICHT einbinden!)');
+        t3lib_extMgm::addStaticFile($_EXTKEY,'static/base/typo3/4.6/',    'Org +ESAB: +Basis fuer TYPO3 < 4.7 (NICHT einbinden!)');
         break;
     }
     break;
   default:
       // English
-    t3lib_extMgm::addStaticFile($_EXTKEY,'static/base/',                  '+Org-Esab: Basis (obligate!)');
-    t3lib_extMgm::addStaticFile($_EXTKEY,'static/esab/46476/',            '+Org-Esab: Views (obligate!)');
-//    t3lib_extMgm::addStaticFile($_EXTKEY,'static/calendar/201/',          '+Org-Esab: Calendar');
-//    t3lib_extMgm::addStaticFile($_EXTKEY,'static/calendar/201/expired/',  '+Org-Esab: +Calendar expired');
-//    t3lib_extMgm::addStaticFile($_EXTKEY,'static/calendar/211/',          '+Org-Esab: Calendar - Margin');
-//    t3lib_extMgm::addStaticFile($_EXTKEY,'static/esab/46476/',            '+Org-Esab: Esab');
+    t3lib_extMgm::addStaticFile($_EXTKEY,'static/base/',                  'Org +ESAB: Basis (obligate!)');
+    t3lib_extMgm::addStaticFile($_EXTKEY,'static/esab/46476/',            'Org +ESAB: Views (obligate!)');
+//    t3lib_extMgm::addStaticFile($_EXTKEY,'static/calendar/201/',          'Org +ESAB: Calendar');
+//    t3lib_extMgm::addStaticFile($_EXTKEY,'static/calendar/201/expired/',  'Org +ESAB: +Calendar expired');
+//    t3lib_extMgm::addStaticFile($_EXTKEY,'static/calendar/211/',          'Org +ESAB: Calendar - Margin');
+//    t3lib_extMgm::addStaticFile($_EXTKEY,'static/esab/46476/',            'Org +ESAB: Esab');
     switch( true )
     {
       case( $typo3Version < 4007000 ):
-        t3lib_extMgm::addStaticFile($_EXTKEY,'static/base/typo3/4.6/',    '+Org-Esab: Basis for TYPO3 < 4.7 (obligate!)');
+        t3lib_extMgm::addStaticFile($_EXTKEY,'static/base/typo3/4.6/',    'Org +ESAB: +Basis for TYPO3 < 4.7 (obligate!)');
         break;
       default:
-        t3lib_extMgm::addStaticFile($_EXTKEY,'static/base/typo3/4.6/',    '+Org-Esab: Basis for TYPO3 < 4.7 (don\'t use it!)');
+        t3lib_extMgm::addStaticFile($_EXTKEY,'static/base/typo3/4.6/',    'Org +ESAB: +Basis for TYPO3 < 4.7 (don\'t use it!)');
         break;
     }
 }
