@@ -546,10 +546,10 @@ class tx_orgesab_convert {
     
     switch( true )
     {
-      case( strpos( $bereich_zuordnung, 'LSB - Ausbildung' ) === true ):
+      case( strpos( $bereich_zuordnung, 'LSB - Ausbildung' ) !== false ):
         $uid_parent = 1;
         break;
-      case( strpos( $bereich_zuordnung, 'LSB - Fortbildung' ) === true ):
+      case( strpos( $bereich_zuordnung, 'LSB - Fortbildung' ) !== false ):
         $uid_parent = 2;
         break;
       default:
