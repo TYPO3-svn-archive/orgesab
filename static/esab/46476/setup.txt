@@ -44,24 +44,19 @@ plugin.tx_browser_pi1 {
       46476 = +Org-Esab: Esab
       46476 {
         name    = +Org-Esab: Esab
-        showUid = esabUid
+        showUid = {$plugin.orgesab.typo3browser.showUid}
         select (
           tx_orgesab.title,
-          tx_orgesab.producer,
-          tx_orgesab.subtitle,
-          tx_orgesab.teaser_short,
-          tx_orgesab.bodytext,
-          tx_orgesab.image,
-          tx_orgesab.imageseo,
-          tx_org_cal.datetime,
-          tx_org_cal.type
+          tx_orgesab.eventBegin,
+          tx_orgesab.eventEnd,
+          tx_orgesab_cat.title
         )
-        andWhere = tx_org_cal.datetime > UNIX_TIMESTAMP() AND tx_org_cal.type LIKE 'tx_orgesab'
+        //andWhere = tx_orgesab.eventBegin > UNIX_TIMESTAMP() 
         csvLinkToSingleView = tx_orgesab.title
         filter {
-          tx_org_cal {
-            datetime < plugin.tx_browser_pi1.displayList.master_templates.selectbox
-            datetime {
+          tx_orgesab {
+            eventBegin < plugin.tx_browser_pi1.displayList.master_templates.selectbox
+            eventBegin {
               first_item {
                 cObject {
                   20 {
@@ -75,74 +70,27 @@ plugin.tx_browser_pi1 {
             }
           }
         }
-        tx_org_cal {
-          datetime = TEXT
-          datetime {
-            value = ###TX_ORG_CAL.DATETIME### h
-            lang {
-              de = ###TX_ORG_CAL.DATETIME### Uhr
-            }
+        tx_orgesab {
+          eventBegin = TEXT
+          eventBegin {
+            value = ###TX_ORGESAB.EVENTBEGIN###
             strftime = %A, %d. %B, %H:%M Uhr
           }
-        }
-        tx_orgesab {
-            // teaser_short || bodytext, more 
-          teaser_short = COA
-          teaser_short {
-            required    = 1
-            wrap        = <div class="esab_teasershort">|</div>
-            20 = TEXT
-            20 {
-              required    = 1
-              if.isTrue   = ###TX_ORG_REPERTOIRE.TEASER_SHORT###
-              value       = ###TX_ORG_REPERTOIRE.TEASER_SHORT###
-              stripHtml   = 1
-              crop        = 200 | &nbsp;... | 1
-            }
-            21 = TEXT
-            21 {
-              required    = 1
-              if.isFalse  = ###TX_ORG_REPERTOIRE.TEASER_SHORT###
-              value       = ###TX_ORG_REPERTOIRE.BODYTEXT###
-              stripHtml   = 1
-              crop        = 200 | &nbsp;... | 1
-            }
-            30 = TEXT
-            30 {
-              value   = more &raquo;
-              lang.de = mehr &raquo;
-              typolink {
-                parameter         = {$plugin.org.pages.esab} - linktosingle
-                additionalParams  = &tx_browser_pi1[esabUid]=###TX_ORG_REPERTOIRE.UID###&###CHASH###
-              }
-              noTrimWrap = | ||
-            }
-          }
-          subtitle = TEXT
-          subtitle {
-            required  = 1
-            value     = ###TX_ORG_REPERTOIRE.SUBTITLE###
-            wrap      = <h3 class="esab_subtitle">|</h3>
+          eventEnd = TEXT
+          eventEnd {
+            value = ###TX_ORGESAB.EVENTEND###
+            strftime = %A, %d. %B, %H:%M Uhr
           }
             // title, producer
-          title = COA
+          title = TEXT
           title {
             wrap = <h2 class="esab_title">|</h2>
-            10 = TEXT
-            10 {
-              required  = 1
-              value     = ###TX_ORG_REPERTOIRE.TITLE###
-              typolink {
-                parameter         = {$plugin.org.pages.esab} - linktosingle
-                additionalParams  = &tx_browser_pi1[esabUid]=###TX_ORG_REPERTOIRE.UID###&###CHASH###
-              }
-            }
-            20 = TEXT
-            20 {
-              if.isTrue   = ###TX_ORG_REPERTOIRE.PRODUCER###
-              value       = by ###TX_ORG_REPERTOIRE.PRODUCER###
-              lang.de     = von ###TX_ORG_REPERTOIRE.PRODUCER###
-              noTrimWrap  = | <span class="esab_producer">|</span>|
+            required  = 1
+            value     = ###TX_ORGESAB.TITLE###
+            typolink {
+              parameter         = {$plugin.orgesab.pages.orgesab} - linktosingle
+              additionalParams  = &tx_browser_pi1[{$plugin.orgesab.typo3browser.showUid}]=###TX_ORGESAB.UID###
+              useCacheHash      = 1
             }
           }
         }
@@ -155,7 +103,7 @@ plugin.tx_browser_pi1 {
             filter {
               value (
               <div class="filter">
-                ###TX_ORG_CAL.DATETIME###
+                ###TX_ORGESAB.EVENTBEGIN###
               </div>
 )
             }
@@ -166,17 +114,12 @@ plugin.tx_browser_pi1 {
               value (
             <div id="c###TT_CONTENT.UID###-listview-###MODE###" class="###VIEW###view ###VIEW###view-content ###VIEW###view-###MODE### ###VIEW###view-content-###MODE###">
               <!-- ###LISTBODY### begin --><!-- ###LISTBODYITEM### begin -->
-              <div class="record01">
-                <div class="image01">
-                  ###TX_ORG_REPERTOIRE.IMAGE###
-                </div>
-                <div class="sbmFloatRight">
-                  ###SOCIALMEDIA_BOOKMARKS###
-                </div>
-                ###TX_ORG_REPERTOIRE.SUBTITLE###
-                ###TX_ORG_REPERTOIRE.TITLE###
-                ###TX_ORG_REPERTOIRE.TEASER_SHORT###
+              <div class="sbmFloatRight">
+                ###SOCIALMEDIA_BOOKMARKS###
               </div>
+                ###TX_ORGESAB.TITLE###
+                ###TX_ORGESAB.EVENTBEGIN###
+                ###TX_ORGESAB.EVENTEND###
               <div class="cleaner">&nbsp;</div><!-- ###LISTBODYITEM### end --><!-- ###LISTBODY### end -->
             </div> <!-- /listview -->
 )
