@@ -355,26 +355,39 @@ class tx_orgesab_convert {
 
   /***********************************************
    *
-   * Prompt and Mail
+   * prompt
    *
    **********************************************/
 
 /**
- * promptAndMail( )
+ * promptCatFieldUidparentError( )  :
  *
+ * @param       string       $bereich_zuordnung : 
  * @return	void
- * @access      private
+ * @access private
  * @version       0.0.1
  * @since         0.0.1
  */
-  private function promptAndMail( $tag, $content )
+  private function promptCatFieldUidparentError( $bereich_zuordnung )
   {
-    $subject  = 'Failed';
-    $body     = 'XML tag: ' . $tag . PHP_EOL
-              . 'Content ' . implode( '; ' . $content )
+    $subject  = 'Category failed';
+    $prompt   = $bereich_zuordnung . ' neither starts with "LSB - Ausbildung" nor "LSB - Fortbildung".';
+    $body     = 'Sorry, but there is no uid_parent possible.' . PHP_EOL
+              . PHP_EOL
+              . $prompt
               . PHP_EOL
               . __CLASS__ . '::' .  __METHOD__ . ' (' . __LINE__ . ')';
     $this->pObj->drsMailToAdmin( $subject, $body );
+
+    if( ! $this->pObj->drsModeError )
+    {
+      return;
+    }
+
+    t3lib_div::devLog( '[tx_orgesab_ImportTask]: ' . $prompt, $this->extKey, 3 );
+    $prompt   = $bereich_zuordnung . ' won\'t get any uid_parent.';
+    t3lib_div::devLog( '[tx_orgesab_ImportTask]: ' . $prompt, $this->extKey, 2 );
+    
   }
 
 
@@ -478,20 +491,24 @@ class tx_orgesab_convert {
  */
   private function setOrgesabCat( $content )
   {
-    $records = array( );
-    
+    $records  = array( );
+
+    $records[1] = $this->setOrgesabCatValueAusbildung( );
+    $records[2] = $this->setOrgesabCatValueFortbildung( );
+
       // LOOP : Angebote
-    foreach( $content['bereiche'] as $uid => $bereich_zuordnung )
+    foreach( $content['bereiche'] as $bereich_zuordnung )
     {
       $records[] = array
       (
-        'uid'       => $uid,
-        'pid'       => $this->pObj->getSysfolderUid( ),
-        'tstamp'    => time( ),
-        'crdate'    => time( ),
-        'cruser_id' => null,
+        'uid'         => null,
+        'pid'         => $this->pObj->getSysfolderUid( ),
+        'tstamp'      => time( ),
+        'crdate'      => time( ),
+        'cruser_id'   => null,
           
-        'title'     => $bereich_zuordnung,
+        'title'       => $bereich_zuordnung,
+        'uid_parent'  => $this->setOrgesabCatFieldUidparent( $bereich_zuordnung ),
       );
     } 
       // LOOP : Angebote
@@ -512,6 +529,87 @@ class tx_orgesab_convert {
       // DRS
 
     return $records;
+  }
+
+/**
+ * setOrgesabCat( )  :
+ *
+ * @param       string       $bereich_zuordnung : 
+ * @return	integer      $uid_parent        :
+ * @access private
+ * @version       0.0.1
+ * @since         0.0.1
+ */
+  private function setOrgesabCatFieldUidparent( $bereich_zuordnung )
+  {
+    $uid_parent = null;
+    
+    switch( true )
+    {
+      case( strpos( $bereich_zuordnung, 'LSB - Ausbildung' ) === true ):
+        $uid_parent = 1;
+        break;
+      case( strpos( $bereich_zuordnung, 'LSB - Fortbildung' ) === true ):
+        $uid_parent = 2;
+        break;
+      default:
+        $this->promptCatFieldUidparentError( $bereich_zuordnung );
+        break;
+    }
+    
+    return $uid_parent;
+  }
+
+/**
+ * setOrgesabCatValueAusbildung( )  :
+ *
+ * @param       array       $content  : 
+ * @return	array       $record  :
+ * @access private
+ * @version       0.0.1
+ * @since         0.0.1
+ */
+  private function setOrgesabCatValueAusbildung( )
+  {
+    $record = array
+    (
+      'uid'         => null,
+      'pid'         => $this->pObj->getSysfolderUid( ),
+      'tstamp'      => time( ),
+      'crdate'      => time( ),
+      'cruser_id'   => null,
+
+      'title'       => 'Ausbildung',
+      'uid_parent'  => null,
+    );
+
+    return $record;
+  }
+
+/**
+ * setOrgesabCatValueFortbildung( )  :
+ *
+ * @param       array       $content  : 
+ * @return	array       $record  :
+ * @access private
+ * @version       0.0.1
+ * @since         0.0.1
+ */
+  private function setOrgesabCatValueFortbildung( )
+  {
+    $record = array
+    (
+      'uid'         => null,
+      'pid'         => $this->pObj->getSysfolderUid( ),
+      'tstamp'      => time( ),
+      'crdate'      => time( ),
+      'cruser_id'   => null,
+
+      'title'       => 'Fortbildung',
+      'uid_parent'  => null,
+    );
+
+    return $record;
   }
 
 /**

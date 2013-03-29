@@ -239,7 +239,7 @@ class tx_orgesab_update {
  */
   private function promptErrorDrs( $query, $error )
   {
-    if( ! $this->pObj->drsModeSql )
+    if( ! $this->pObj->drsModeError )
     {
       return;
     }
