@@ -67,6 +67,24 @@ plugin.tx_browser_pi1 {
               wrap = <span class="selectbox">|</span>
               order.field = uid
               area < plugin.tx_browser_pi1.displayList.master_templates.areas.sample_period
+              area {
+                interval {
+                  case = month
+                  month {
+                    start_period {
+                      stdWrap {
+                        value = -2 years
+                      }
+                    }
+                    times_stdWrap {
+                      value = 36
+                    }
+                    value_stdWrap {
+                      strftime = %Y %b 
+                    }
+                  }
+                }
+              }
             }
           }
           tx_orgesab_cat {
