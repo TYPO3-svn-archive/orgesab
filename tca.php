@@ -185,7 +185,7 @@ $TCA['tx_orgesab'] = array (
   'ctrl' => $TCA['tx_orgesab']['ctrl'],
   'interface' => array (
     'showRecordFieldList' => '
-        title,bookedup,bookingurl,eventbegin,eventend,staff1,staff2,price1,price2,price3,tx_orgesab_cat,bodytext,skills
+        title,bookedup,bookingurl,eventbegin,eventend,spaceoftime,staff1,staff2,price1,price2,price3,tx_orgesab_cat,bodytext,skills,details,category
       , tx_org_cal
       , tx_orgesab_cat
       , location1,location2,location3,location4,location5
@@ -237,6 +237,11 @@ $TCA['tx_orgesab'] = array (
       'exclude' => 0,
       'label'   => 'LLL:EXT:orgesab/locallang_db.xml:tx_orgesab.eventend',
       'config'  => $conf_datetimeend,
+    ),
+    'spaceoftime' => array (
+      'exclude' => 0,
+      'label'   => 'LLL:EXT:orgesab/locallang_db.xml:tx_orgesab.spaceoftime',
+      'config'  => $conf_input_30_trim,
     ),
     'staff1' => array (
       'exclude' => 0,
@@ -325,6 +330,16 @@ $TCA['tx_orgesab'] = array (
       'exclude' => $bool_exclude_default,
       'label'   => 'LLL:EXT:orgesab/locallang_db.xml:tx_orgesab.skills',
       'config'  => $conf_text_50_10,
+    ),
+    'details' => array (
+      'exclude' => 0,
+      'label'   => 'LLL:EXT:orgesab/locallang_db.xml:tx_orgesab.details',
+      'config'  => $conf_text_50_10,
+    ),
+    'category' => array (
+      'exclude' => 0,
+      'label'   => 'LLL:EXT:orgesab/locallang_db.xml:tx_orgesab.category',
+      'config'  => $conf_input_80_trim,
     ),
     'tx_org_cal' => array (
       'exclude' => $bool_exclude_default,
@@ -463,12 +478,15 @@ $TCA['tx_orgesab'] = array (
           , bookingurl
           , eventbegin
           , eventend
+          , spaceoftime
           , staff1
           , staff2
           , price1
           , price2
           , price3
           , tx_orgesab_cat
+          , details
+          , category
           , bodytext;;;richtext[]:rte_transform[mode=ts];
           , skills
           , --div--;LLL:EXT:orgesab/locallang_db.xml:tx_orgesab.div_calendar

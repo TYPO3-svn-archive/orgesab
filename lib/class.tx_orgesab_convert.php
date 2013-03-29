@@ -423,11 +423,13 @@ class tx_orgesab_convert {
         'externalid'  => $angebot['angebot_nr'],
         'eventbegin'  => $this->setOrgesabFieldEventBegin( $angebot ),
         'eventend'    => $this->setOrgesabFieldEventEnd(   $angebot ),
+        'fe_group'    => null,
         'hours1'      => $angebot['angebot_uhrzeit1'],
         'hours2'      => $angebot['angebot_uhrzeit2'],
         'hours3'      => $angebot['angebot_uhrzeit3'],
         'hours4'      => $angebot['angebot_uhrzeit4'],
         'hours5'      => $angebot['angebot_uhrzeit5'],
+        'keywords'    => $angebot['angebot_keywords'],
         'location1'   => $angebot['angebot_ort1'],
         'location2'   => $angebot['angebot_ort2'],
         'location3'   => $angebot['angebot_ort3'],
@@ -441,14 +443,8 @@ class tx_orgesab_convert {
         'staff1'      => $angebot['angebot_kursleiter1'],
         'staff2'      => $angebot['angebot_kursleiter2'],
         'title'       => $angebot['angebot_name'],
-        
         'tx_orgesab_cat'  => 1,
         'tx_org_cal'      => null,
-        
-        'fe_group'    => null,
-
-        'keywords'    => $angebot['angebot_keywords'],
-        'description' => $angebot['angebot_beschreibung'],
       );
     } 
       // LOOP : Angebote
