@@ -409,7 +409,7 @@ class tx_orgesab_convert {
         'crdate'    => time( ),
         'cruser_id' => null,
           
-        'bodytext'    => $angebot['angebot_details'],
+        'bodytext'    => $angebot['angebot_beschreibung'],
         'bookedup'    => $angebot['angebot_ausgebucht'],
         'bookingurl'  => $angebot['angebot_link'],
         'category'    => $angebot['angebot_bereich'],
@@ -418,6 +418,8 @@ class tx_orgesab_convert {
         'day3'        => $angebot['angebot_tag3'],
         'day4'        => $angebot['angebot_tag4'],
         'day5'        => $angebot['angebot_tag5'],
+        'description' => $this->setOrgesabFieldDescription( $angebot ),
+        'details'     => $angebot['angebot_details'],
         'externalid'  => $angebot['angebot_nr'],
         'eventbegin'  => $this->setOrgesabFieldEventBegin( $angebot ),
         'eventend'    => $this->setOrgesabFieldEventEnd(   $angebot ),
@@ -517,10 +519,31 @@ class tx_orgesab_convert {
   }
 
 /**
- * setOrgesab( )  :
+ * setOrgesabFieldDescription( )  :
  *
- * @param       array       $content  : 
- * @return	array       $records  :
+ * @param       array       $content      :  
+ * @return	string      $description  :
+ * @access private
+ * @version       0.0.1
+ * @since         0.0.1
+ */
+  private function setOrgesabFieldDescription( $angebot )
+  {
+    $description  = $angebot['angebot_name']
+                  . $angebot['angebot_bereich']
+                  . $angebot['angebot_inhalte']
+                  ;
+    
+    $description  = str_replace(PHP_EOL, ' ', $description ); 
+    
+    return $description;
+  }
+
+/**
+ * setOrgesabFieldEventBegin( )  :
+ *
+ * @param       array       $content    : 
+ * @return	integer     $timestamp  :
  * @access private
  * @version       0.0.1
  * @since         0.0.1
@@ -581,7 +604,7 @@ class tx_orgesab_convert {
  * setOrgesabFieldEventEnd( )  :
  *
  * @param       array       $content  : 
- * @return	array       $records  :
+ * @return	integer     $timestamp  :
  * @access private
  * @version       0.0.1
  * @since         0.0.1

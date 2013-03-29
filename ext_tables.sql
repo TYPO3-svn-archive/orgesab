@@ -30,6 +30,7 @@ CREATE TABLE tx_orgesab (
   day3 tinytext,
   day4 tinytext,
   day5 tinytext,
+  details tinytext,
   externalid tinytext,
   eventbegin int(11) unsigned DEFAULT '0' NOT NULL,
   eventend int(11) unsigned DEFAULT '0' NOT NULL,
