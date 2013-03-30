@@ -19,13 +19,6 @@ if( ! empty ( $extConf['showSampleTasks'] ) )
     'description'      => 'LLL:EXT:' . $_EXTKEY . '/lib/scheduler/locallang.xml:label.testTask.description',
     'additionalFields' => 'tx_orgesab_TestTask_AdditionalFieldProvider'
   );
-  $GLOBALS['TYPO3_CONF_VARS']['SC_OPTIONS']['scheduler']['tasks']['tx_orgesab_QuotaTask'] = array
-  (
-    'extension'        => $_EXTKEY,
-    'title'            => 'LLL:EXT:' . $_EXTKEY . '/lib/scheduler/locallang.xml:label.quotaTask.name',
-    'description'      => 'LLL:EXT:' . $_EXTKEY . '/lib/scheduler/locallang.xml:label.quotaTask.description',
-    'additionalFields' => 'tx_orgesab_QuotaTask_AdditionalFieldProvider'
-  );
 }
 
 $GLOBALS['TYPO3_CONF_VARS']['SC_OPTIONS']['scheduler']['tasks']['tx_orgesab_ImportTask'] = array
