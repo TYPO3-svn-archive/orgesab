@@ -310,7 +310,6 @@ plugin.tx_browser_pi1 {
               if {
                 isTrue = ###TX_ORGESAB.LOCATION1######TX_ORGESAB.LOCATION2######TX_ORGESAB.LOCATION3######TX_ORGESAB.LOCATION4######TX_ORGESAB.LOCATION5###
               }
-              stdWrap.parseFunc < lib.parseFunc_RTE
                 // header
               10 = TEXT
               10 {
@@ -320,30 +319,35 @@ plugin.tx_browser_pi1 {
                 // locations
               20 = COA
               20 {
+                  // location1
                 10 = TEXT
                 10 {
                   wrap      = <p class="tx_orgesab_location tx_orgesab_location1 location location1">|</p>
                   required  = 1
                   value     = ###TX_ORGESAB.LOCATION1###
                 }
+                  // location2
                 20 = TEXT
                 20 {
                   wrap      = <p class="tx_orgesab_location tx_orgesab_location2 location location2">|</p>
                   required  = 1
                   value     = ###TX_ORGESAB.LOCATION2###
                 }
+                  // location3
                 30 = TEXT
                 30 {
                   wrap      = <p class="tx_orgesab_location tx_orgesab_location3 location location3">|</p>
                   required  = 1
                   value     = ###TX_ORGESAB.LOCATION3###
                 }
+                  // location4
                 40 = TEXT
                 40 {
-                  wrap      = <p class="tx_orgesab_location tx_orgesab_location4 location location1">|</p>
-                  required  = 4
+                  wrap      = <p class="tx_orgesab_location tx_orgesab_location4 location location4">|</p>
+                  required  = 1
                   value     = ###TX_ORGESAB.LOCATION4###
                 }
+                  // location5
                 50 = TEXT
                 50 {
                   wrap      = <p class="tx_orgesab_location tx_orgesab_location5 location location5">|</p>
@@ -353,12 +357,11 @@ plugin.tx_browser_pi1 {
               }
             }
               // staff: header, staffs
-            60 = COA
-            60 {
+            70 = COA
+            70 {
               if {
                 isTrue = ###TX_ORGESAB.STAFF1######TX_ORGESAB.STAFF2###
               }
-              stdWrap.parseFunc < lib.parseFunc_RTE
                 // header
               10 = TEXT
               10 {
@@ -368,17 +371,57 @@ plugin.tx_browser_pi1 {
                 // staffs
               20 = COA
               20 {
+                  // staff1
                 10 = TEXT
                 10 {
                   wrap      = <p class="tx_orgesab_staff tx_orgesab_staff1 staff staff1">|</p>
                   required  = 1
                   value     = ###TX_ORGESAB.STAFF1###
                 }
+                  // staff2
                 20 = TEXT
                 20 {
                   wrap      = <p class="tx_orgesab_staff tx_orgesab_staff2 staff staff2">|</p>
                   required  = 1
                   value     = ###TX_ORGESAB.STAFF2###
+                }
+              }
+            }
+              // price: header, prices
+            80 = COA
+            80 {
+              if {
+                isTrue = ###TX_ORGESAB.PRICE1######TX_ORGESAB.PRICE2######TX_ORGESAB.PRICE3###
+              }
+                // header
+              10 = TEXT
+              10 {
+                wrap      = <h3 class="tx_orgesab_price price">|</h3>
+                value     = Ort
+              }
+                // prices
+              20 = COA
+              20 {
+                  // price1
+                10 = TEXT
+                10 {
+                  wrap      = <p class="tx_orgesab_price tx_orgesab_price1 price price1">|</p>
+                  required  = 1
+                  value     = Mitglieder: ###TX_ORGESAB.PRICE1### &euro;
+                }
+                  // price2
+                20 = TEXT
+                20 {
+                  wrap      = <p class="tx_orgesab_price tx_orgesab_price2 price price2">|</p>
+                  required  = 1
+                  value     = Andere: ###TX_ORGESAB.PRICE2### &euro;
+                }
+                  // price3
+                30 = TEXT
+                30 {
+                  wrap      = <p class="tx_orgesab_price tx_orgesab_price3 price price3">|</p>
+                  required  = 1
+                  value     = ?: ###TX_ORGESAB.PRICE3### &euro;
                 }
               }
             }
