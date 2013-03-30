@@ -566,7 +566,7 @@ end:        ' . ( ( empty( $end ) ) ? '-' : ( date( 'Y-m-d H:i:s', $end ) . ' ['
 interval:   ' . $interval . '
 multiple:   ' . ( $multiple ? 'yes' : 'no' ) . '
 cronCmd:    ' . ( $cronCmd ? $cronCmd : 'not used' ) . '
-Sysfolder   ' . $this->orgesab_sysfolderUid   
+Sysfolder:  ' . $this->orgesab_sysfolderUid   
               ;
 
       // Prepare mailer and send the mail
