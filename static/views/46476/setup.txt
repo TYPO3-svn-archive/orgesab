@@ -397,7 +397,7 @@ plugin.tx_browser_pi1 {
               10 = TEXT
               10 {
                 wrap      = <h3 class="tx_orgesab_price price">|</h3>
-                value     = Ort
+                value     = Teilnahmegebühr
               }
                 // prices
               20 = COA
@@ -405,23 +405,23 @@ plugin.tx_browser_pi1 {
                   // price1
                 10 = TEXT
                 10 {
-                  wrap      = <p class="tx_orgesab_price tx_orgesab_price1 price price1">|</p>
-                  required  = 1
-                  value     = Mitglieder: ###TX_ORGESAB.PRICE1### &euro;
+                  noTrimWrap  = |<p class="tx_orgesab_price tx_orgesab_price1 price price1">Mitglieder: |  &euro;</p>|
+                  required    = 1
+                  value       = ###TX_ORGESAB.PRICE1###
                 }
                   // price2
                 20 = TEXT
                 20 {
-                  wrap      = <p class="tx_orgesab_price tx_orgesab_price2 price price2">|</p>
+                  noTrimWrap  = |<p class="tx_orgesab_price tx_orgesab_price2 price price2">Andere: |  &euro;</p>|
                   required  = 1
-                  value     = Andere: ###TX_ORGESAB.PRICE2### &euro;
+                  value     = ###TX_ORGESAB.PRICE2###
                 }
                   // price3
                 30 = TEXT
                 30 {
-                  wrap      = <p class="tx_orgesab_price tx_orgesab_price3 price price3">|</p>
+                  noTrimWrap  = |<p class="tx_orgesab_price tx_orgesab_price3 price price3">?: |  &euro;</p>|
                   required  = 1
-                  value     = ?: ###TX_ORGESAB.PRICE3### &euro;
+                  value     = ###TX_ORGESAB.PRICE3###
                 }
               }
             }
