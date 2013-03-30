@@ -352,6 +352,36 @@ plugin.tx_browser_pi1 {
                 }
               }
             }
+              // staff: header, staffs
+            60 = COA
+            60 {
+              if {
+                isTrue = ###TX_ORGESAB.STAFF1######TX_ORGESAB.STAFF2###
+              }
+              stdWrap.parseFunc < lib.parseFunc_RTE
+                // header
+              10 = TEXT
+              10 {
+                wrap      = <h3 class="tx_orgesab_staff staff">|</h3>
+                value     = Ort
+              }
+                // staffs
+              20 = COA
+              20 {
+                10 = TEXT
+                10 {
+                  wrap      = <p class="tx_orgesab_staff tx_orgesab_staff1 staff staff1">|</p>
+                  required  = 1
+                  value     = ###TX_ORGESAB.STAFF1###
+                }
+                20 = TEXT
+                20 {
+                  wrap      = <p class="tx_orgesab_staff tx_orgesab_staff2 staff staff2">|</p>
+                  required  = 1
+                  value     = ###TX_ORGESAB.STAFF2###
+                }
+              }
+            }
           }
         }
           // marker and subparts will replaced in the HTML template before data handling
