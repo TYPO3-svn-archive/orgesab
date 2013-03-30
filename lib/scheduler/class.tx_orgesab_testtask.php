@@ -39,11 +39,11 @@ class tx_orgesab_TestTask extends tx_scheduler_Task {
      var $orgesab_orgesabAdminEmail;
 
     /**
-     * Function executed from the Scheduler.
-     * Sends an email
-     *
-     * @return boolean
-     */
+ * Function executed from the Scheduler.
+ * Sends an email
+ *
+ * @return	boolean
+ */
     public function execute() {
         $success = FALSE;
 
@@ -108,10 +108,10 @@ class tx_orgesab_TestTask extends tx_scheduler_Task {
     }
 
     /**
-     * This method returns the destination mail address as additional information
-     *
-     * @return string Information to display
-     */
+ * This method returns the destination mail address as additional information
+ *
+ * @return	string		Information to display
+ */
     public function getAdditionalInformation() {
         return $GLOBALS['LANG']->sL('LLL:EXT:orgesab/lib/scheduler/locallang.xml:label.orgesabAdminEmail') . ': ' . $this->orgesab_orgesabAdminEmail;
     }

@@ -28,28 +28,26 @@
  *
  *
  *
- *   66: class tx_orgesab_get
+ *   64: class tx_orgesab_get
  *
  *              SECTION: Main
- *  105:     public function main( )
+ *  103:     public function main( )
  *
  *              SECTION: Init
- *  143:     private function init( )
- *  161:     private function initPobj( )
+ *  141:     private function init( )
+ *  159:     private function initPobj( )
  *
  *              SECTION: Get
- *  203:     private function getContent( )
- *  231:     private function getContentIsNotEmpty( $content )
- *  267:     private function getContentIsRessource( $handle )
- *  302:     public function getContentIsUpToDate( )
- *  316:     private function getMd5( $content )
- *  331:     private function getMd5Comparision( $content )
+ *  201:     private function getContent( )
+ *  228:     public function getContentIsUpToDate( )
+ *  242:     private function getMd5( $xml )
+ *  257:     private function getMd5Comparision( $xml )
  *
  *              SECTION: Set
- *  364:     private function setContentIsUpdated( $content )
- *  415:     public function setPobj( $pObj )
+ *  290:     private function setContentIsUpdated( $xml )
+ *  341:     public function setPobj( $pObj )
  *
- * TOTAL FUNCTIONS: 11
+ * TOTAL FUNCTIONS: 9
  * (This index is automatically created/updated by the extension "extdeveval")
  *
  */
@@ -97,7 +95,7 @@ class tx_orgesab_get {
 /**
  * main( )  :
  *
- * @return	object    $xml  : the xml object
+ * @return	object		$xml  : the xml object
  * @access public
  * @version       0.0.1
  * @since         0.0.1
@@ -195,7 +193,7 @@ class tx_orgesab_get {
 /**
  * getContent( )  :
  *
- * @return	object      $xml : xml object
+ * @return	object		$xml : xml object
  * @access private
  * @version       0.0.1
  * @since         0.0.1
@@ -207,7 +205,7 @@ class tx_orgesab_get {
     {
       return $xml;
     }
-    
+
     $subject  = 'Failed';
     $body     = 'XML file could not open.' . PHP_EOL
               . PHP_EOL
@@ -235,8 +233,8 @@ class tx_orgesab_get {
 /**
  * getMd5( )  :
  *
- * @param       object		$xml  : the xml object
- * @return	integer         $md5  :
+ * @param	object		$xml  : the xml object
+ * @return	integer		$md5  :
  * @access private
  * @version       0.0.1
  * @since         0.0.1
@@ -250,8 +248,8 @@ class tx_orgesab_get {
 /**
  * getMd5Comparision( )  :
  *
- * @param       object		$xml                : the xml object
- * @return	boolean         $contentIsUpToDate  :
+ * @param	object		$xml                : the xml object
+ * @return	boolean		$contentIsUpToDate  :
  * @access private
  * @version       0.0.1
  * @since         0.0.1
@@ -283,7 +281,7 @@ class tx_orgesab_get {
 /**
  * setContentIsUpdated( )  :
  *
- * @param       object		$xml  : the xml object
+ * @param	object		$xml  : the xml object
  * @return	boolean
  * @access private
  * @version       0.0.1

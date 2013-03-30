@@ -27,33 +27,36 @@
  *
  *
  *
- *   70: class tx_orgesab_ImportTask_AdditionalFieldProvider implements tx_scheduler_AdditionalFieldProvider
+ *   73: class tx_orgesab_ImportTask_AdditionalFieldProvider implements tx_scheduler_AdditionalFieldProvider
  *
  *              SECTION: Bulding the form
- *  103:     public function getAdditionalFields( array &$taskInfo, $task, tx_scheduler_Module $parentObject )
- *  133:     private function getFieldImportMode( array &$taskInfo, $task, $parentObject )
- *  206:     private function getFieldImportUrl( array &$taskInfo, $task, $parentObject )
- *  264:     private function getFieldOrgesabAdminEmail( array &$taskInfo, $task, $parentObject )
- *  322:     private function getFieldReportMode( array &$taskInfo, $task, $parentObject )
+ *  106:     public function getAdditionalFields( array &$taskInfo, $task, tx_scheduler_Module $parentObject )
+ *  137:     private function getFieldImportMode( array &$taskInfo, $task, $parentObject )
+ *  210:     private function getFieldImportUrl( array &$taskInfo, $task, $parentObject )
+ *  268:     private function getFieldOrgesabAdminEmail( array &$taskInfo, $task, $parentObject )
+ *  326:     private function getFieldReportMode( array &$taskInfo, $task, $parentObject )
+ *  402:     private function getFieldSysfolderUid( array &$taskInfo, $task, $parentObject )
  *
  *              SECTION: Saving
- *  398:     public function saveAdditionalFields( array $submittedData, tx_scheduler_Task $task )
- *  416:     private function saveFieldImportMode( array $submittedData, tx_scheduler_Task $task )
- *  431:     private function saveFieldImportUrl( array $submittedData, tx_scheduler_Task $task )
- *  447:     private function saveFieldOrgesabAdminEmail( array $submittedData, tx_scheduler_Task $task )
- *  462:     private function saveFieldReportMode( array $submittedData, tx_scheduler_Task $task )
+ *  460:     public function saveAdditionalFields( array $submittedData, tx_scheduler_Task $task )
+ *  479:     private function saveFieldImportMode( array $submittedData, tx_scheduler_Task $task )
+ *  495:     private function saveFieldImportUrl( array $submittedData, tx_scheduler_Task $task )
+ *  511:     private function saveFieldOrgesabAdminEmail( array $submittedData, tx_scheduler_Task $task )
+ *  526:     private function saveFieldReportMode( array $submittedData, tx_scheduler_Task $task )
+ *  542:     private function saveFieldSysfolderUid( array $submittedData, tx_scheduler_Task $task )
  *
  *              SECTION: Validating
- *  485:     public function validateAdditionalFields( array &$submittedData, tx_scheduler_Module $parentObject )
- *  541:     private function validateFieldFrequency( array &$submittedData, tx_scheduler_Module $parentObject )
- *  566:     private function validateFieldImportMode( array &$submittedData, tx_scheduler_Module $parentObject )
- *  606:     private function validateFieldImportUrl( array &$submittedData, tx_scheduler_Module $parentObject )
- *  636:     private function validateFieldOrgesabAdminEmail( array &$submittedData, tx_scheduler_Module $parentObject )
- *  662:     private function validateFieldReportMode( array &$submittedData, tx_scheduler_Module $parentObject )
- *  706:     private function validateFieldStart( array &$submittedData, tx_scheduler_Module $parentObject )
- *  737:     public function validateOS( tx_scheduler_Module $parentObject )
+ *  565:     public function validateAdditionalFields( array &$submittedData, tx_scheduler_Module $parentObject )
+ *  626:     private function validateFieldFrequency( array &$submittedData, tx_scheduler_Module $parentObject )
+ *  651:     private function validateFieldImportMode( array &$submittedData, tx_scheduler_Module $parentObject )
+ *  691:     private function validateFieldImportUrl( array &$submittedData, tx_scheduler_Module $parentObject )
+ *  721:     private function validateFieldOrgesabAdminEmail( array &$submittedData, tx_scheduler_Module $parentObject )
+ *  747:     public function validateOS( tx_scheduler_Module $parentObject )
+ *  778:     private function validateFieldReportMode( array &$submittedData, tx_scheduler_Module $parentObject )
+ *  822:     private function validateFieldStart( array &$submittedData, tx_scheduler_Module $parentObject )
+ *  853:     private function validateFieldSysfolderUid( array &$submittedData, tx_scheduler_Module $parentObject )
  *
- * TOTAL FUNCTIONS: 18
+ * TOTAL FUNCTIONS: 21
  * (This index is automatically created/updated by the extension "extdeveval")
  *
  */

@@ -28,59 +28,67 @@
  *
  *
  *
- *   97: class tx_orgesab_ImportTask extends tx_scheduler_Task
+ *  105: class tx_orgesab_ImportTask extends tx_scheduler_Task
  *
  *              SECTION: Main
- *  263:     public function execute( )
+ *  300:     public function execute( )
  *
  *              SECTION: Additional information for scheduler
- *  339:     public function getAdditionalInformation( )
+ *  380:     public function getAdditionalInformation( )
  *
  *              SECTION: Converting
- *  364:     private function convertContent( )
- *  386:     private function convertContentDrsMail( $success )
- *  410:     private function convertContentInstance( )
+ *  406:     private function convertContent( $xml )
+ *  423:     private function convertContentDrsMail( $success )
+ *  447:     private function convertContentInstance( )
  *
  *              SECTION: DRS - Development Reporting System
- *  439:     private function drsDebugTrail( $level = 1 )
- *  485:     public function drsMailToAdmin( $subject='Information', $body=null )
+ *  476:     private function drsDebugTrail( $level = 1 )
+ *  522:     public function drsMailToAdmin( $subject='Information', $body=null )
  *
  *              SECTION: Get private
- *  597:     private function getContent( )
- *  621:     private function getContentInstance( )
+ *  635:     private function getContent( )
+ *  665:     private function getContentInstance( )
  *
  *              SECTION: Get public
- *  647:     public function getAdminmail( )
- *  660:     public function getImportMode( )
- *  673:     public function getImportUrl( )
- *  686:     public function getReportMode( )
+ *  691:     public function getAdminmail( )
+ *  704:     public function getImportMode( )
+ *  717:     public function getImportUrl( )
+ *  730:     public function getReportMode( )
+ *  743:     public function getSysfolderUid( )
  *
  *              SECTION: Initials
- *  707:     private function init( )
- *  733:     private function initDRS( )
- *  775:     private function initRequirements( )
- *  804:     private function initRequirementsAdminmail( )
- *  832:     private function initRequirementsAllowUrlFopen( )
- *  871:     private function initRequirementsOs( )
- *  923:     private function initRegistryInstance( )
- *  936:     private function initTimetracking( )
+ *  764:     private function init( )
+ *  793:     private function initDRS( )
+ *  841:     private function initRequirements( )
+ *  870:     private function initRequirementsAdminmail( )
+ *  898:     private function initRequirementsAllowUrlFopen( )
+ *  937:     private function initRequirementsOs( )
+ *  989:     private function initRegistryInstance( )
+ * 1002:     private function initTimetracking( )
  *
  *              SECTION: Registry
- *  960:     public function registryGet( $key )
- *  984:     public function registryKey( $key )
- * 1027:     public function registrySet( $key, $value )
+ * 1026:     public function registryGet( $key )
+ * 1051:     private function registryKey( $key )
+ * 1094:     public function registrySet( $key, $value )
+ *
+ *              SECTION: Set public
+ * 1130:     public function setAdminmail( $value )
+ * 1144:     public function setImportMode( $value )
+ * 1158:     public function setImportUrl( $value )
+ * 1172:     public function setReportMode( $value )
+ * 1186:     public function setSysfolderUid( $value )
  *
  *              SECTION: Time tracking
- * 1061:     private function timeTracking_init( )
- * 1083:     private function timeTracking_log( $debugTrailLevel, $prompt )
- * 1135:     private function timeTracking_prompt( $debugTrailLevel, $prompt )
+ * 1208:     private function timeTracking_init( )
+ * 1230:     private function timeTracking_log( $debugTrailLevel, $prompt )
+ * 1282:     private function timeTracking_prompt( $debugTrailLevel, $prompt )
  *
  *              SECTION: Update
- * 1172:     private function updateDatabase( )
- * 1194:     private function updateDatabaseDrsMail( $success )
- * 1218:     private function updateDatabaseInstance( )
+ * 1320:     private function updateDatabase( $content )
+ * 1339:     private function updateDatabaseDrsMail( $success )
+ * 1363:     private function updateDatabaseInstance( )
  *
- * TOTAL FUNCTIONS: 30
+ * TOTAL FUNCTIONS: 36
  * (This index is automatically created/updated by the extension "extdeveval")
  *
  */
@@ -389,6 +397,7 @@ class tx_orgesab_ImportTask extends tx_scheduler_Task {
 /**
  * convertContent( )  :
  *
+ * @param	[type]		$$xml: ...
  * @return	boolean
  * @access private
  * @version       0.0.1
@@ -566,7 +575,7 @@ end:        ' . ( ( empty( $end ) ) ? '-' : ( date( 'Y-m-d H:i:s', $end ) . ' ['
 interval:   ' . $interval . '
 multiple:   ' . ( $multiple ? 'yes' : 'no' ) . '
 cronCmd:    ' . ( $cronCmd ? $cronCmd : 'not used' ) . '
-Sysfolder:  ' . $this->orgesab_sysfolderUid   
+Sysfolder:  ' . $this->orgesab_sysfolderUid
               ;
 
       // Prepare mailer and send the mail
@@ -1112,6 +1121,7 @@ Sysfolder:  ' . $this->orgesab_sysfolderUid
 /**
  * setAdminmail( ):
  *
+ * @param	[type]		$$value: ...
  * @return	void
  * @access public
  * @version       0.0.1
@@ -1125,6 +1135,7 @@ Sysfolder:  ' . $this->orgesab_sysfolderUid
 /**
  * setImportMode( ):
  *
+ * @param	[type]		$$value: ...
  * @return	void
  * @access public
  * @version       0.0.1
@@ -1138,6 +1149,7 @@ Sysfolder:  ' . $this->orgesab_sysfolderUid
 /**
  * setImportUrl( ):
  *
+ * @param	[type]		$$value: ...
  * @return	void
  * @access public
  * @version       0.0.1
@@ -1151,6 +1163,7 @@ Sysfolder:  ' . $this->orgesab_sysfolderUid
 /**
  * setReportMode( ):
  *
+ * @param	[type]		$$value: ...
  * @return	void
  * @access public
  * @version       0.0.1
@@ -1164,6 +1177,7 @@ Sysfolder:  ' . $this->orgesab_sysfolderUid
 /**
  * setSysfolderUid( ):
  *
+ * @param	[type]		$$value: ...
  * @return	void
  * @access public
  * @version       0.0.1
@@ -1297,7 +1311,7 @@ Sysfolder:  ' . $this->orgesab_sysfolderUid
 /**
  * updateDatabase( )  :
  *
- * @param       array       $content  : 
+ * @param	array		$content  :
  * @return	boolean
  * @access private
  * @version       0.0.1

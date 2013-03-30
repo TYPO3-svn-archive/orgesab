@@ -28,23 +28,38 @@
  *
  *
  *
- *   61: class tx_orgesab_xml
+ *   76: class tx_orgesab_convert
  *
  *              SECTION: Main
- *   93:     public function main( )
+ *  109:     public function main( $xml )
+ *
+ *              SECTION: Get
+ *  155:     private function getAngebote( $xml )
+ *  233:     private function getBereiche( $xml )
+ *  280:     private function getProgramm( $xml )
  *
  *              SECTION: Init
- *  139:     private function init( )
+ *  325:     private function init( )
+ *  343:     private function initPobj( )
+ *
+ *              SECTION: prompt
+ *  386:     private function promptCatFieldUidparentError( $bereich_zuordnung )
+ *
+ *              SECTION: Set tables
+ *  425:     private function setOrgesab( $content )
+ *  507:     private function setOrgesabCat( $content )
+ *  562:     private function setOrgesabCatFieldUidparent( $bereich_zuordnung )
+ *  591:     private function setOrgesabCatValueAusbildung( )
+ *  617:     private function setOrgesabCatValueFortbildung( )
+ *  643:     private function setOrgesabFieldDescription( $angebot )
+ *  666:     private function setOrgesabFieldEventBegin( $angebot )
+ *  734:     private function setOrgesabFieldEventEnd( $angebot )
+ *  798:     private function setOrgesabMmCat( $content, $records )
  *
  *              SECTION: Set
- *  167:     public function setPobj( $pObj )
+ *  871:     public function setPobj( $pObj )
  *
- *              SECTION: Main
- *  196:     private function xmlForDatabase( )
- *  227:     private function convertContent( )
- *  247:     private function xmlIsUpdated( )
- *
- * TOTAL FUNCTIONS: 6
+ * TOTAL FUNCTIONS: 17
  * (This index is automatically created/updated by the extension "extdeveval")
  *
  */
@@ -85,8 +100,8 @@ class tx_orgesab_convert {
 /**
  * main( )  :
  *
- * @param       object      $xml      : the xml object
- * @return	array       $content  : 
+ * @param	object		$xml      : the xml object
+ * @return	array		$content  :
  * @access public
  * @version       0.0.1
  * @since         0.0.1
@@ -94,13 +109,13 @@ class tx_orgesab_convert {
   public function main( $xml )
   {
     $this->init( );
-    
+
     $content = array(
       'programm' => $this->getProgramm( $xml ),
       'bereiche' => $this->getBereiche( $xml ),
       'angebote' => $this->getAngebote( $xml )
     );
-    
+
     $records = array(
       'tx_orgesab' => array(
         'truncate' => true,
@@ -131,8 +146,8 @@ class tx_orgesab_convert {
 /**
  * getAngebote( )  :
  *
- * @param       object      $xml      : xml object
- * @return	array       $content  :
+ * @param	object		$xml      : xml object
+ * @return	array		$content  :
  * @access private
  * @version       0.0.1
  * @since         0.0.1
@@ -151,7 +166,7 @@ class tx_orgesab_convert {
         $id++;
         $angebote[$id] = array
         (
-          'bereich_zuordnung'     => ( string ) $bereich->bereich_zuordnung,  
+          'bereich_zuordnung'     => ( string ) $bereich->bereich_zuordnung,
           'angebot_ausgebucht'    => ( string ) $angebot->angebot_ausgebucht,
           'angebot_bereich'       => ( string ) $angebot->angebot_bereich,
           'angebot_beschreibung'  => ( string ) $angebot->angebot_beschreibung,
@@ -185,9 +200,9 @@ class tx_orgesab_convert {
         );
       }
         // LOOP : Angebote
-    } 
+    }
       // LOOP : Bereiche
-    
+
       // DRS
     if( $this->pObj->drsModeConvert )
     {
@@ -209,8 +224,8 @@ class tx_orgesab_convert {
 /**
  * getBereiche( )  :
  *
- * @param       object      $xml      : xml object
- * @return	array       $content  :
+ * @param	object		$xml      : xml object
+ * @return	array		$content  :
  * @access private
  * @version       0.0.1
  * @since         0.0.1
@@ -228,7 +243,7 @@ class tx_orgesab_convert {
 
     $bereiche = array( );
     $id = 0;
-    
+
     foreach( $xml->Bereich as $bereich )
     {
       if( empty( $bereich->bereich_zuordnung ) )
@@ -238,10 +253,10 @@ class tx_orgesab_convert {
       $id++;
       $bereiche[$id] = ( string ) $bereich->bereich_zuordnung;
 
-    } 
-    
+    }
+
     $bereiche = array_unique( $bereiche );
-    
+
       // DRS
     if( $this->pObj->drsModeConvert )
     {
@@ -256,8 +271,8 @@ class tx_orgesab_convert {
 /**
  * getProgramm( )  :
  *
- * @param       object      $xml      : xml object
- * @return	array       $programm :
+ * @param	object		$xml      : xml object
+ * @return	array		$programm :
  * @access private
  * @version       0.0.1
  * @since         0.0.1
@@ -272,14 +287,14 @@ class tx_orgesab_convert {
 //          ...
 //        </Bereich>
 //      </Programm>
-    
+
     $programm = array
     (
       'programm_bezeichnung'  => ( string ) $xml->programm_bezeichnung,
       'programm_beginn'       => ( string ) $xml->programm_beginn,
       'programm_ende'         => ( string ) $xml->programm_ende
     );
-    
+
       // DRS
     if( $this->pObj->drsModeConvert )
     {
@@ -362,7 +377,7 @@ class tx_orgesab_convert {
 /**
  * promptCatFieldUidparentError( )  :
  *
- * @param       string       $bereich_zuordnung : 
+ * @param	string		$bereich_zuordnung :
  * @return	void
  * @access private
  * @version       0.0.1
@@ -387,7 +402,7 @@ class tx_orgesab_convert {
     t3lib_div::devLog( '[tx_orgesab_ImportTask]: ' . $prompt, $this->extKey, 3 );
     $prompt   = $bereich_zuordnung . ' won\'t get any uid_parent.';
     t3lib_div::devLog( '[tx_orgesab_ImportTask]: ' . $prompt, $this->extKey, 2 );
-    
+
   }
 
 
@@ -401,8 +416,8 @@ class tx_orgesab_convert {
 /**
  * setOrgesab( )  :
  *
- * @param       array       $content  : 
- * @return	array       $records  :
+ * @param	array		$content  :
+ * @return	array		$records  :
  * @access private
  * @version       0.0.1
  * @since         0.0.1
@@ -410,7 +425,7 @@ class tx_orgesab_convert {
   private function setOrgesab( $content )
   {
     $records = array( );
-    
+
       // LOOP : Angebote
     foreach( $content['angebote'] as $uid => $angebot )
     {
@@ -421,7 +436,7 @@ class tx_orgesab_convert {
         'tstamp'    => time( ),
         'crdate'    => time( ),
         'cruser_id' => null,
-          
+
         'bodytext'    => $angebot['angebot_beschreibung'],
         'bookedup'    => $angebot['angebot_ausgebucht'],
         'bookingurl'  => $angebot['angebot_link'],
@@ -459,9 +474,9 @@ class tx_orgesab_convert {
         'tx_orgesab_cat'  => 2,
         'tx_org_cal'      => null,
       );
-    } 
+    }
       // LOOP : Angebote
-    
+
       // DRS
     if( $this->pObj->drsModeConvert )
     {
@@ -483,8 +498,8 @@ class tx_orgesab_convert {
 /**
  * setOrgesabCat( )  :
  *
- * @param       array       $content  : 
- * @return	array       $records  :
+ * @param	array		$content  :
+ * @return	array		$records  :
  * @access private
  * @version       0.0.1
  * @since         0.0.1
@@ -493,7 +508,7 @@ class tx_orgesab_convert {
   {
     $records  = array( );
     $id       = 0;
-    
+
     $id = 1;
     $records[$id] = $this->setOrgesabCatValueAusbildung( );
     $id = 2;
@@ -510,13 +525,13 @@ class tx_orgesab_convert {
         'tstamp'      => time( ),
         'crdate'      => time( ),
         'cruser_id'   => null,
-          
+
         'title'       => $bereich_zuordnung,
         'uid_parent'  => $this->setOrgesabCatFieldUidparent( $bereich_zuordnung ),
       );
-    } 
+    }
       // LOOP : Angebote
-    
+
       // DRS
     if( $this->pObj->drsModeConvert )
     {
@@ -538,8 +553,8 @@ class tx_orgesab_convert {
 /**
  * setOrgesabCat( )  :
  *
- * @param       string       $bereich_zuordnung : 
- * @return	integer      $uid_parent        :
+ * @param	string		$bereich_zuordnung :
+ * @return	integer		$uid_parent        :
  * @access private
  * @version       0.0.1
  * @since         0.0.1
@@ -547,7 +562,7 @@ class tx_orgesab_convert {
   private function setOrgesabCatFieldUidparent( $bereich_zuordnung )
   {
     $uid_parent = null;
-    
+
     switch( true )
     {
       case( strpos( $bereich_zuordnung, 'LSB - Ausbildung' ) !== false ):
@@ -560,15 +575,15 @@ class tx_orgesab_convert {
         $this->promptCatFieldUidparentError( $bereich_zuordnung );
         break;
     }
-    
+
     return $uid_parent;
   }
 
 /**
  * setOrgesabCatValueAusbildung( )  :
  *
- * @param       array       $content  : 
- * @return	array       $record  :
+ * @param	array		$content  :
+ * @return	array		$record  :
  * @access private
  * @version       0.0.1
  * @since         0.0.1
@@ -593,8 +608,8 @@ class tx_orgesab_convert {
 /**
  * setOrgesabCatValueFortbildung( )  :
  *
- * @param       array       $content  : 
- * @return	array       $record  :
+ * @param	array		$content  :
+ * @return	array		$record  :
  * @access private
  * @version       0.0.1
  * @since         0.0.1
@@ -619,31 +634,31 @@ class tx_orgesab_convert {
 /**
  * setOrgesabFieldDescription( )  :
  *
- * @param       array       $content      :  
- * @return	string      $description  :
+ * @param	array		$content      :
+ * @return	string		$description  :
  * @access private
  * @version       0.0.1
  * @since         0.0.1
  */
   private function setOrgesabFieldDescription( $angebot )
   {
-    $description  = $angebot['angebot_name'] 
+    $description  = $angebot['angebot_name']
                   . ' | '
                   . $angebot['angebot_bereich']
                   . ' | '
                   . $angebot['angebot_inhalte']
                   ;
-    
-    $description  = str_replace(PHP_EOL, '; ', $description ); 
-    
+
+    $description  = str_replace(PHP_EOL, '; ', $description );
+
     return $description;
   }
 
 /**
  * setOrgesabFieldEventBegin( )  :
  *
- * @param       array       $content    : 
- * @return	integer     $timestamp  :
+ * @param	array		$content    :
+ * @return	integer		$timestamp  :
  * @access private
  * @version       0.0.1
  * @since         0.0.1
@@ -658,7 +673,7 @@ class tx_orgesab_convert {
     // 23.06. - 28.06.2013 || Herbst 2013 || 28.09.2013
     list( $periodBegin, $periodEnd ) = explode( '-', $angebot['angebot_zeitraum'] );
     $periodBegin = trim( $periodBegin );
-    
+
     list( $hour, $minute )      = explode( ':', $timeBegin );
     $hour   = ( int ) $hour;
     $minute = ( int ) $minute;
@@ -671,7 +686,7 @@ class tx_orgesab_convert {
       list( $dummy, $dummy, $year ) = explode( '.', $periodEnd );
       $year = ( int ) $year;
     }
-    
+
     switch (true )
     {
       case( empty( $day   ) ):
@@ -703,15 +718,15 @@ class tx_orgesab_convert {
     }
 
     $timestamp = mktime( $hour, $minute, $second, $month, $day, $year );
-    
+
     return $timestamp;
   }
 
 /**
  * setOrgesabFieldEventEnd( )  :
  *
- * @param       array       $content  : 
- * @return	integer     $timestamp  :
+ * @param	array		$content  :
+ * @return	integer		$timestamp  :
  * @access private
  * @version       0.0.1
  * @since         0.0.1
@@ -733,7 +748,7 @@ class tx_orgesab_convert {
       $periodEnd = $periodBegin;
     }
     $periodEnd = trim( $periodEnd );
-    
+
     list( $hour, $minute )      = explode( ':', $timeEnd );
     $hour   = ( int ) $hour;
     $minute = ( int ) $minute;
@@ -741,7 +756,7 @@ class tx_orgesab_convert {
     $day    = ( int ) $day;
     $month  = ( int ) $month;
     $year   = ( int ) $year;
-    
+
     switch (true )
     {
       case( empty( $day   ) ):
@@ -766,16 +781,16 @@ class tx_orgesab_convert {
     }
 
     $timestamp = mktime( $hour, $minute, $second, $month, $day, $year );
-    
+
     return $timestamp;
   }
 
 /**
  * setOrgesabFieldEventEnd( )  :
  *
- * @param       array       $content  : 
- * @param       array       $records  : 
- * @return	array       $records  :
+ * @param	array		$content  :
+ * @param	array		$records  :
+ * @return	array		$records  :
  * @access private
  * @version       0.0.1
  * @since         0.0.1
@@ -790,16 +805,16 @@ class tx_orgesab_convert {
       $title  = $category['title'];
       $tx_orgesab_catFlipped[$title] = $uid;
     }
-    
+
     $recordsMm = array( );
-    
+
       // LOOP : Angebote
     foreach( $angebote as $uid => $angebot )
     {
       $bereich_zuordnung  = $angebot['bereich_zuordnung'];
       $uid_foreign        = $tx_orgesab_catFlipped[$bereich_zuordnung];
       $uid_foreign_parent = $tx_orgesab_cat[$uid_foreign]['uid_parent'];
-        
+
       $recordsMm[] = array
       (
         'uid_local'       => $uid,
@@ -816,9 +831,9 @@ class tx_orgesab_convert {
         'sorting'         => 256 * 2,
         'sorting_foreign' => null
       );
-    } 
+    }
       // LOOP : Angebote
-    
+
       // DRS
     if( $this->pObj->drsModeConvert )
     {
@@ -864,7 +879,7 @@ class tx_orgesab_convert {
     }
     $this->pObj = $pObj;
   }
-  
+
 }
 
 if (defined('TYPO3_MODE') && isset($GLOBALS['TYPO3_CONF_VARS'][TYPO3_MODE]['XCLASS']['ext/orgesab/lib/class.tx_orgesab_convert.php'])) {

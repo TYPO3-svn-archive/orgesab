@@ -33,27 +33,28 @@
  */
 class tx_orgesab_QuotaTask_AdditionalFieldProvider implements tx_scheduler_AdditionalFieldProvider
 {
-  
+
   var $msgPrefix = 'Org +ESAB Quota';
 
   /**
-    * getAdditionalFields( )  : This method is used to define new fields for adding or editing a task
-    *                           In this case, it adds an email field
-    *
-    * @param array $taskInfo Reference to the array containing the info used in the add/edit form
-    * @param object $task When editing, reference to the current task object. Null when adding.
-    * @param tx_scheduler_Module $parentObject Reference to the calling object (Scheduler's BE module)
-    * @return array    Array containing all the information pertaining to the additional fields
-    *                    The array is multidimensional, keyed to the task class name and each field's id
-    *                    For each field it provides an associative sub-array with the following:
-    *                        ['code']        => The HTML code for the field
-    *                        ['label']        => The label of the field (possibly localized)
-    *                        ['cshKey']        => The CSH key for the field
-    *                        ['cshLabel']    => The code of the CSH label
-    * @version       0.0.1
-    * @since         0.0.1
-    */
-  public function getAdditionalFields( array &$taskInfo, $task, tx_scheduler_Module $parentObject ) 
+ * getAdditionalFields( )  : This method is used to define new fields for adding or editing a task
+ *                           In this case, it adds an email field
+ *
+ *                    The array is multidimensional, keyed to the task class name and each field's id
+ *                    For each field it provides an associative sub-array with the following:
+ *                        ['code']        => The HTML code for the field
+ *                        ['label']        => The label of the field (possibly localized)
+ *                        ['cshKey']        => The CSH key for the field
+ *                        ['cshLabel']    => The code of the CSH label
+ *
+ * @param	array		$taskInfo Reference to the array containing the info used in the add/edit form
+ * @param	object		$task When editing, reference to the current task object. Null when adding.
+ * @param	tx_scheduler_Module		$parentObject Reference to the calling object (Scheduler's BE module)
+ * @return	array		Array containing all the information pertaining to the additional fields
+ * @version       0.0.1
+ * @since         0.0.1
+ */
+  public function getAdditionalFields( array &$taskInfo, $task, tx_scheduler_Module $parentObject )
   {
     $additionalFields = array( );
     $additionalFields = $additionalFields + $this->getFieldOrgesabAdminCompany( $taskInfo, $task, $parentObject );
@@ -66,38 +67,39 @@ class tx_orgesab_QuotaTask_AdditionalFieldProvider implements tx_scheduler_Addit
     $additionalFields = $additionalFields + $this->getFieldQuotaLimitWarn( $taskInfo, $task, $parentObject );
     $additionalFields = $additionalFields + $this->getFieldQuotaReduceMailbox( $taskInfo, $task, $parentObject );
 //    quotaDefaultLimit
-    
+
     return $additionalFields;
   }
 
   /**
-    * getFieldQuotaReduceMailbox( )  : This method is used to define new fields for adding or editing a task
-    *                                           In this case, it adds an email field
-    *
-    * @param array $taskInfo Reference to the array containing the info used in the add/edit form
-    * @param object $task When editing, reference to the current task object. Null when adding.
-    * @param tx_scheduler_Module $parentObject Reference to the calling object (Scheduler's BE module)
-    * @return array    Array containing all the information pertaining to the additional fields
-    *                    The array is multidimensional, keyed to the task class name and each field's id
-    *                    For each field it provides an associative sub-array with the following:
-    *                        ['code']        => The HTML code for the field
-    *                        ['label']        => The label of the field (possibly localized)
-    *                        ['cshKey']        => The CSH key for the field
-    *                        ['cshLabel']    => The code of the CSH label
-    * @version       0.0.1
-    * @since         0.0.1
-    */
-  private function getFieldQuotaReduceMailbox( array &$taskInfo, $task, $parentObject ) 
+ * getFieldQuotaReduceMailbox( )  : This method is used to define new fields for adding or editing a task
+ *                                           In this case, it adds an email field
+ *
+ *                    The array is multidimensional, keyed to the task class name and each field's id
+ *                    For each field it provides an associative sub-array with the following:
+ *                        ['code']        => The HTML code for the field
+ *                        ['label']        => The label of the field (possibly localized)
+ *                        ['cshKey']        => The CSH key for the field
+ *                        ['cshLabel']    => The code of the CSH label
+ *
+ * @param	array		$taskInfo Reference to the array containing the info used in the add/edit form
+ * @param	object		$task When editing, reference to the current task object. Null when adding.
+ * @param	tx_scheduler_Module		$parentObject Reference to the calling object (Scheduler's BE module)
+ * @return	array		Array containing all the information pertaining to the additional fields
+ * @version       0.0.1
+ * @since         0.0.1
+ */
+  private function getFieldQuotaReduceMailbox( array &$taskInfo, $task, $parentObject )
   {
       // IF : field is empty, initialize extra field value
-    if( empty( $taskInfo['orgesab_quotaReduceMailbox'] ) ) 
+    if( empty( $taskInfo['orgesab_quotaReduceMailbox'] ) )
     {
-      if( $parentObject->CMD == 'add' ) 
+      if( $parentObject->CMD == 'add' )
       {
           // In case of new task and if field is empty, set default email address
         $taskInfo['orgesab_quotaReduceMailbox'] = '90';
-      } 
-      elseif( $parentObject->CMD == 'edit' ) 
+      }
+      elseif( $parentObject->CMD == 'edit' )
       {
           // In case of edit, and editing a test task, set to internal value if not data was submitted already
         $taskInfo['orgesab_quotaReduceMailbox'] = $task->orgesab_quotaReduceMailbox;
@@ -129,33 +131,34 @@ class tx_orgesab_QuotaTask_AdditionalFieldProvider implements tx_scheduler_Addit
 
 
   /**
-    * getFieldOrgesabAdminCompany( )  : This method is used to define new fields for adding or editing a task
-    *                                           In this case, it adds an email field
-    *
-    * @param array $taskInfo Reference to the array containing the info used in the add/edit form
-    * @param object $task When editing, reference to the current task object. Null when adding.
-    * @param tx_scheduler_Module $parentObject Reference to the calling object (Scheduler's BE module)
-    * @return array    Array containing all the information pertaining to the additional fields
-    *                    The array is multidimensional, keyed to the task class name and each field's id
-    *                    For each field it provides an associative sub-array with the following:
-    *                        ['code']        => The HTML code for the field
-    *                        ['label']        => The label of the field (possibly localized)
-    *                        ['cshKey']        => The CSH key for the field
-    *                        ['cshLabel']    => The code of the CSH label
-    * @version       0.0.1
-    * @since         0.0.1
-    */
-  private function getFieldOrgesabAdminCompany( array &$taskInfo, $task, $parentObject ) 
+ * getFieldOrgesabAdminCompany( )  : This method is used to define new fields for adding or editing a task
+ *                                           In this case, it adds an email field
+ *
+ *                    The array is multidimensional, keyed to the task class name and each field's id
+ *                    For each field it provides an associative sub-array with the following:
+ *                        ['code']        => The HTML code for the field
+ *                        ['label']        => The label of the field (possibly localized)
+ *                        ['cshKey']        => The CSH key for the field
+ *                        ['cshLabel']    => The code of the CSH label
+ *
+ * @param	array		$taskInfo Reference to the array containing the info used in the add/edit form
+ * @param	object		$task When editing, reference to the current task object. Null when adding.
+ * @param	tx_scheduler_Module		$parentObject Reference to the calling object (Scheduler's BE module)
+ * @return	array		Array containing all the information pertaining to the additional fields
+ * @version       0.0.1
+ * @since         0.0.1
+ */
+  private function getFieldOrgesabAdminCompany( array &$taskInfo, $task, $parentObject )
   {
       // IF : field is empty, initialize extra field value
-    if( empty( $taskInfo['orgesab_orgesabAdminCompany'] ) ) 
+    if( empty( $taskInfo['orgesab_orgesabAdminCompany'] ) )
     {
-      if( $parentObject->CMD == 'add' ) 
+      if( $parentObject->CMD == 'add' )
       {
           // In case of new task and if field is empty, set default email address
         $taskInfo['orgesab_orgesabAdminCompany'] = $GLOBALS['TYPO3_CONF_VARS']['SYS']['sitename'];
-      } 
-      elseif( $parentObject->CMD == 'edit' ) 
+      }
+      elseif( $parentObject->CMD == 'edit' )
       {
           // In case of edit, and editing a test task, set to internal value if not data was submitted already
         $taskInfo['orgesab_orgesabAdminCompany'] = $task->orgesab_orgesabAdminCompany;
@@ -187,33 +190,34 @@ class tx_orgesab_QuotaTask_AdditionalFieldProvider implements tx_scheduler_Addit
 
 
   /**
-    * getFieldOrgesabAdminEmail( )  : This method is used to define new fields for adding or editing a task
-    *                                           In this case, it adds an email field
-    *
-    * @param array $taskInfo Reference to the array containing the info used in the add/edit form
-    * @param object $task When editing, reference to the current task object. Null when adding.
-    * @param tx_scheduler_Module $parentObject Reference to the calling object (Scheduler's BE module)
-    * @return array    Array containing all the information pertaining to the additional fields
-    *                    The array is multidimensional, keyed to the task class name and each field's id
-    *                    For each field it provides an associative sub-array with the following:
-    *                        ['code']        => The HTML code for the field
-    *                        ['label']        => The label of the field (possibly localized)
-    *                        ['cshKey']        => The CSH key for the field
-    *                        ['cshLabel']    => The code of the CSH label
-    * @version       0.0.1
-    * @since         0.0.1
-    */
-  private function getFieldOrgesabAdminEmail( array &$taskInfo, $task, $parentObject ) 
+ * getFieldOrgesabAdminEmail( )  : This method is used to define new fields for adding or editing a task
+ *                                           In this case, it adds an email field
+ *
+ *                    The array is multidimensional, keyed to the task class name and each field's id
+ *                    For each field it provides an associative sub-array with the following:
+ *                        ['code']        => The HTML code for the field
+ *                        ['label']        => The label of the field (possibly localized)
+ *                        ['cshKey']        => The CSH key for the field
+ *                        ['cshLabel']    => The code of the CSH label
+ *
+ * @param	array		$taskInfo Reference to the array containing the info used in the add/edit form
+ * @param	object		$task When editing, reference to the current task object. Null when adding.
+ * @param	tx_scheduler_Module		$parentObject Reference to the calling object (Scheduler's BE module)
+ * @return	array		Array containing all the information pertaining to the additional fields
+ * @version       0.0.1
+ * @since         0.0.1
+ */
+  private function getFieldOrgesabAdminEmail( array &$taskInfo, $task, $parentObject )
   {
       // IF : field is empty, initialize extra field value
-    if( empty( $taskInfo['orgesab_orgesabAdminEmail'] ) ) 
+    if( empty( $taskInfo['orgesab_orgesabAdminEmail'] ) )
     {
-      if( $parentObject->CMD == 'add' ) 
+      if( $parentObject->CMD == 'add' )
       {
           // In case of new task and if field is empty, set default email address
         $taskInfo['orgesab_orgesabAdminEmail'] = $GLOBALS['BE_USER']->user['email'];
-      } 
-      elseif( $parentObject->CMD == 'edit' ) 
+      }
+      elseif( $parentObject->CMD == 'edit' )
       {
           // In case of edit, and editing a test task, set to internal value if not data was submitted already
         $taskInfo['orgesab_orgesabAdminEmail'] = $task->orgesab_orgesabAdminEmail;
@@ -245,33 +249,34 @@ class tx_orgesab_QuotaTask_AdditionalFieldProvider implements tx_scheduler_Addit
 
 
   /**
-    * getFieldOrgesabAdminName( )  : This method is used to define new fields for adding or editing a task
-    *                                           In this case, it adds an email field
-    *
-    * @param array $taskInfo Reference to the array containing the info used in the add/edit form
-    * @param object $task When editing, reference to the current task object. Null when adding.
-    * @param tx_scheduler_Module $parentObject Reference to the calling object (Scheduler's BE module)
-    * @return array    Array containing all the information pertaining to the additional fields
-    *                    The array is multidimensional, keyed to the task class name and each field's id
-    *                    For each field it provides an associative sub-array with the following:
-    *                        ['code']        => The HTML code for the field
-    *                        ['label']        => The label of the field (possibly localized)
-    *                        ['cshKey']        => The CSH key for the field
-    *                        ['cshLabel']    => The code of the CSH label
-    * @version       0.0.1
-    * @since         0.0.1
-    */
-  private function getFieldOrgesabAdminName( array &$taskInfo, $task, $parentObject ) 
+ * getFieldOrgesabAdminName( )  : This method is used to define new fields for adding or editing a task
+ *                                           In this case, it adds an email field
+ *
+ *                    The array is multidimensional, keyed to the task class name and each field's id
+ *                    For each field it provides an associative sub-array with the following:
+ *                        ['code']        => The HTML code for the field
+ *                        ['label']        => The label of the field (possibly localized)
+ *                        ['cshKey']        => The CSH key for the field
+ *                        ['cshLabel']    => The code of the CSH label
+ *
+ * @param	array		$taskInfo Reference to the array containing the info used in the add/edit form
+ * @param	object		$task When editing, reference to the current task object. Null when adding.
+ * @param	tx_scheduler_Module		$parentObject Reference to the calling object (Scheduler's BE module)
+ * @return	array		Array containing all the information pertaining to the additional fields
+ * @version       0.0.1
+ * @since         0.0.1
+ */
+  private function getFieldOrgesabAdminName( array &$taskInfo, $task, $parentObject )
   {
       // IF : field is empty, initialize extra field value
-    if( empty( $taskInfo['orgesab_orgesabAdminName'] ) ) 
+    if( empty( $taskInfo['orgesab_orgesabAdminName'] ) )
     {
-      if( $parentObject->CMD == 'add' ) 
+      if( $parentObject->CMD == 'add' )
       {
           // In case of new task and if field is empty, set default email address
         $taskInfo['orgesab_orgesabAdminName'] = $GLOBALS['BE_USER']->user['realName'];
-      } 
-      elseif( $parentObject->CMD == 'edit' ) 
+      }
+      elseif( $parentObject->CMD == 'edit' )
       {
           // In case of edit, and editing a test task, set to internal value if not data was submitted already
         $taskInfo['orgesab_orgesabAdminName'] = $task->orgesab_orgesabAdminName;
@@ -303,33 +308,34 @@ class tx_orgesab_QuotaTask_AdditionalFieldProvider implements tx_scheduler_Addit
 
 
   /**
-    * getFieldOrgesabAdminPhone( )  : This method is used to define new fields for adding or editing a task
-    *                                           In this case, it adds an email field
-    *
-    * @param array $taskInfo Reference to the array containing the info used in the add/edit form
-    * @param object $task When editing, reference to the current task object. Null when adding.
-    * @param tx_scheduler_Module $parentObject Reference to the calling object (Scheduler's BE module)
-    * @return array    Array containing all the information pertaining to the additional fields
-    *                    The array is multidimensional, keyed to the task class name and each field's id
-    *                    For each field it provides an associative sub-array with the following:
-    *                        ['code']        => The HTML code for the field
-    *                        ['label']        => The label of the field (possibly localized)
-    *                        ['cshKey']        => The CSH key for the field
-    *                        ['cshLabel']    => The code of the CSH label
-    * @version       0.0.1
-    * @since         0.0.1
-    */
-  private function getFieldOrgesabAdminPhone( array &$taskInfo, $task, $parentObject ) 
+ * getFieldOrgesabAdminPhone( )  : This method is used to define new fields for adding or editing a task
+ *                                           In this case, it adds an email field
+ *
+ *                    The array is multidimensional, keyed to the task class name and each field's id
+ *                    For each field it provides an associative sub-array with the following:
+ *                        ['code']        => The HTML code for the field
+ *                        ['label']        => The label of the field (possibly localized)
+ *                        ['cshKey']        => The CSH key for the field
+ *                        ['cshLabel']    => The code of the CSH label
+ *
+ * @param	array		$taskInfo Reference to the array containing the info used in the add/edit form
+ * @param	object		$task When editing, reference to the current task object. Null when adding.
+ * @param	tx_scheduler_Module		$parentObject Reference to the calling object (Scheduler's BE module)
+ * @return	array		Array containing all the information pertaining to the additional fields
+ * @version       0.0.1
+ * @since         0.0.1
+ */
+  private function getFieldOrgesabAdminPhone( array &$taskInfo, $task, $parentObject )
   {
       // IF : field is empty, initialize extra field value
-    if( empty( $taskInfo['orgesab_orgesabAdminPhone'] ) ) 
+    if( empty( $taskInfo['orgesab_orgesabAdminPhone'] ) )
     {
-      if( $parentObject->CMD == 'add' ) 
+      if( $parentObject->CMD == 'add' )
       {
           // In case of new task and if field is empty, set default email address
         $taskInfo['orgesab_orgesabAdminPhone'] = '000 00000000';
-      } 
-      elseif( $parentObject->CMD == 'edit' ) 
+      }
+      elseif( $parentObject->CMD == 'edit' )
       {
           // In case of edit, and editing a test task, set to internal value if not data was submitted already
         $taskInfo['orgesab_orgesabAdminPhone'] = $task->orgesab_orgesabAdminPhone;
@@ -360,33 +366,34 @@ class tx_orgesab_QuotaTask_AdditionalFieldProvider implements tx_scheduler_Addit
   }
 
   /**
-    * getFieldQuotaLimitDefault( )  : This method is used to define new fields for adding or editing a task
-    *                                           In this case, it adds an email field
-    *
-    * @param array $taskInfo Reference to the array containing the info used in the add/edit form
-    * @param object $task When editing, reference to the current task object. Null when adding.
-    * @param tx_scheduler_Module $parentObject Reference to the calling object (Scheduler's BE module)
-    * @return array    Array containing all the information pertaining to the additional fields
-    *                    The array is multidimensional, keyed to the task class name and each field's id
-    *                    For each field it provides an associative sub-array with the following:
-    *                        ['code']        => The HTML code for the field
-    *                        ['label']        => The label of the field (possibly localized)
-    *                        ['cshKey']        => The CSH key for the field
-    *                        ['cshLabel']    => The code of the CSH label
-    * @version       0.0.1
-    * @since         0.0.1
-    */
-  private function getFieldQuotaLimitDefault( array &$taskInfo, $task, $parentObject ) 
+ * getFieldQuotaLimitDefault( )  : This method is used to define new fields for adding or editing a task
+ *                                           In this case, it adds an email field
+ *
+ *                    The array is multidimensional, keyed to the task class name and each field's id
+ *                    For each field it provides an associative sub-array with the following:
+ *                        ['code']        => The HTML code for the field
+ *                        ['label']        => The label of the field (possibly localized)
+ *                        ['cshKey']        => The CSH key for the field
+ *                        ['cshLabel']    => The code of the CSH label
+ *
+ * @param	array		$taskInfo Reference to the array containing the info used in the add/edit form
+ * @param	object		$task When editing, reference to the current task object. Null when adding.
+ * @param	tx_scheduler_Module		$parentObject Reference to the calling object (Scheduler's BE module)
+ * @return	array		Array containing all the information pertaining to the additional fields
+ * @version       0.0.1
+ * @since         0.0.1
+ */
+  private function getFieldQuotaLimitDefault( array &$taskInfo, $task, $parentObject )
   {
       // IF : field is empty, initialize extra field value
-    if( empty( $taskInfo['orgesab_quotaLimitDefault'] ) ) 
+    if( empty( $taskInfo['orgesab_quotaLimitDefault'] ) )
     {
-      if( $parentObject->CMD == 'add' ) 
+      if( $parentObject->CMD == 'add' )
       {
           // In case of new task and if field is empty, set default email address
         $taskInfo['orgesab_quotaLimitDefault'] = '100';
-      } 
-      elseif( $parentObject->CMD == 'edit' ) 
+      }
+      elseif( $parentObject->CMD == 'edit' )
       {
           // In case of edit, and editing a test task, set to internal value if not data was submitted already
         $taskInfo['orgesab_quotaLimitDefault'] = $task->orgesab_quotaLimitDefault;
@@ -417,33 +424,34 @@ class tx_orgesab_QuotaTask_AdditionalFieldProvider implements tx_scheduler_Addit
   }
 
   /**
-    * getFieldQuotaLimitRemove( )  : This method is used to define new fields for adding or editing a task
-    *                                           In this case, it adds an email field
-    *
-    * @param array $taskInfo Reference to the array containing the info used in the add/edit form
-    * @param object $task When editing, reference to the current task object. Null when adding.
-    * @param tx_scheduler_Module $parentObject Reference to the calling object (Scheduler's BE module)
-    * @return array    Array containing all the information pertaining to the additional fields
-    *                    The array is multidimensional, keyed to the task class name and each field's id
-    *                    For each field it provides an associative sub-array with the following:
-    *                        ['code']        => The HTML code for the field
-    *                        ['label']        => The label of the field (possibly localized)
-    *                        ['cshKey']        => The CSH key for the field
-    *                        ['cshLabel']    => The code of the CSH label
-    * @version       0.0.1
-    * @since         0.0.1
-    */
-  private function getFieldQuotaLimitRemove( array &$taskInfo, $task, $parentObject ) 
+ * getFieldQuotaLimitRemove( )  : This method is used to define new fields for adding or editing a task
+ *                                           In this case, it adds an email field
+ *
+ *                    The array is multidimensional, keyed to the task class name and each field's id
+ *                    For each field it provides an associative sub-array with the following:
+ *                        ['code']        => The HTML code for the field
+ *                        ['label']        => The label of the field (possibly localized)
+ *                        ['cshKey']        => The CSH key for the field
+ *                        ['cshLabel']    => The code of the CSH label
+ *
+ * @param	array		$taskInfo Reference to the array containing the info used in the add/edit form
+ * @param	object		$task When editing, reference to the current task object. Null when adding.
+ * @param	tx_scheduler_Module		$parentObject Reference to the calling object (Scheduler's BE module)
+ * @return	array		Array containing all the information pertaining to the additional fields
+ * @version       0.0.1
+ * @since         0.0.1
+ */
+  private function getFieldQuotaLimitRemove( array &$taskInfo, $task, $parentObject )
   {
       // IF : field is empty, initialize extra field value
-    if( empty( $taskInfo['orgesab_quotaLimitRemove'] ) ) 
+    if( empty( $taskInfo['orgesab_quotaLimitRemove'] ) )
     {
-      if( $parentObject->CMD == 'add' ) 
+      if( $parentObject->CMD == 'add' )
       {
           // In case of new task and if field is empty, set default email address
         $taskInfo['orgesab_quotaLimitRemove'] = '105';
-      } 
-      elseif( $parentObject->CMD == 'edit' ) 
+      }
+      elseif( $parentObject->CMD == 'edit' )
       {
           // In case of edit, and editing a test task, set to internal value if not data was submitted already
         $taskInfo['orgesab_quotaLimitRemove'] = $task->orgesab_quotaLimitRemove;
@@ -474,33 +482,34 @@ class tx_orgesab_QuotaTask_AdditionalFieldProvider implements tx_scheduler_Addit
   }
 
   /**
-    * getFieldQuotaLimitWarn( )  : This method is used to define new fields for adding or editing a task
-    *                                           In this case, it adds an email field
-    *
-    * @param array $taskInfo Reference to the array containing the info used in the add/edit form
-    * @param object $task When editing, reference to the current task object. Null when adding.
-    * @param tx_scheduler_Module $parentObject Reference to the calling object (Scheduler's BE module)
-    * @return array    Array containing all the information pertaining to the additional fields
-    *                    The array is multidimensional, keyed to the task class name and each field's id
-    *                    For each field it provides an associative sub-array with the following:
-    *                        ['code']        => The HTML code for the field
-    *                        ['label']        => The label of the field (possibly localized)
-    *                        ['cshKey']        => The CSH key for the field
-    *                        ['cshLabel']    => The code of the CSH label
-    * @version       0.0.1
-    * @since         0.0.1
-    */
-  private function getFieldQuotaLimitWarn( array &$taskInfo, $task, $parentObject ) 
+ * getFieldQuotaLimitWarn( )  : This method is used to define new fields for adding or editing a task
+ *                                           In this case, it adds an email field
+ *
+ *                    The array is multidimensional, keyed to the task class name and each field's id
+ *                    For each field it provides an associative sub-array with the following:
+ *                        ['code']        => The HTML code for the field
+ *                        ['label']        => The label of the field (possibly localized)
+ *                        ['cshKey']        => The CSH key for the field
+ *                        ['cshLabel']    => The code of the CSH label
+ *
+ * @param	array		$taskInfo Reference to the array containing the info used in the add/edit form
+ * @param	object		$task When editing, reference to the current task object. Null when adding.
+ * @param	tx_scheduler_Module		$parentObject Reference to the calling object (Scheduler's BE module)
+ * @return	array		Array containing all the information pertaining to the additional fields
+ * @version       0.0.1
+ * @since         0.0.1
+ */
+  private function getFieldQuotaLimitWarn( array &$taskInfo, $task, $parentObject )
   {
       // IF : field is empty, initialize extra field value
-    if( empty( $taskInfo['orgesab_quotaLimitWarn'] ) ) 
+    if( empty( $taskInfo['orgesab_quotaLimitWarn'] ) )
     {
-      if( $parentObject->CMD == 'add' ) 
+      if( $parentObject->CMD == 'add' )
       {
           // In case of new task and if field is empty, set default email address
         $taskInfo['orgesab_quotaLimitWarn'] = '95';
-      } 
-      elseif( $parentObject->CMD == 'edit' ) 
+      }
+      elseif( $parentObject->CMD == 'edit' )
       {
           // In case of edit, and editing a test task, set to internal value if not data was submitted already
         $taskInfo['orgesab_quotaLimitWarn'] = $task->orgesab_quotaLimitWarn;
@@ -532,33 +541,34 @@ class tx_orgesab_QuotaTask_AdditionalFieldProvider implements tx_scheduler_Addit
 
 
   /**
-    * getFieldQuotaMode( )  : This method is used to define new fields for adding or editing a task
-    *                                           In this case, it adds an email field
-    *
-    * @param array $taskInfo Reference to the array containing the info used in the add/edit form
-    * @param object $task When editing, reference to the current task object. Null when adding.
-    * @param tx_scheduler_Module $parentObject Reference to the calling object (Scheduler's BE module)
-    * @return array    Array containing all the information pertaining to the additional fields
-    *                    The array is multidimensional, keyed to the task class name and each field's id
-    *                    For each field it provides an associative sub-array with the following:
-    *                        ['code']        => The HTML code for the field
-    *                        ['label']        => The label of the field (possibly localized)
-    *                        ['cshKey']        => The CSH key for the field
-    *                        ['cshLabel']    => The code of the CSH label
-    * @version       0.0.1
-    * @since         0.0.1
-    */
-  private function getFieldQuotaMode( array &$taskInfo, $task, $parentObject ) 
+ * getFieldQuotaMode( )  : This method is used to define new fields for adding or editing a task
+ *                                           In this case, it adds an email field
+ *
+ *                    The array is multidimensional, keyed to the task class name and each field's id
+ *                    For each field it provides an associative sub-array with the following:
+ *                        ['code']        => The HTML code for the field
+ *                        ['label']        => The label of the field (possibly localized)
+ *                        ['cshKey']        => The CSH key for the field
+ *                        ['cshLabel']    => The code of the CSH label
+ *
+ * @param	array		$taskInfo Reference to the array containing the info used in the add/edit form
+ * @param	object		$task When editing, reference to the current task object. Null when adding.
+ * @param	tx_scheduler_Module		$parentObject Reference to the calling object (Scheduler's BE module)
+ * @return	array		Array containing all the information pertaining to the additional fields
+ * @version       0.0.1
+ * @since         0.0.1
+ */
+  private function getFieldQuotaMode( array &$taskInfo, $task, $parentObject )
   {
       // IF : field is empty, initialize extra field value
-    if( empty( $taskInfo['orgesab_quotaMode'] ) ) 
+    if( empty( $taskInfo['orgesab_quotaMode'] ) )
     {
-      if( $parentObject->CMD == 'add' ) 
+      if( $parentObject->CMD == 'add' )
       {
           // In case of new task and if field is empty, set default email address
         $taskInfo['orgesab_quotaMode'] = 'test';
-      } 
-      elseif( $parentObject->CMD == 'edit' ) 
+      }
+      elseif( $parentObject->CMD == 'edit' )
       {
           // In case of edit, and editing a test task, set to internal value if not data was submitted already
         $taskInfo['orgesab_quotaMode'] = $task->orgesab_quotaMode;
@@ -582,14 +592,14 @@ class tx_orgesab_QuotaTask_AdditionalFieldProvider implements tx_scheduler_Addit
     $selected['test']       = null;
     $selected['warn']       = null;
     $selected[$fieldValue]  = ' selected="selected"';
-    
+
     $fieldCode    = '
                       <select name="tx_scheduler[orgesab_quotaMode]" id="' . $fieldID . '" size="1" style="width:300px;">
                         <option value="remove"' . $selected['remove'] . '>' . $labelRemove . '</option>
                         <option value="warn"' . $selected['warn'] . '>' . $labelWarn . '</option>
                         <option value="test"' . $selected['test'] . '>' . $labelTest . '</option>
                       </select>
-                    ';    
+                    ';
     $additionalFields = array( );
     $additionalFields[$fieldID] = array
     (
@@ -603,238 +613,238 @@ class tx_orgesab_QuotaTask_AdditionalFieldProvider implements tx_scheduler_Addit
     return $additionalFields;
   }
 
-  
+
   /**
-    * validateAdditionalFields( ) : This method checks any additional data that is relevant to the specific task
-    *                               If the task class is not relevant, the method is expected to return TRUE
-    *
-    * @param array     $submittedData Reference to the array containing the data submitted by the user
-    * @param tx_scheduler_Module $parentObject Reference to the calling object (Scheduler's BE module)
-    * @return boolean TRUE if validation was ok (or selected class is not relevant), FALSE otherwise
-    * @version       0.0.1
-    * @since         0.0.1
-    */
-  public function validateAdditionalFields( array &$submittedData, tx_scheduler_Module $parentObject ) 
+ * validateAdditionalFields( ) : This method checks any additional data that is relevant to the specific task
+ *                               If the task class is not relevant, the method is expected to return TRUE
+ *
+ * @param	array		$submittedData Reference to the array containing the data submitted by the user
+ * @param	tx_scheduler_Module		$parentObject Reference to the calling object (Scheduler's BE module)
+ * @return	boolean		TRUE if validation was ok (or selected class is not relevant), FALSE otherwise
+ * @version       0.0.1
+ * @since         0.0.1
+ */
+  public function validateAdditionalFields( array &$submittedData, tx_scheduler_Module $parentObject )
   {
     $bool_isValidatingSuccessful = true;
-    
+
 //    $prompt = var_export( $submittedData, true );
 //    $parentObject->addMessage( $prompt, t3lib_FlashMessage::INFO );
 
-     
-    if( ! $this->validateOS( $parentObject ) ) 
+
+    if( ! $this->validateOS( $parentObject ) )
     {
       return false;
-    } 
+    }
 
-    if( ! $this->validateFieldFrequency( $submittedData, $parentObject ) ) 
+    if( ! $this->validateFieldFrequency( $submittedData, $parentObject ) )
     {
       $bool_isValidatingSuccessful = false;
-    } 
+    }
 
-    if( ! $this->validateFieldOrgesabAdminCompany( $submittedData, $parentObject ) ) 
+    if( ! $this->validateFieldOrgesabAdminCompany( $submittedData, $parentObject ) )
     {
       $bool_isValidatingSuccessful = false;
-    } 
+    }
 
-    if( ! $this->validateFieldOrgesabAdminEmail( $submittedData, $parentObject ) ) 
+    if( ! $this->validateFieldOrgesabAdminEmail( $submittedData, $parentObject ) )
     {
       $bool_isValidatingSuccessful = false;
-    } 
+    }
 
-    if( ! $this->validateFieldOrgesabAdminName( $submittedData, $parentObject ) ) 
+    if( ! $this->validateFieldOrgesabAdminName( $submittedData, $parentObject ) )
     {
       $bool_isValidatingSuccessful = false;
-    } 
+    }
 
-    if( ! $this->validateFieldOrgesabAdminPhone( $submittedData, $parentObject ) ) 
+    if( ! $this->validateFieldOrgesabAdminPhone( $submittedData, $parentObject ) )
     {
       $bool_isValidatingSuccessful = false;
-    } 
+    }
 
-    if( ! $this->validateFieldQuotaMode( $submittedData, $parentObject ) ) 
+    if( ! $this->validateFieldQuotaMode( $submittedData, $parentObject ) )
     {
       $bool_isValidatingSuccessful = false;
-    } 
+    }
 
-    if( ! $this->validateFieldQuotaLimitDefault( $submittedData, $parentObject ) ) 
+    if( ! $this->validateFieldQuotaLimitDefault( $submittedData, $parentObject ) )
     {
       $bool_isValidatingSuccessful = false;
-    } 
+    }
 
-    if( ! $this->validateFieldQuotaLimitRemove( $submittedData, $parentObject ) ) 
+    if( ! $this->validateFieldQuotaLimitRemove( $submittedData, $parentObject ) )
     {
       $bool_isValidatingSuccessful = false;
-    } 
+    }
 
-    if( ! $this->validateFieldQuotaLimitWarn( $submittedData, $parentObject ) ) 
+    if( ! $this->validateFieldQuotaLimitWarn( $submittedData, $parentObject ) )
     {
       $bool_isValidatingSuccessful = false;
-    } 
+    }
 
 
-    if( ! $this->validateFieldQuotaReduceMailbox( $submittedData, $parentObject ) ) 
+    if( ! $this->validateFieldQuotaReduceMailbox( $submittedData, $parentObject ) )
     {
       $bool_isValidatingSuccessful = false;
-    } 
+    }
 
-    if( ! $this->validateFieldStart( $submittedData, $parentObject ) ) 
+    if( ! $this->validateFieldStart( $submittedData, $parentObject ) )
     {
       $bool_isValidatingSuccessful = false;
-    } 
+    }
 
     return $bool_isValidatingSuccessful;
   }
 
   /**
-    * validateFieldOrgesabAdminCompany( )  : This method checks any additional data that is relevant to the specific task
-    *                                     If the task class is not relevant, the method is expected to return TRUE
-    *
-    * @param array     $submittedData Reference to the array containing the data submitted by the user
-    * @param tx_scheduler_Module $parentObject Reference to the calling object (Scheduler's BE module)
-    * @return boolean TRUE if validation was ok (or selected class is not relevant), FALSE otherwise
-    * @version       0.0.1
-    * @since         0.0.1
-    */
-  private function validateFieldOrgesabAdminCompany( array &$submittedData, tx_scheduler_Module $parentObject ) 
+ * validateFieldOrgesabAdminCompany( )  : This method checks any additional data that is relevant to the specific task
+ *                                     If the task class is not relevant, the method is expected to return TRUE
+ *
+ * @param	array		$submittedData Reference to the array containing the data submitted by the user
+ * @param	tx_scheduler_Module		$parentObject Reference to the calling object (Scheduler's BE module)
+ * @return	boolean		TRUE if validation was ok (or selected class is not relevant), FALSE otherwise
+ * @version       0.0.1
+ * @since         0.0.1
+ */
+  private function validateFieldOrgesabAdminCompany( array &$submittedData, tx_scheduler_Module $parentObject )
   {
     $bool_isValidatingSuccessful = true;
 
     $submittedData['orgesab_orgesabAdminCompany'] = trim( $submittedData['orgesab_orgesabAdminCompany'] );
 
-    if( empty( $submittedData['orgesab_orgesabAdminCompany'] ) ) 
+    if( empty( $submittedData['orgesab_orgesabAdminCompany'] ) )
     {
       $prompt = $this->msgPrefix . ': ' . $GLOBALS['LANG']->sL( 'LLL:EXT:orgesab/lib/scheduler/locallang.xml:msg.enterOrgesabAdminCompany' );
       $parentObject->addMessage( $prompt, t3lib_FlashMessage::ERROR );
       $bool_isValidatingSuccessful = false;
-    } 
+    }
 
     return $bool_isValidatingSuccessful;
   }
 
   /**
-    * validateFieldFrequency( )  : This method checks any additional data that is relevant to the specific task
-    *                                     If the task class is not relevant, the method is expected to return TRUE
-    *
-    * @param array     $submittedData Reference to the array containing the data submitted by the user
-    * @param tx_scheduler_Module $parentObject Reference to the calling object (Scheduler's BE module)
-    * @return boolean TRUE if validation was ok (or selected class is not relevant), FALSE otherwise
-    * @version       0.0.1
-    * @since         0.0.1
-    */
-  private function validateFieldFrequency( array &$submittedData, tx_scheduler_Module $parentObject ) 
+ * validateFieldFrequency( )  : This method checks any additional data that is relevant to the specific task
+ *                                     If the task class is not relevant, the method is expected to return TRUE
+ *
+ * @param	array		$submittedData Reference to the array containing the data submitted by the user
+ * @param	tx_scheduler_Module		$parentObject Reference to the calling object (Scheduler's BE module)
+ * @return	boolean		TRUE if validation was ok (or selected class is not relevant), FALSE otherwise
+ * @version       0.0.1
+ * @since         0.0.1
+ */
+  private function validateFieldFrequency( array &$submittedData, tx_scheduler_Module $parentObject )
   {
     $bool_isValidatingSuccessful = true;
 
     $submittedData['frequency'] = ( int ) $submittedData['frequency'];
 
-    if( $submittedData['frequency'] < 86400 ) 
+    if( $submittedData['frequency'] < 86400 )
     {
       $prompt = $this->msgPrefix . ': ' . $GLOBALS['LANG']->sL( 'LLL:EXT:orgesab/lib/scheduler/locallang.xml:msg.enterFrequency' );
       $parentObject->addMessage( $prompt, t3lib_FlashMessage::WARNING );
-    } 
+    }
 
     return $bool_isValidatingSuccessful;
   }
 
   /**
-    * validateFieldOrgesabAdminEmail( )  : This method checks any additional data that is relevant to the specific task
-    *                                     If the task class is not relevant, the method is expected to return TRUE
-    *
-    * @param array     $submittedData Reference to the array containing the data submitted by the user
-    * @param tx_scheduler_Module $parentObject Reference to the calling object (Scheduler's BE module)
-    * @return boolean TRUE if validation was ok (or selected class is not relevant), FALSE otherwise
-    * @version       0.0.1
-    * @since         0.0.1
-    */
-  private function validateFieldOrgesabAdminEmail( array &$submittedData, tx_scheduler_Module $parentObject ) 
+ * validateFieldOrgesabAdminEmail( )  : This method checks any additional data that is relevant to the specific task
+ *                                     If the task class is not relevant, the method is expected to return TRUE
+ *
+ * @param	array		$submittedData Reference to the array containing the data submitted by the user
+ * @param	tx_scheduler_Module		$parentObject Reference to the calling object (Scheduler's BE module)
+ * @return	boolean		TRUE if validation was ok (or selected class is not relevant), FALSE otherwise
+ * @version       0.0.1
+ * @since         0.0.1
+ */
+  private function validateFieldOrgesabAdminEmail( array &$submittedData, tx_scheduler_Module $parentObject )
   {
     $bool_isValidatingSuccessful = true;
 
     $submittedData['orgesab_orgesabAdminEmail'] = trim( $submittedData['orgesab_orgesabAdminEmail'] );
 
-    if( empty( $submittedData['orgesab_orgesabAdminEmail'] ) ) 
+    if( empty( $submittedData['orgesab_orgesabAdminEmail'] ) )
     {
       $prompt = $this->msgPrefix . ': ' . $GLOBALS['LANG']->sL( 'LLL:EXT:orgesab/lib/scheduler/locallang.xml:msg.enterOrgesabAdminEmail' );
       $parentObject->addMessage( $prompt, t3lib_FlashMessage::ERROR );
       $bool_isValidatingSuccessful = false;
-    } 
+    }
 
     return $bool_isValidatingSuccessful;
   }
 
   /**
-    * validateFieldOrgesabAdminName( )  : This method checks any additional data that is relevant to the specific task
-    *                                     If the task class is not relevant, the method is expected to return TRUE
-    *
-    * @param array     $submittedData Reference to the array containing the data submitted by the user
-    * @param tx_scheduler_Module $parentObject Reference to the calling object (Scheduler's BE module)
-    * @return boolean TRUE if validation was ok (or selected class is not relevant), FALSE otherwise
-    * @version       0.0.1
-    * @since         0.0.1
-    */
-  private function validateFieldOrgesabAdminName( array &$submittedData, tx_scheduler_Module $parentObject ) 
+ * validateFieldOrgesabAdminName( )  : This method checks any additional data that is relevant to the specific task
+ *                                     If the task class is not relevant, the method is expected to return TRUE
+ *
+ * @param	array		$submittedData Reference to the array containing the data submitted by the user
+ * @param	tx_scheduler_Module		$parentObject Reference to the calling object (Scheduler's BE module)
+ * @return	boolean		TRUE if validation was ok (or selected class is not relevant), FALSE otherwise
+ * @version       0.0.1
+ * @since         0.0.1
+ */
+  private function validateFieldOrgesabAdminName( array &$submittedData, tx_scheduler_Module $parentObject )
   {
     $bool_isValidatingSuccessful = true;
 
     $submittedData['orgesab_orgesabAdminName'] = trim( $submittedData['orgesab_orgesabAdminName'] );
 
-    if( empty( $submittedData['orgesab_orgesabAdminName'] ) ) 
+    if( empty( $submittedData['orgesab_orgesabAdminName'] ) )
     {
       $prompt = $this->msgPrefix . ': ' . $GLOBALS['LANG']->sL( 'LLL:EXT:orgesab/lib/scheduler/locallang.xml:msg.enterOrgesabAdminName' );
       $parentObject->addMessage( $prompt, t3lib_FlashMessage::ERROR );
       $bool_isValidatingSuccessful = false;
-    } 
+    }
 
     return $bool_isValidatingSuccessful;
   }
 
   /**
-    * validateFieldOrgesabAdminPhone( )  : This method checks any additional data that is relevant to the specific task
-    *                                     If the task class is not relevant, the method is expected to return TRUE
-    *
-    * @param array     $submittedData Reference to the array containing the data submitted by the user
-    * @param tx_scheduler_Module $parentObject Reference to the calling object (Scheduler's BE module)
-    * @return boolean TRUE if validation was ok (or selected class is not relevant), FALSE otherwise
-    * @version       0.0.1
-    * @since         0.0.1
-    */
-  private function validateFieldOrgesabAdminPhone( array &$submittedData, tx_scheduler_Module $parentObject ) 
+ * validateFieldOrgesabAdminPhone( )  : This method checks any additional data that is relevant to the specific task
+ *                                     If the task class is not relevant, the method is expected to return TRUE
+ *
+ * @param	array		$submittedData Reference to the array containing the data submitted by the user
+ * @param	tx_scheduler_Module		$parentObject Reference to the calling object (Scheduler's BE module)
+ * @return	boolean		TRUE if validation was ok (or selected class is not relevant), FALSE otherwise
+ * @version       0.0.1
+ * @since         0.0.1
+ */
+  private function validateFieldOrgesabAdminPhone( array &$submittedData, tx_scheduler_Module $parentObject )
   {
     $bool_isValidatingSuccessful = true;
 
     $submittedData['orgesab_orgesabAdminPhone'] = trim( $submittedData['orgesab_orgesabAdminPhone'] );
 
-    if( empty( $submittedData['orgesab_orgesabAdminPhone'] ) ) 
+    if( empty( $submittedData['orgesab_orgesabAdminPhone'] ) )
     {
       $prompt = $this->msgPrefix . ': ' . $GLOBALS['LANG']->sL( 'LLL:EXT:orgesab/lib/scheduler/locallang.xml:msg.enterOrgesabAdminPhone' );
       $parentObject->addMessage( $prompt, t3lib_FlashMessage::ERROR );
       $bool_isValidatingSuccessful = false;
-    } 
-    
-    if( $submittedData['orgesab_orgesabAdminPhone'] == '000 00000000' ) 
+    }
+
+    if( $submittedData['orgesab_orgesabAdminPhone'] == '000 00000000' )
     {
       $prompt = $this->msgPrefix . ': ' . $GLOBALS['LANG']->sL( 'LLL:EXT:orgesab/lib/scheduler/locallang.xml:msg.enterOrgesabAdminPhone' );
       $parentObject->addMessage( $prompt, t3lib_FlashMessage::ERROR );
       $bool_isValidatingSuccessful = false;
-    } 
-    
-    
+    }
+
+
 
     return $bool_isValidatingSuccessful;
   }
 
   /**
-    * validateFieldQuotaLimitDefault( )  : This method checks any additional data that is relevant to the specific task
-    *                                     If the task class is not relevant, the method is expected to return TRUE
-    *
-    * @param array     $submittedData Reference to the array containing the data submitted by the user
-    * @param tx_scheduler_Module $parentObject Reference to the calling object (Scheduler's BE module)
-    * @return boolean TRUE if validation was ok (or selected class is not relevant), FALSE otherwise
-    * @version       0.0.1
-    * @since         0.0.1
-    */
-  private function validateFieldQuotaLimitDefault( array &$submittedData, tx_scheduler_Module $parentObject ) 
+ * validateFieldQuotaLimitDefault( )  : This method checks any additional data that is relevant to the specific task
+ *                                     If the task class is not relevant, the method is expected to return TRUE
+ *
+ * @param	array		$submittedData Reference to the array containing the data submitted by the user
+ * @param	tx_scheduler_Module		$parentObject Reference to the calling object (Scheduler's BE module)
+ * @return	boolean		TRUE if validation was ok (or selected class is not relevant), FALSE otherwise
+ * @version       0.0.1
+ * @since         0.0.1
+ */
+  private function validateFieldQuotaLimitDefault( array &$submittedData, tx_scheduler_Module $parentObject )
   {
     $bool_isValidatingSuccessful = true;
 
@@ -856,16 +866,16 @@ class tx_orgesab_QuotaTask_AdditionalFieldProvider implements tx_scheduler_Addit
   }
 
   /**
-    * validateFieldQuotaLimitRemove( )  : This method checks any additional data that is relevant to the specific task
-    *                                     If the task class is not relevant, the method is expected to return TRUE
-    *
-    * @param array     $submittedData Reference to the array containing the data submitted by the user
-    * @param tx_scheduler_Module $parentObject Reference to the calling object (Scheduler's BE module)
-    * @return boolean TRUE if validation was ok (or selected class is not relevant), FALSE otherwise
-    * @version       0.0.1
-    * @since         0.0.1
-    */
-  private function validateFieldQuotaLimitRemove( array &$submittedData, tx_scheduler_Module $parentObject ) 
+ * validateFieldQuotaLimitRemove( )  : This method checks any additional data that is relevant to the specific task
+ *                                     If the task class is not relevant, the method is expected to return TRUE
+ *
+ * @param	array		$submittedData Reference to the array containing the data submitted by the user
+ * @param	tx_scheduler_Module		$parentObject Reference to the calling object (Scheduler's BE module)
+ * @return	boolean		TRUE if validation was ok (or selected class is not relevant), FALSE otherwise
+ * @version       0.0.1
+ * @since         0.0.1
+ */
+  private function validateFieldQuotaLimitRemove( array &$submittedData, tx_scheduler_Module $parentObject )
   {
     $bool_isValidatingSuccessful = true;
 
@@ -893,16 +903,16 @@ class tx_orgesab_QuotaTask_AdditionalFieldProvider implements tx_scheduler_Addit
   }
 
   /**
-    * validateFieldQuotaLimitWarn( )  : This method checks any additional data that is relevant to the specific task
-    *                                     If the task class is not relevant, the method is expected to return TRUE
-    *
-    * @param array     $submittedData Reference to the array containing the data submitted by the user
-    * @param tx_scheduler_Module $parentObject Reference to the calling object (Scheduler's BE module)
-    * @return boolean TRUE if validation was ok (or selected class is not relevant), FALSE otherwise
-    * @version       0.0.1
-    * @since         0.0.1
-    */
-  private function validateFieldQuotaLimitWarn( array &$submittedData, tx_scheduler_Module $parentObject ) 
+ * validateFieldQuotaLimitWarn( )  : This method checks any additional data that is relevant to the specific task
+ *                                     If the task class is not relevant, the method is expected to return TRUE
+ *
+ * @param	array		$submittedData Reference to the array containing the data submitted by the user
+ * @param	tx_scheduler_Module		$parentObject Reference to the calling object (Scheduler's BE module)
+ * @return	boolean		TRUE if validation was ok (or selected class is not relevant), FALSE otherwise
+ * @version       0.0.1
+ * @since         0.0.1
+ */
+  private function validateFieldQuotaLimitWarn( array &$submittedData, tx_scheduler_Module $parentObject )
   {
     $bool_isValidatingSuccessful = true;
 
@@ -925,16 +935,16 @@ class tx_orgesab_QuotaTask_AdditionalFieldProvider implements tx_scheduler_Addit
   }
 
   /**
-    * validateFieldQuotaMode( )  : This method checks any additional data that is relevant to the specific task
-    *                                     If the task class is not relevant, the method is expected to return TRUE
-    *
-    * @param array     $submittedData Reference to the array containing the data submitted by the user
-    * @param tx_scheduler_Module $parentObject Reference to the calling object (Scheduler's BE module)
-    * @return boolean TRUE if validation was ok (or selected class is not relevant), FALSE otherwise
-    * @version       0.0.1
-    * @since         0.0.1
-    */
-  private function validateFieldQuotaMode( array &$submittedData, tx_scheduler_Module $parentObject ) 
+ * validateFieldQuotaMode( )  : This method checks any additional data that is relevant to the specific task
+ *                                     If the task class is not relevant, the method is expected to return TRUE
+ *
+ * @param	array		$submittedData Reference to the array containing the data submitted by the user
+ * @param	tx_scheduler_Module		$parentObject Reference to the calling object (Scheduler's BE module)
+ * @return	boolean		TRUE if validation was ok (or selected class is not relevant), FALSE otherwise
+ * @version       0.0.1
+ * @since         0.0.1
+ */
+  private function validateFieldQuotaMode( array &$submittedData, tx_scheduler_Module $parentObject )
   {
     $bool_isValidatingSuccessful = true;
 
@@ -965,16 +975,16 @@ class tx_orgesab_QuotaTask_AdditionalFieldProvider implements tx_scheduler_Addit
   }
 
   /**
-    * validateFieldQuotaReduceMailbox( )  : This method checks any additional data that is relevant to the specific task
-    *                                     If the task class is not relevant, the method is expected to return TRUE
-    *
-    * @param array     $submittedData Reference to the array containing the data submitted by the user
-    * @param tx_scheduler_Module $parentObject Reference to the calling object (Scheduler's BE module)
-    * @return boolean TRUE if validation was ok (or selected class is not relevant), FALSE otherwise
-    * @version       0.0.1
-    * @since         0.0.1
-    */
-  private function validateFieldQuotaReduceMailbox( array &$submittedData, tx_scheduler_Module $parentObject ) 
+ * validateFieldQuotaReduceMailbox( )  : This method checks any additional data that is relevant to the specific task
+ *                                     If the task class is not relevant, the method is expected to return TRUE
+ *
+ * @param	array		$submittedData Reference to the array containing the data submitted by the user
+ * @param	tx_scheduler_Module		$parentObject Reference to the calling object (Scheduler's BE module)
+ * @return	boolean		TRUE if validation was ok (or selected class is not relevant), FALSE otherwise
+ * @version       0.0.1
+ * @since         0.0.1
+ */
+  private function validateFieldQuotaReduceMailbox( array &$submittedData, tx_scheduler_Module $parentObject )
   {
     $bool_isValidatingSuccessful = true;
 
@@ -1002,16 +1012,16 @@ class tx_orgesab_QuotaTask_AdditionalFieldProvider implements tx_scheduler_Addit
   }
 
   /**
-    * validateFieldStart( )  : This method checks any additional data that is relevant to the specific task
-    *                                     If the task class is not relevant, the method is expected to return TRUE
-    *
-    * @param array     $submittedData Reference to the array containing the data submitted by the user
-    * @param tx_scheduler_Module $parentObject Reference to the calling object (Scheduler's BE module)
-    * @return boolean TRUE if validation was ok (or selected class is not relevant), FALSE otherwise
-    * @version       0.0.1
-    * @since         0.0.1
-    */
-  private function validateFieldStart( array &$submittedData, tx_scheduler_Module $parentObject ) 
+ * validateFieldStart( )  : This method checks any additional data that is relevant to the specific task
+ *                                     If the task class is not relevant, the method is expected to return TRUE
+ *
+ * @param	array		$submittedData Reference to the array containing the data submitted by the user
+ * @param	tx_scheduler_Module		$parentObject Reference to the calling object (Scheduler's BE module)
+ * @return	boolean		TRUE if validation was ok (or selected class is not relevant), FALSE otherwise
+ * @version       0.0.1
+ * @since         0.0.1
+ */
+  private function validateFieldStart( array &$submittedData, tx_scheduler_Module $parentObject )
   {
     $bool_isValidatingSuccessful = true;
 
@@ -1019,31 +1029,31 @@ class tx_orgesab_QuotaTask_AdditionalFieldProvider implements tx_scheduler_Addit
 
     $inAnHour = time( ) + ( 60 * 60 );
 
-    if( $submittedData['start'] < $inAnHour ) 
+    if( $submittedData['start'] < $inAnHour )
     {
       $prompt = $this->msgPrefix . ': ' . $GLOBALS['LANG']->sL( 'LLL:EXT:orgesab/lib/scheduler/locallang.xml:msg.enterStart' );
       $parentObject->addMessage( $prompt, t3lib_FlashMessage::ERROR );
       $bool_isValidatingSuccessful = false;
-    } 
+    }
 
     return $bool_isValidatingSuccessful;
   }
 
-  
+
   /**
-    * validateOS( ) : This method checks any additional data that is relevant to the specific task
-    *                               If the task class is not relevant, the method is expected to return TRUE
-    *
-    * @param array     $submittedData Reference to the array containing the data submitted by the user
-    * @param tx_scheduler_Module $parentObject Reference to the calling object (Scheduler's BE module)
-    * @return boolean TRUE if validation was ok (or selected class is not relevant), FALSE otherwise
-    * @version       0.0.1
-    * @since         0.0.1
-    */
-  public function validateOS( tx_scheduler_Module $parentObject ) 
+ * validateOS( ) : This method checks any additional data that is relevant to the specific task
+ *                               If the task class is not relevant, the method is expected to return TRUE
+ *
+ * @param	array		$submittedData Reference to the array containing the data submitted by the user
+ * @param	tx_scheduler_Module		$parentObject Reference to the calling object (Scheduler's BE module)
+ * @return	boolean		TRUE if validation was ok (or selected class is not relevant), FALSE otherwise
+ * @version       0.0.1
+ * @since         0.0.1
+ */
+  public function validateOS( tx_scheduler_Module $parentObject )
   {
     $bool_isValidatingSuccessful = true;
-    
+
       // SWITCH : OS of the server
     switch( strtolower( PHP_OS ) )
     {
@@ -1057,20 +1067,20 @@ class tx_orgesab_QuotaTask_AdditionalFieldProvider implements tx_scheduler_Addit
         $parentObject->addMessage( $prompt, t3lib_FlashMessage::ERROR );
     }
       // SWITCH : OS of the server
-      
+
     return $bool_isValidatingSuccessful;
   }
 
   /**
-    * saveAdditionalFields( ) : This method is used to save any additional input into the current task object
-    *                           if the task class matches
-    *
-    * @param array $submittedData Array containing the data submitted by the user
-    * @param tx_scheduler_Task $task Reference to the current task object
-    * @return void
-    * @version       0.0.1
-    * @since         0.0.1
-    */
+ * saveAdditionalFields( ) : This method is used to save any additional input into the current task object
+ *                           if the task class matches
+ *
+ * @param	array		$submittedData Array containing the data submitted by the user
+ * @param	tx_scheduler_Task		$task Reference to the current task object
+ * @return	void
+ * @version       0.0.1
+ * @since         0.0.1
+ */
   public function saveAdditionalFields( array $submittedData, tx_scheduler_Task $task )
   {
     $this->saveFieldOrgesabAdminCompany( $submittedData, $task );
@@ -1085,90 +1095,90 @@ class tx_orgesab_QuotaTask_AdditionalFieldProvider implements tx_scheduler_Addit
   }
 
   /**
-    * saveFieldOrgesabAdminCompany( ) : This method is used to save any additional input into the current task object
-    *                           if the task class matches
-    *
-    * @param array $submittedData Array containing the data submitted by the user
-    * @param tx_scheduler_Task $task Reference to the current task object
-    * @return void
-    * @version       0.0.1
-    * @since         0.0.1
-    */
+ * saveFieldOrgesabAdminCompany( ) : This method is used to save any additional input into the current task object
+ *                           if the task class matches
+ *
+ * @param	array		$submittedData Array containing the data submitted by the user
+ * @param	tx_scheduler_Task		$task Reference to the current task object
+ * @return	void
+ * @version       0.0.1
+ * @since         0.0.1
+ */
   private function saveFieldOrgesabAdminCompany( array $submittedData, tx_scheduler_Task $task )
   {
     $task->orgesab_orgesabAdminCompany = $submittedData['orgesab_orgesabAdminCompany'];
   }
-  
+
   /**
-    * saveFieldOrgesabAdminEmail( ) : This method is used to save any additional input into the current task object
-    *                           if the task class matches
-    *
-    * @param array $submittedData Array containing the data submitted by the user
-    * @param tx_scheduler_Task $task Reference to the current task object
-    * @return void
-    * @version       0.0.1
-    * @since         0.0.1
-    */
+ * saveFieldOrgesabAdminEmail( ) : This method is used to save any additional input into the current task object
+ *                           if the task class matches
+ *
+ * @param	array		$submittedData Array containing the data submitted by the user
+ * @param	tx_scheduler_Task		$task Reference to the current task object
+ * @return	void
+ * @version       0.0.1
+ * @since         0.0.1
+ */
   private function saveFieldOrgesabAdminEmail( array $submittedData, tx_scheduler_Task $task )
   {
     $task->orgesab_orgesabAdminEmail = $submittedData['orgesab_orgesabAdminEmail'];
   }
-  
+
   /**
-    * saveFieldOrgesabAdminName( ) : This method is used to save any additional input into the current task object
-    *                           if the task class matches
-    *
-    * @param array $submittedData Array containing the data submitted by the user
-    * @param tx_scheduler_Task $task Reference to the current task object
-    * @return void
-    * @version       0.0.1
-    * @since         0.0.1
-    */
+ * saveFieldOrgesabAdminName( ) : This method is used to save any additional input into the current task object
+ *                           if the task class matches
+ *
+ * @param	array		$submittedData Array containing the data submitted by the user
+ * @param	tx_scheduler_Task		$task Reference to the current task object
+ * @return	void
+ * @version       0.0.1
+ * @since         0.0.1
+ */
   private function saveFieldOrgesabAdminName( array $submittedData, tx_scheduler_Task $task )
   {
     $task->orgesab_orgesabAdminName = $submittedData['orgesab_orgesabAdminName'];
   }
-  
+
   /**
-    * saveFieldOrgesabAdminPhone( ) : This method is used to save any additional input into the current task object
-    *                           if the task class matches
-    *
-    * @param array $submittedData Array containing the data submitted by the user
-    * @param tx_scheduler_Task $task Reference to the current task object
-    * @return void
-    * @version       0.0.1
-    * @since         0.0.1
-    */
+ * saveFieldOrgesabAdminPhone( ) : This method is used to save any additional input into the current task object
+ *                           if the task class matches
+ *
+ * @param	array		$submittedData Array containing the data submitted by the user
+ * @param	tx_scheduler_Task		$task Reference to the current task object
+ * @return	void
+ * @version       0.0.1
+ * @since         0.0.1
+ */
   private function saveFieldOrgesabAdminPhone( array $submittedData, tx_scheduler_Task $task )
   {
     $task->orgesab_orgesabAdminPhone = $submittedData['orgesab_orgesabAdminPhone'];
   }
 
   /**
-    * saveFieldQuotaMode( ) : This method is used to save any additional input into the current task object
-    *                           if the task class matches
-    *
-    * @param array $submittedData Array containing the data submitted by the user
-    * @param tx_scheduler_Task $task Reference to the current task object
-    * @return void
-    * @version       0.0.1
-    * @since         0.0.1
-    */
+ * saveFieldQuotaMode( ) : This method is used to save any additional input into the current task object
+ *                           if the task class matches
+ *
+ * @param	array		$submittedData Array containing the data submitted by the user
+ * @param	tx_scheduler_Task		$task Reference to the current task object
+ * @return	void
+ * @version       0.0.1
+ * @since         0.0.1
+ */
   private function saveFieldQuotaMode( array $submittedData, tx_scheduler_Task $task )
   {
     $task->orgesab_quotaMode = $submittedData['orgesab_quotaMode'];
   }
 
   /**
-    * saveFieldQuotaLimitDefault( ) : This method is used to save any additional input into the current task object
-    *                           if the task class matches
-    *
-    * @param array $submittedData Array containing the data submitted by the user
-    * @param tx_scheduler_Task $task Reference to the current task object
-    * @return void
-    * @version       0.0.1
-    * @since         0.0.1
-    */
+ * saveFieldQuotaLimitDefault( ) : This method is used to save any additional input into the current task object
+ *                           if the task class matches
+ *
+ * @param	array		$submittedData Array containing the data submitted by the user
+ * @param	tx_scheduler_Task		$task Reference to the current task object
+ * @return	void
+ * @version       0.0.1
+ * @since         0.0.1
+ */
   private function saveFieldQuotaLimitDefault( array $submittedData, tx_scheduler_Task $task )
   {
     $orgesab_quotaLimitDefault       = ( int ) $submittedData['orgesab_quotaLimitDefault'];
@@ -1176,15 +1186,15 @@ class tx_orgesab_QuotaTask_AdditionalFieldProvider implements tx_scheduler_Addit
   }
 
   /**
-    * saveFieldQuotaLimitRemove( ) : This method is used to save any additional input into the current task object
-    *                           if the task class matches
-    *
-    * @param array $submittedData Array containing the data submitted by the user
-    * @param tx_scheduler_Task $task Reference to the current task object
-    * @return void
-    * @version       0.0.1
-    * @since         0.0.1
-    */
+ * saveFieldQuotaLimitRemove( ) : This method is used to save any additional input into the current task object
+ *                           if the task class matches
+ *
+ * @param	array		$submittedData Array containing the data submitted by the user
+ * @param	tx_scheduler_Task		$task Reference to the current task object
+ * @return	void
+ * @version       0.0.1
+ * @since         0.0.1
+ */
   private function saveFieldQuotaLimitRemove( array $submittedData, tx_scheduler_Task $task )
   {
     $orgesab_quotaLimitRemove       = ( int ) $submittedData['orgesab_quotaLimitRemove'];
@@ -1192,15 +1202,15 @@ class tx_orgesab_QuotaTask_AdditionalFieldProvider implements tx_scheduler_Addit
   }
 
   /**
-    * saveFieldQuotaLimitWarn( ) : This method is used to save any additional input into the current task object
-    *                           if the task class matches
-    *
-    * @param array $submittedData Array containing the data submitted by the user
-    * @param tx_scheduler_Task $task Reference to the current task object
-    * @return void
-    * @version       0.0.1
-    * @since         0.0.1
-    */
+ * saveFieldQuotaLimitWarn( ) : This method is used to save any additional input into the current task object
+ *                           if the task class matches
+ *
+ * @param	array		$submittedData Array containing the data submitted by the user
+ * @param	tx_scheduler_Task		$task Reference to the current task object
+ * @return	void
+ * @version       0.0.1
+ * @since         0.0.1
+ */
   private function saveFieldQuotaLimitWarn( array $submittedData, tx_scheduler_Task $task )
   {
     $orgesab_quotaLimitWarn       = ( int ) $submittedData['orgesab_quotaLimitWarn'];
@@ -1208,22 +1218,22 @@ class tx_orgesab_QuotaTask_AdditionalFieldProvider implements tx_scheduler_Addit
   }
 
   /**
-    * saveFieldQuotaReduceMailbox( ) : This method is used to save any additional input into the current task object
-    *                           if the task class matches
-    *
-    * @param array $submittedData Array containing the data submitted by the user
-    * @param tx_scheduler_Task $task Reference to the current task object
-    * @return void
-    * @version       0.0.1
-    * @since         0.0.1
-    */
+ * saveFieldQuotaReduceMailbox( ) : This method is used to save any additional input into the current task object
+ *                           if the task class matches
+ *
+ * @param	array		$submittedData Array containing the data submitted by the user
+ * @param	tx_scheduler_Task		$task Reference to the current task object
+ * @return	void
+ * @version       0.0.1
+ * @since         0.0.1
+ */
   private function saveFieldQuotaReduceMailbox( array $submittedData, tx_scheduler_Task $task )
   {
     $orgesab_quotaReduceMailbox       = ( int ) $submittedData['orgesab_quotaReduceMailbox'];
     $task->orgesab_quotaReduceMailbox = $orgesab_quotaReduceMailbox;
   }
 
-  
+
 }
 
 if (defined('TYPO3_MODE') && isset($GLOBALS['TYPO3_CONF_VARS'][TYPO3_MODE]['XCLASS']['ext/orgesab/lib/scheduler/class.tx_orgesab_quotatask_additionalfieldprovider.php'])) {

@@ -28,18 +28,31 @@
  *
  *
  *
- *   56: class tx_orgesab_update
+ *   69: class tx_orgesab_update
  *
  *              SECTION: Main
- *   88:     public function main( )
+ *  102:     public function main( $content )
  *
  *              SECTION: Init
- *  118:     private function init( )
+ *  135:     private function init( )
+ *
+ *              SECTION: Insert
+ *  163:     private function insert( $content )
+ *  194:     private function insertQuery( $table, $record, $recordCounter )
+ *
+ *              SECTION: Prompts
+ *  236:     private function promptError( $query, $error )
+ *  253:     private function promptErrorDrs( $query, $error )
+ *  277:     private function promptErrorMail( $query, $error )
+ *  301:     private function promptSuccess( $query, $recordCounter )
  *
  *              SECTION: Set
- *  146:     public function setPobj( $pObj )
+ *  347:     public function setPobj( $pObj )
  *
- * TOTAL FUNCTIONS: 3
+ *              SECTION: Truncate
+ *  377:     private function truncate( $content )
+ *
+ * TOTAL FUNCTIONS: 10
  * (This index is automatically created/updated by the extension "extdeveval")
  *
  */
@@ -80,7 +93,7 @@ class tx_orgesab_update {
 /**
  * main( )  :
  *
- * @param       array     $content  :        
+ * @param	array		$content  :
  * @return	boolean
  * @access public
  * @version       0.0.1
@@ -89,7 +102,7 @@ class tx_orgesab_update {
   public function main( $content )
   {
     $this->init( );
-    
+
     if( ! $this->truncate( $content ) )
     {
       return false;
@@ -99,7 +112,7 @@ class tx_orgesab_update {
     {
       return false;
     }
-    
+
     return true;
   }
 
@@ -141,7 +154,7 @@ class tx_orgesab_update {
 /**
  * insert( )  :
  *
- * @param       array     $content  :        
+ * @param	array		$content  :
  * @return	boolean
  * @access private
  * @version       0.0.1
@@ -150,7 +163,7 @@ class tx_orgesab_update {
   private function insert( $content )
   {
     $recordCounter = null;
-    
+
     foreach( $content as $table => $properties )
     {
       $recordCounter = 0;
@@ -170,9 +183,9 @@ class tx_orgesab_update {
 /**
  * insertQuery( )  :
  *
- * @param       string    $table          :
- * @param       array     $record         :
- * @param       array     $recordCounter  :
+ * @param	string		$table          :
+ * @param	array		$record         :
+ * @param	array		$recordCounter  :
  * @return	void
  * @access private
  * @version       0.0.1
@@ -181,7 +194,7 @@ class tx_orgesab_update {
   private function insertQuery( $table, $record, $recordCounter )
   {
     $success = null;
-    
+
     $query = $GLOBALS['TYPO3_DB']->INSERTquery( $table, $record );
     $GLOBALS['TYPO3_DB']->exec_INSERTquery( $table, $record );
     $error = $GLOBALS['TYPO3_DB']->sql_error( );
@@ -212,9 +225,9 @@ class tx_orgesab_update {
 /**
  * promptError( )  :
  *
- * @param       string    $table          :
- * @param       array     $record         :
- * @param       array     $recordCounter  :
+ * @param	string		$table          :
+ * @param	array		$record         :
+ * @param	array		$recordCounter  :
  * @return	void
  * @access private
  * @version       0.0.1
@@ -229,9 +242,9 @@ class tx_orgesab_update {
 /**
  * promptErrorDrs( )  :
  *
- * @param       string    $table          :
- * @param       array     $record         :
- * @param       array     $recordCounter  :
+ * @param	string		$table          :
+ * @param	array		$record         :
+ * @param	array		$recordCounter  :
  * @return	void
  * @access private
  * @version       0.0.1
@@ -253,9 +266,9 @@ class tx_orgesab_update {
 /**
  * promptErrorMail( )  :
  *
- * @param       string    $table          :
- * @param       array     $record         :
- * @param       array     $recordCounter  :
+ * @param	string		$table          :
+ * @param	array		$record         :
+ * @param	array		$recordCounter  :
  * @return	void
  * @access private
  * @version       0.0.1
@@ -277,9 +290,9 @@ class tx_orgesab_update {
 /**
  * promptSuccess( )  :
  *
- * @param       string    $table          :
- * @param       array     $record         :
- * @param       array     $recordCounter  :
+ * @param	string		$table          :
+ * @param	array		$record         :
+ * @param	array		$recordCounter  :
  * @return	void
  * @access private
  * @version       0.0.1
@@ -297,7 +310,7 @@ class tx_orgesab_update {
 //    $prompt = $query;
 //    t3lib_div::devLog( '[tx_orgesab_ImportTask]: ' . $prompt, $this->extKey, -1 );
 //    return;
-    
+
     switch( true )
     {
       case( $recordCounter >= 1 ):
@@ -355,8 +368,8 @@ class tx_orgesab_update {
 /**
  * truncate( )  :
  *
- * @param       array     $content  :        
- * @return	array     $truncate :
+ * @param	array		$content  :
+ * @return	array		$truncate :
  * @access private
  * @version       0.0.1
  * @since         0.0.1
@@ -364,7 +377,7 @@ class tx_orgesab_update {
   private function truncate( $content )
   {
     $query    = null;
-    
+
     foreach( $content as $table => $properties )
     {
       if( ! $properties['truncate'] )
