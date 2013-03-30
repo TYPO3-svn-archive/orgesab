@@ -262,10 +262,29 @@ class tx_orgesab_get {
     $md5CurrFile = $this->getMd5( $xml );
     $md5LastFile = $this->pObj->registryGet( $key );
 
-    if( $md5CurrFile != $md5LastFile )
+    switch( $md5CurrFile != $md5LastFile )
     {
-      $contentIsUpToDate = false;
+      case( true ):
+          // DRS
+        $prompt = 'File isn\'t up to date.';
+        $contentIsUpToDate = false;
+        break;
+      case( false ):
+      default:
+          // DRS
+        $prompt = 'File is up to date.';
+        $contentIsUpToDate = true;
+        break;
     }
+
+      // DRS
+    if( $this->pObj->drsModeInfo )
+    {
+      $prompt = $prompt
+              . ' md5 current file: ' . $md5CurrFile. '; md5 last file: ' . $md5LastFile;
+      t3lib_div::devLog( '[tx_orgesab_ImportTask]: ' . $prompt, $this->extKey, 0 );
+    }
+      // DRS
 
     return $contentIsUpToDate;
   }
@@ -294,14 +313,17 @@ class tx_orgesab_get {
     switch( $this->pObj->getImportMode( ) )
     {
       case( 'ever'):
+        $prompt = 'Import mode: ever';
         $this->contentIsUpToDate = false;
         $success = true;
         break;
       case( 'never'):
+        $prompt = 'Import mode: never';
         $this->contentIsUpToDate = true;
         $success = true;
         break;
       case( 'update'):
+        $prompt = 'Import mode: update';
         $this->contentIsUpToDate = $this->getMd5Comparision( $xml );
         $success = true;
         break;
@@ -326,6 +348,13 @@ class tx_orgesab_get {
         break;
     }
 
+      // DRS
+    if( $this->pObj->drsModeInfo )
+    {
+      $prompt = 'contentIsUpToDate is set to "' . $this->contentIsUpToDate . "'";
+      t3lib_div::devLog( '[tx_orgesab_ImportTask]: ' . $prompt, $this->extKey, 0 );
+    }
+      // DRS
     return $success;
   }
 

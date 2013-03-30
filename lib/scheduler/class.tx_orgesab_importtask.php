@@ -322,6 +322,15 @@ class tx_orgesab_ImportTask extends tx_scheduler_Task {
       // RETURN true : content is up to date
     if( $this->get->getContentIsUpToDate( ) )
     {
+      $subject  = 'Success (no update)';
+      $body     = 'Content is up to date. ' . PHP_EOL
+                . 'XML file is not imported.' . PHP_EOL
+                . PHP_EOL
+                . $this->orgesab_importUrl . PHP_EOL
+                . PHP_EOL
+                . __CLASS__ . '::' .  __METHOD__ . ' (' . __LINE__ . ')';
+      $this->drsMailToAdmin( $subject, $body );
+
       $this->timeTracking_log( $debugTrailLevel, 'END' );
       return true;
     }
