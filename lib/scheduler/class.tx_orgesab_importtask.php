@@ -343,6 +343,13 @@ class tx_orgesab_ImportTask extends tx_scheduler_Task {
     $this->registrySet( $key, $value );
       // Set registry
 
+    $subject  = 'Success';
+    $body     = 'Content is impoprted from ' . PHP_EOL
+              . $this->orgesab_importUrl . PHP_EOL
+              . PHP_EOL
+              . __CLASS__ . '::' .  __METHOD__ . ' (' . __LINE__ . ')';
+    $this->drsMailToAdmin( $subject, $body );
+
     return true;
   }
 
