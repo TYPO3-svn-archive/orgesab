@@ -256,7 +256,7 @@ plugin.tx_browser_pi1 {
               required  = 1
               value     = ###TX_ORGESAB.BODYTEXT###
             }
-              // skills
+              // skills: header, content
             40 = COA
             40 {
               if {
@@ -276,17 +276,33 @@ plugin.tx_browser_pi1 {
                 value     = ###TX_ORGESAB.SKILLS###
               }
             }
-              // eventbegin
-            100 = TEXT
-            100 {
-              value = ###TX_ORGESAB.EVENTBEGIN###
-              strftime = %A, %d. %B, %H:%M Uhr
-            }
-              // eventend
-            110 = TEXT
-            110 {
-              value = ###TX_ORGESAB.EVENTEND###
-              strftime = %A, %d. %B, %H:%M Uhr
+              // space of time: eventbegin, eventend
+            50 = COA
+            50 {
+                // Label from
+              10 = TEXT
+              10 {
+                value       = von 
+                noTrimWrap  = || |
+              }
+                // eventbegin
+              11 = TEXT
+              11 {
+                value     = ###TX_ORGESAB.EVENTBEGIN###
+                strftime  = %A, %d. %B, %H:%M Uhr
+              }
+                // Label to
+              20 = TEXT
+              20 {
+                value       = bis 
+                noTrimWrap  = | | |
+              }
+                // eventend
+              21 = TEXT
+              21 {
+                value     = ###TX_ORGESAB.EVENTEND###
+                strftime  = %A, %d. %B, %H:%M Uhr
+              }
             }
           }
         }
