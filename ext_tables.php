@@ -140,9 +140,9 @@ switch($confArr['store_records'])
 switch(true) {
   case($llStatic == 'de'):
       // German
-    t3lib_extMgm::addStaticFile($_EXTKEY,'static/base/',                  'Org +Esab: Basis (immer einbinden!)' );
-    t3lib_extMgm::addStaticFile($_EXTKEY,'static/views/46476/',           'Org +Esab: Views (immer einbinden!)' );
-    t3lib_extMgm::addStaticFile($_EXTKEY,'static/base/css/',              'Org +Esab: +CSS' );
+    t3lib_extMgm::addStaticFile($_EXTKEY,'static/base/',                  'Org +ESAB: Basis (immer einbinden!)' );
+    t3lib_extMgm::addStaticFile($_EXTKEY,'static/views/46476/',           'Org +ESAB: Views (immer einbinden!)' );
+    t3lib_extMgm::addStaticFile($_EXTKEY,'static/base/css/',              'Org +ESAB: +CSS' );
 //    t3lib_extMgm::addStaticFile($_EXTKEY,'static/calendar/201/',          'Org +ESAB: Kalender');
 //    t3lib_extMgm::addStaticFile($_EXTKEY,'static/calendar/201/expired/',  'Org +ESAB: +Kalender Archiv');
 ////    t3lib_extMgm::addStaticFile($_EXTKEY,'static/calendar/211/',          'Org +ESAB: Kalender - Rand');
@@ -160,7 +160,7 @@ switch(true) {
       // English
     t3lib_extMgm::addStaticFile($_EXTKEY,'static/base/',                  'Org +ESAB: Basis (obligate!)' );
     t3lib_extMgm::addStaticFile($_EXTKEY,'static/views/46476/',           'Org +ESAB: Views (obligate!)' );
-    t3lib_extMgm::addStaticFile($_EXTKEY,'static/base/css/',              'Org +Esab: +CSS' );
+    t3lib_extMgm::addStaticFile($_EXTKEY,'static/base/css/',              'Org +ESAB: +CSS' );
 //    t3lib_extMgm::addStaticFile($_EXTKEY,'static/calendar/201/',          'Org +ESAB: Calendar');
 //    t3lib_extMgm::addStaticFile($_EXTKEY,'static/calendar/201/expired/',  'Org +ESAB: +Calendar expired');
 //    t3lib_extMgm::addStaticFile($_EXTKEY,'static/calendar/211/',          'Org +ESAB: Calendar - Margin');
