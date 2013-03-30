@@ -276,30 +276,36 @@ plugin.tx_browser_pi1 {
                 value     = ###TX_ORGESAB.SKILLS###
               }
             }
-              // space of time: eventbegin, eventend
+              // date: header, label from, eventbegin, label to, eventend
             50 = COA
             50 {
-                // Label from
+                // header
               10 = TEXT
               10 {
+                wrap      = <h3 class="tx_orgesab_date date">|</h3>
+                value     = Termin
+              }
+                // Label from
+              20 = TEXT
+              20 {
                 value       = von 
                 noTrimWrap  = || |
               }
                 // eventbegin
-              11 = TEXT
-              11 {
+              21 = TEXT
+              21 {
                 value     = ###TX_ORGESAB.EVENTBEGIN###
                 strftime  = %A, %d. %B, %H:%M Uhr
               }
                 // Label to
-              20 = TEXT
-              20 {
+              30 = TEXT
+              30 {
                 value       = bis 
                 noTrimWrap  = | | |
               }
                 // eventend
-              21 = TEXT
-              21 {
+              31 = TEXT
+              31 {
                 value     = ###TX_ORGESAB.EVENTEND###
                 strftime  = %A, %d. %B, %H:%M Uhr
               }
