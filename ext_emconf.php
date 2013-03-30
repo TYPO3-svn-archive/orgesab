@@ -15,8 +15,8 @@ $EM_CONF[$_EXTKEY] = array(
 	'description' => 'Extend the Organiser with an esab database!',
 	'category' => 'plugin',
 	'shy' => 0,
-	'version' => '0.0.4',
-	'dependencies' => 'browser,cps_tcatree,css_styled_content,linkhandler',
+	'version' => '0.0.5',
+	'dependencies' => 'browser,cps_tcatree,css_styled_content',
 	'conflicts' => '',
 	'priority' => '',
 	'loadOrder' => '',
@@ -37,11 +37,11 @@ $EM_CONF[$_EXTKEY] = array(
 			'browser' => '',
 			'cps_tcatree' => '',
 			'css_styled_content' => '',
-			'linkhandler' => '',
 		),
 		'conflicts' => array(
 		),
 		'suggests' => array(
+			'linkhandler' => '',
 		),
 	),
 	'suggests' => array(
