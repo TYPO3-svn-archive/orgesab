@@ -216,118 +216,118 @@ t3lib_extMgm::addPageTSConfig('<INCLUDE_TYPOSCRIPT: source="FILE:EXT:' . $_EXTKE
   // 
   // Configure third party tables
   
-  // draft field tx_orgesab
-  // tx_org_cal
-
-  // draft field tx_orgesab
-$arr_tx_orgesab = array (
-  'exclude' => $bool_exclude_default,
-  'label'   => 'LLL:EXT:orgesab/locallang_db.xml:tx_orgesab',
-  'config'  => array (
-    'type'     => 'select', 
-    'size'     =>  30, 
-    'minitems' =>   0,
-    'maxitems' =>   1,
-    'MM'                  => '%MM%',
-    'MM_opposite_field'   => '%MM_opposite_field%',
-    'foreign_table'       => 'tx_orgesab',
-    'foreign_table_where' => 'AND tx_orgesab.' . $str_store_record_conf . ' ORDER BY tx_orgesab.title',
-    'wizards' => array(
-      '_PADDING'  => 2,
-      '_VERTICAL' => 0,
-      'add' => array(
-        'type'   => 'script',
-        'title'  => 'LLL:EXT:orgesab/locallang_db.xml:wizard.tx_orgesab.add',
-        'icon'   => 'add.gif',
-        'params' => array(
-          'table'    => 'tx_orgesab',
-          'pid'      => $str_marker_pid,
-          'setValue' => 'prepend'
-        ),
-        'script' => 'wizard_add.php',
-      ),
-      'list' => array(
-        'type'   => 'script',
-        'title'  => 'LLL:EXT:orgesab/locallang_db.xml:wizard.tx_orgesab.list',
-        'icon'   => 'list.gif',
-        'params' => array(
-          'table'   => 'tx_orgesab',
-          'pid'     => $str_marker_pid,
-        ),
-        'script' => 'wizard_list.php',
-      ),
-      'edit' => array(
-        'type'                      => 'popup',
-        'title'                     => 'LLL:EXT:orgesab/locallang_db.xml:wizard.tx_orgesab.edit',
-        'script'                    => 'wizard_edit.php',
-        'popup_onlyOpenIfSelected'  => 1,
-        'icon'                      => 'edit2.gif',
-        'JSopenParams'              => 'height=350,width=580,status=0,menubar=0,scrollbars=1',
-      ),
-    ),
-  ),
-);
-  // draft field tx_orgesab
-
-  // tx_org_cal
-t3lib_div::loadTCA('tx_org_cal');
-
-  // typeicons: Add type_icon
-$TCA['tx_org_cal']['ctrl']['typeicons']['tx_orgesab'] = 
-  '../typo3conf/ext/orgesab/ext_icon/esab.gif';
-  // typeicons: Add type_icon
-
-  // showRecordFieldList: Add field tx_orgesab
-$showRecordFieldList = $TCA['tx_org_cal']['interface']['showRecordFieldList'];
-$showRecordFieldList = $showRecordFieldList.',tx_orgesab';
-$TCA['tx_org_cal']['interface']['showRecordFieldList'] = $showRecordFieldList;
-  // showRecordFieldList: Add field tx_orgesab
-
-  // columns: Add field tx_orgesab
-$TCA['tx_org_cal']['columns']['tx_orgesab']                                =
-  $arr_tx_orgesab;
-$TCA['tx_org_cal']['columns']['tx_orgesab']['label']                       =
-  'LLL:EXT:orgesab/locallang_db.xml:tx_org_cal.tx_orgesab';
-$TCA['tx_org_cal']['columns']['tx_orgesab']['config']['MM']                =
-  'tx_orgesab_mm_tx_org_cal';
-$TCA['tx_org_cal']['columns']['tx_orgesab']['config']['MM_opposite_field'] =
-  'tx_org_cal';
-
-if($bool_wizards_wo_add_and_list)
-{
-  unset($TCA['tx_org_cal']['columns']['tx_orgesab']['config']['wizards']['add']);
-  unset($TCA['tx_org_cal']['columns']['tx_orgesab']['config']['wizards']['list']);
-}
-  // columns: Add field tx_orgesab
-
-  // columns: extend type
-$TCA['tx_org_cal']['columns']['type']['config']['items']['tx_orgesab'] = array
-(
-  '0' => 'LLL:EXT:orgesab/locallang_db.xml:tx_org_cal.type.tx_orgesab',
-  '1' => 'tx_orgesab',
-  '2' => 'EXT:orgesab/ext_icon/esab.gif',
-);
-  // columns: extend type
-
-  // Insert type [esab] with fields to TCAtypes
-//$TCA['tx_org_cal']['types']['tx_orgesab']['showitem'] = 
-//  '--div--;LLL:EXT:org/locallang_db.xml:tx_org_cal.div_calendar,    type,title,datetime,tx_org_caltype,tx_orgesab,'.
-//  '--div--;LLL:EXT:org/locallang_db.xml:tx_org_cal.div_event,       tx_org_location,tx_org_calentrance,'.
-//  '--div--;LLL:EXT:org/locallang_db.xml:tx_org_cal.div_department,  tx_org_department,'.
-//  '--div--;LLL:EXT:org/locallang_db.xml:tx_org_cal.div_control,     hidden;;1;;,fe_group'.
-//  ''
+//  // draft field tx_orgesab
+//  // tx_org_cal
+//
+//  // draft field tx_orgesab
+//$arr_tx_orgesab = array (
+//  'exclude' => $bool_exclude_default,
+//  'label'   => 'LLL:EXT:orgesab/locallang_db.xml:tx_orgesab',
+//  'config'  => array (
+//    'type'     => 'select', 
+//    'size'     =>  30, 
+//    'minitems' =>   0,
+//    'maxitems' =>   1,
+//    'MM'                  => '%MM%',
+//    'MM_opposite_field'   => '%MM_opposite_field%',
+//    'foreign_table'       => 'tx_orgesab',
+//    'foreign_table_where' => 'AND tx_orgesab.' . $str_store_record_conf . ' ORDER BY tx_orgesab.title',
+//    'wizards' => array(
+//      '_PADDING'  => 2,
+//      '_VERTICAL' => 0,
+//      'add' => array(
+//        'type'   => 'script',
+//        'title'  => 'LLL:EXT:orgesab/locallang_db.xml:wizard.tx_orgesab.add',
+//        'icon'   => 'add.gif',
+//        'params' => array(
+//          'table'    => 'tx_orgesab',
+//          'pid'      => $str_marker_pid,
+//          'setValue' => 'prepend'
+//        ),
+//        'script' => 'wizard_add.php',
+//      ),
+//      'list' => array(
+//        'type'   => 'script',
+//        'title'  => 'LLL:EXT:orgesab/locallang_db.xml:wizard.tx_orgesab.list',
+//        'icon'   => 'list.gif',
+//        'params' => array(
+//          'table'   => 'tx_orgesab',
+//          'pid'     => $str_marker_pid,
+//        ),
+//        'script' => 'wizard_list.php',
+//      ),
+//      'edit' => array(
+//        'type'                      => 'popup',
+//        'title'                     => 'LLL:EXT:orgesab/locallang_db.xml:wizard.tx_orgesab.edit',
+//        'script'                    => 'wizard_edit.php',
+//        'popup_onlyOpenIfSelected'  => 1,
+//        'icon'                      => 'edit2.gif',
+//        'JSopenParams'              => 'height=350,width=580,status=0,menubar=0,scrollbars=1',
+//      ),
+//    ),
+//  ),
+//);
+//  // draft field tx_orgesab
+//
+//  // tx_org_cal
+//t3lib_div::loadTCA('tx_org_cal');
+//
+//  // typeicons: Add type_icon
+//$TCA['tx_org_cal']['ctrl']['typeicons']['tx_orgesab'] = 
+//  '../typo3conf/ext/orgesab/ext_icon/esab.gif';
+//  // typeicons: Add type_icon
+//
+//  // showRecordFieldList: Add field tx_orgesab
+//$showRecordFieldList = $TCA['tx_org_cal']['interface']['showRecordFieldList'];
+//$showRecordFieldList = $showRecordFieldList.',tx_orgesab';
+//$TCA['tx_org_cal']['interface']['showRecordFieldList'] = $showRecordFieldList;
+//  // showRecordFieldList: Add field tx_orgesab
+//
+//  // columns: Add field tx_orgesab
+//$TCA['tx_org_cal']['columns']['tx_orgesab']                                =
+//  $arr_tx_orgesab;
+//$TCA['tx_org_cal']['columns']['tx_orgesab']['label']                       =
+//  'LLL:EXT:orgesab/locallang_db.xml:tx_org_cal.tx_orgesab';
+//$TCA['tx_org_cal']['columns']['tx_orgesab']['config']['MM']                =
+//  'tx_orgesab_mm_tx_org_cal';
+//$TCA['tx_org_cal']['columns']['tx_orgesab']['config']['MM_opposite_field'] =
+//  'tx_org_cal';
+//
+//if($bool_wizards_wo_add_and_list)
+//{
+//  unset($TCA['tx_org_cal']['columns']['tx_orgesab']['config']['wizards']['add']);
+//  unset($TCA['tx_org_cal']['columns']['tx_orgesab']['config']['wizards']['list']);
+//}
+//  // columns: Add field tx_orgesab
+//
+//  // columns: extend type
+//$TCA['tx_org_cal']['columns']['type']['config']['items']['tx_orgesab'] = array
+//(
+//  '0' => 'LLL:EXT:orgesab/locallang_db.xml:tx_org_cal.type.tx_orgesab',
+//  '1' => 'tx_orgesab',
+//  '2' => 'EXT:orgesab/ext_icon/esab.gif',
+//);
+//  // columns: extend type
+//
+//  // Insert type [esab] with fields to TCAtypes
+////$TCA['tx_org_cal']['types']['tx_orgesab']['showitem'] = 
+////  '--div--;LLL:EXT:org/locallang_db.xml:tx_org_cal.div_calendar,    type,title,datetime,tx_org_caltype,tx_orgesab,'.
+////  '--div--;LLL:EXT:org/locallang_db.xml:tx_org_cal.div_event,       tx_org_location,tx_org_calentrance,'.
+////  '--div--;LLL:EXT:org/locallang_db.xml:tx_org_cal.div_department,  tx_org_department,'.
+////  '--div--;LLL:EXT:org/locallang_db.xml:tx_org_cal.div_control,     hidden;;1;;,fe_group'.
+////  ''
+////;
+//$TCA['tx_org_cal']['types']['tx_orgesab']['showitem'] = '
+//    --div--;LLL:EXT:org/locallang_db.xml:tx_org_cal.div_calendar
+//    ,title
+//    ,type
+//    ,tx_orgesab
+//    ,'
 //;
-$TCA['tx_org_cal']['types']['tx_orgesab']['showitem'] = '
-    --div--;LLL:EXT:org/locallang_db.xml:tx_org_cal.div_calendar
-    ,title
-    ,type
-    ,tx_orgesab
-    ,'
-;
-
-  // Insert div [esab] with fields to TCAtypes
-  // tx_org_cal
-  // Configure third party tables
+//
+//  // Insert div [esab] with fields to TCAtypes
+//  // tx_org_cal
+//  // Configure third party tables
 
 
 

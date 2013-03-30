@@ -1,3 +1,18 @@
+0.0.4
+  13-03-30
+  * #i0002: Org +ESAB "stand alone"
+            Reintegration Organiser
+            Effected files:
+            * ext_emconf.php
+            * ext_conf_template.txt
+            * ext_tables.php
+            * ext_tables.sql
+            
+0.0.3
+  13-03-29
+  * #i0001: Work flow
+            TypoSCript
+            
 0.0.2
   13-03-25
   * #46652: Cron Job

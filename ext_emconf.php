@@ -12,10 +12,10 @@
 
 $EM_CONF[$_EXTKEY] = array(
 	'title' => 'Org +ESAB',
-	'description' => 'Extend the Organiser with a esab database!',
+	'description' => 'Extend the Organiser with an esab database!',
 	'category' => 'plugin',
 	'shy' => 0,
-	'version' => '0.0.1',
+	'version' => '0.0.4',
 	'dependencies' => 'browser,cps_tcatree,css_styled_content,linkhandler',
 	'conflicts' => '',
 	'priority' => '',
