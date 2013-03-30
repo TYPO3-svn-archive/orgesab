@@ -66,8 +66,9 @@ $confArr  = unserialize($GLOBALS['TYPO3_CONF_VARS']['EXT']['extConf'][$_EXTKEY])
 
   // Language for labels of static templates and page tsConfig
 $llStatic = $confArr['LLstatic'];
-switch($llStatic) {
-  case($llStatic == 'German'):
+switch( true ) 
+{
+  case( $llStatic == 'German' ):
     $llStatic = 'de';
     break;
   default:
