@@ -556,7 +556,7 @@ class tx_orgesab_ImportTask extends tx_scheduler_Task {
 
 Org +ESAB
 - - - - - - - - - - - - - - - -
-UID:        ' . $this->taskUid . '
+Task-Id:    ' . $this->taskUid . '
 Sitename:   ' . $GLOBALS['TYPO3_CONF_VARS']['SYS']['sitename'] . '
 Site:       ' . $site . '
 Called by:  ' . $calledBy . '
@@ -565,7 +565,8 @@ start:      ' . date( 'Y-m-d H:i:s', $start ) . ' [' . $start . ']
 end:        ' . ( ( empty( $end ) ) ? '-' : ( date( 'Y-m-d H:i:s', $end ) . ' [' . $end . ']') ) . '
 interval:   ' . $interval . '
 multiple:   ' . ( $multiple ? 'yes' : 'no' ) . '
-cronCmd:    ' . ( $cronCmd ? $cronCmd : 'not used' )
+cronCmd:    ' . ( $cronCmd ? $cronCmd : 'not used' ) . '
+Sysfolder   ' . $this->orgesab_sysfolderUid   
               ;
 
       // Prepare mailer and send the mail
