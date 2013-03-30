@@ -371,7 +371,7 @@ plugin.tx_browser_pi1 {
               10 = TEXT
               10 {
                 wrap      = <h3 class="tx_orgesab_staff staff">|</h3>
-                value     = Ort
+                value     = Referent
               }
                 // staffs
               20 = COA

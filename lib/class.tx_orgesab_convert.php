@@ -677,15 +677,22 @@ class tx_orgesab_convert {
       case( empty( $day   ) ):
       case( empty( $month ) ):
       case( empty( $year  ) ):
+        $uid    = $angebot['angebot_nr'];
+        $title  = $angebot['angebot_name'];
+        $period = $angebot['angebot_zeitraum'];
+        $hours  = $angebot['angebot_uhrzeit1'];
+        $prompt = 'Unproper period in Angebot "' . $title . '" '
+                . '(#' . $uid . '): "' . $period . ' ' . $hours .'"';
+        $subject  = 'Failed period';
+        $body     = 'Sorry, but the given period isn\'t proper.' . PHP_EOL
+                  . PHP_EOL
+                  . $prompt . PHP_EOL
+                  . PHP_EOL
+                  . __CLASS__ . '::' .  __METHOD__ . ' (' . __LINE__ . ')';
+        $this->pObj->drsMailToAdmin( $subject, $body );
           // DRS
         if( $this->pObj->drsModeError )
         {
-          $uid    = $angebot['angebot_nr'];
-          $title  = $angebot['angebot_name'];
-          $period = $angebot['angebot_zeitraum'];
-          $hours  = $angebot['angebot_uhrzeit1'];
-          $prompt = 'Unproper period in Angebot "' . $title . '" '
-                  . '(#' . $uid . '): "' . $period . ' ' . $hours .'"';
           t3lib_div::devLog( '[tx_orgesab_ImportTask]: ' . $prompt, $this->extKey, 3 );
         }
           // DRS
@@ -856,34 +863,6 @@ class tx_orgesab_convert {
       die( $prompt );
     }
     $this->pObj = $pObj;
-  }
-
-
-
-  /***********************************************
-   *
-   * Main
-   *
-   **********************************************/
-
-/**
- * convertXmlToArray( )  :
- *
- * @return	array
- * @access private
- * @version       0.0.1
- * @since         0.0.1
- */
-  private function convertXmlToArray( $content )
-  {
-    $xml = new SimpleXMLElement( $content );
-    
-    $programm = $this-
-    $subject  = 'Failed';
-    $body     = __CLASS__ . '::' .  __METHOD__ . ' (' . __LINE__ . ')';
-    $this->pObj->drsMailToAdmin( $subject, $body );
-
-    return false;
   }
   
 }
