@@ -434,7 +434,7 @@ plugin.tx_browser_pi1 {
             90 = TEXT
             90 {
               wrap  = <div class="tx_orgesab_bookingurl bookingurl">|</div>
-              value = Buchen
+              value = Buchen &raquo;
               typolink {
                 parameter = ###TX_ORGESAB.BOOKINGURL### - "tx_orgesab_bookingurl bookingurl" "###TX_ORGESAB.TITLE###"
               }
