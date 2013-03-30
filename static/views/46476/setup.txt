@@ -276,7 +276,7 @@ plugin.tx_browser_pi1 {
                 value     = ###TX_ORGESAB.SKILLS###
               }
             }
-              // date: header, eventbegin, label to, eventend
+              // date: header, content
             50 = COA
             50 {
                 // header
@@ -285,23 +285,28 @@ plugin.tx_browser_pi1 {
                 wrap      = <h3 class="tx_orgesab_date date">|</h3>
                 value     = Termin
               }
-                // eventbegin
-              20 = TEXT
+                // eventbegin, label to, eventend
+              20 = COA
               20 {
-                value     = ###TX_ORGESAB.EVENTBEGIN###
-                strftime  = %A, %d. %B, %H:%M Uhr
-              }
-                // Label to
-              30 = TEXT
-              30 {
-                value       = - 
-                noTrimWrap  = | | |
-              }
-                // eventend
-              31 = TEXT
-              31 {
-                value     = ###TX_ORGESAB.EVENTEND###
-                strftime  = %A, %d. %B, %H:%M Uhr
+                wrap = <p class="tx_orgesab_date date">|</p>
+                  // eventbegin
+                10 = TEXT
+                10 {
+                  value     = ###TX_ORGESAB.EVENTBEGIN###
+                  strftime  = %A, %d. %B, %H:%M Uhr
+                }
+                  // Label to
+                20 = TEXT
+                20 {
+                  value       = - 
+                  noTrimWrap  = | | |
+                }
+                  // eventend
+                21 = TEXT
+                21 {
+                  value     = ###TX_ORGESAB.EVENTEND###
+                  strftime  = %A, %d. %B, %H:%M Uhr
+                }
               }
             }
               // location: header, locations
@@ -417,12 +422,21 @@ plugin.tx_browser_pi1 {
                   value     = ###TX_ORGESAB.PRICE2###
                 }
                   // price3
-                30 = TEXT
-                30 {
+                XX_30 = TEXT
+                XX_30 {
                   noTrimWrap  = |<p class="tx_orgesab_price tx_orgesab_price3 price price3">?: |  &euro;</p>|
                   required  = 1
                   value     = ###TX_ORGESAB.PRICE3###
                 }
+              }
+            }
+              // bookingurl
+            90 = TEXT
+            90 {
+              wrap  = <div class="tx_orgesab_bookingurl bookingurl">|</div>
+              value = Buchen
+              typolink {
+                parameter = ###TX_ORGESAB.BOOKINGURL### - "tx_orgesab_bookingurl bookingurl" "###TX_ORGESAB.TITLE###"
               }
             }
           }
