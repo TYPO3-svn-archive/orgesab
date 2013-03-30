@@ -314,6 +314,13 @@ class tx_orgesab_ImportTask extends tx_scheduler_Task {
     $xml = $this->getContent( );
     if( ! $xml )
     {
+        // DRS
+      if( $this->drsModeError )
+      {
+        $prompt = 'Failure in getContent( ):';
+        t3lib_div::devLog( '[tx_orgesab_ImportTask]: ' . $prompt, $this->extKey, 3 );
+      }
+        // DRS
       $this->timeTracking_log( $debugTrailLevel, 'END' );
       return false;
     }
@@ -322,6 +329,13 @@ class tx_orgesab_ImportTask extends tx_scheduler_Task {
       // RETURN true : content is up to date
     if( $this->get->getContentIsUpToDate( ) )
     {
+        // DRS
+      if( $this->drsModeInfo )
+      {
+        $prompt = 'Success. No update. Content is up to date.';
+        t3lib_div::devLog( '[tx_orgesab_ImportTask]: ' . $prompt, $this->extKey, -1 );
+      }
+        // DRS
       $subject  = 'Success (no update)';
       $body     = 'Content is up to date. ' . PHP_EOL
                 . 'XML file is not imported.' . PHP_EOL
@@ -342,6 +356,13 @@ class tx_orgesab_ImportTask extends tx_scheduler_Task {
     $content = $this->convertContent( $xml );
     if( ! $content )
     {
+        // DRS
+      if( $this->drsModeError )
+      {
+        $prompt = 'Failure in convertContent( ):';
+        t3lib_div::devLog( '[tx_orgesab_ImportTask]: ' . $prompt, $this->extKey, 3 );
+      }
+        // DRS
       $this->timeTracking_log( $debugTrailLevel, 'END' );
       return false;
     }
@@ -350,6 +371,13 @@ class tx_orgesab_ImportTask extends tx_scheduler_Task {
       // RETURN false : database could not updated
     if( ! $this->updateDatabase( $content ) )
     {
+        // DRS
+      if( $this->drsModeError )
+      {
+        $prompt = 'Failure in updateDatabase( ):';
+        t3lib_div::devLog( '[tx_orgesab_ImportTask]: ' . $prompt, $this->extKey, 3 );
+      }
+        // DRS
       return false;
     }
       // RETURN false : database could not updated
@@ -367,6 +395,13 @@ class tx_orgesab_ImportTask extends tx_scheduler_Task {
               . __CLASS__ . '::' .  __METHOD__ . ' (' . __LINE__ . ')';
     $this->drsMailToAdmin( $subject, $body );
 
+      // DRS
+    if( $this->drsModeInfo )
+    {
+      $prompt = 'Success.';
+      t3lib_div::devLog( '[tx_orgesab_ImportTask]: ' . $prompt, $this->extKey, -1 );
+    }
+      // DRS
     return true;
   }
 
