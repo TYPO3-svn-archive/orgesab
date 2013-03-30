@@ -276,7 +276,7 @@ plugin.tx_browser_pi1 {
                 value     = ###TX_ORGESAB.SKILLS###
               }
             }
-              // date: header, label from, eventbegin, label to, eventend
+              // date: header, eventbegin, label to, eventend
             50 = COA
             50 {
                 // header
@@ -285,22 +285,16 @@ plugin.tx_browser_pi1 {
                 wrap      = <h3 class="tx_orgesab_date date">|</h3>
                 value     = Termin
               }
-                // Label from
+                // eventbegin
               20 = TEXT
               20 {
-                value       = von 
-                noTrimWrap  = || |
-              }
-                // eventbegin
-              21 = TEXT
-              21 {
                 value     = ###TX_ORGESAB.EVENTBEGIN###
                 strftime  = %A, %d. %B, %H:%M Uhr
               }
                 // Label to
               30 = TEXT
               30 {
-                value       = bis 
+                value       = - 
                 noTrimWrap  = | | |
               }
                 // eventend
