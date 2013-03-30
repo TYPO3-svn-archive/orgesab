@@ -304,6 +304,54 @@ plugin.tx_browser_pi1 {
                 strftime  = %A, %d. %B, %H:%M Uhr
               }
             }
+              // location: header, locations
+            60 = COA
+            60 {
+              if {
+                isTrue = ###TX_ORGESAB.LOCATION1######TX_ORGESAB.LOCATION2######TX_ORGESAB.LOCATION3######TX_ORGESAB.LOCATION4######TX_ORGESAB.LOCATION5###
+              }
+              stdWrap.parseFunc < lib.parseFunc_RTE
+                // header
+              10 = TEXT
+              10 {
+                wrap      = <h3 class="tx_orgesab_location location">|</h3>
+                value     = Ort
+              }
+                // locations
+              20 = COA
+              20 {
+                10 = TEXT
+                10 {
+                  wrap      = <p class="tx_orgesab_location tx_orgesab_location1 location location1">|</p>
+                  required  = 1
+                  value     = ###TX_ORGESAB.LOCATION1###
+                }
+                20 = TEXT
+                20 {
+                  wrap      = <p class="tx_orgesab_location tx_orgesab_location2 location location2">|</p>
+                  required  = 1
+                  value     = ###TX_ORGESAB.LOCATION2###
+                }
+                30 = TEXT
+                30 {
+                  wrap      = <p class="tx_orgesab_location tx_orgesab_location3 location location3">|</p>
+                  required  = 1
+                  value     = ###TX_ORGESAB.LOCATION3###
+                }
+                40 = TEXT
+                40 {
+                  wrap      = <p class="tx_orgesab_location tx_orgesab_location4 location location1">|</p>
+                  required  = 4
+                  value     = ###TX_ORGESAB.LOCATION4###
+                }
+                50 = TEXT
+                50 {
+                  wrap      = <p class="tx_orgesab_location tx_orgesab_location5 location location5">|</p>
+                  required  = 1
+                  value     = ###TX_ORGESAB.LOCATION5###
+                }
+              }
+            }
           }
         }
           // marker and subparts will replaced in the HTML template before data handling
