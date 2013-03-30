@@ -1,0 +1,16 @@
+plugin.tx_caddy_pi1 {
+  _CSS_DEFAULT_STYLE (  
+    .tx-browser-pi1 .category_menu_treeview {
+      float: left;
+      padding-right: 1em;
+      position: relative;
+      width: 30em;
+    }
+    .tx-browser-pi1 .category_menu_treeview a {
+      font-weight:normal;
+    }
+    .tx-browser-pi1 .category_menu_treeview a.selected {
+      font-weight:bold;
+    }
+  )
+}
