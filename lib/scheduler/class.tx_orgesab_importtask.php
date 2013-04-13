@@ -975,51 +975,57 @@ Sysfolder:  ' . $this->orgesab_sysfolderUid
  *
  * @return	boolean
  * @access private
- * @version       0.0.1
+ * @version       0.0.2
  * @since         0.0.1
  */
   private function initRequirementsOs( )
   {
-    $os = false;
-
-      // SWITCH : server OS
-    switch( strtolower( PHP_OS ) )
-    {
-      case( 'linux' ):
-          // Linux is proper: Follow the workflow
-        $os = true;
-        break;
-      default:
-          // OS isn't supported
-        $os = false;
-    }
-      // SWITCH : server OS
-
-      // RETURN : os is supported
-    if( $os )
-    {
-      return true;
-    }
-      // RETURN : os is supported
-
-      // DRS
-    if( $this->drsModeError )
-    {
-      $prompt = 'Sorry, but the operating system "' . PHP_OS . '" isn\'t supported by TYPO3 Org +ESAB.';
-      t3lib_div::devLog( '[tx_orgesab_ImportTask]: ' . $prompt, $this->extKey, 3 );
-    }
-      // DRS
-
-      // e-mail to admin
-    $subject  = 'Failed';
-    $body     = 'Sorry, but ' . PHP_OS . ' isn\'t supported.' . PHP_EOL
-              . PHP_EOL
-              . __CLASS__ . '::' .  __METHOD__ . ' (' . __LINE__ . ')'
-              ;
-    $this->drsMailToAdmin( $subject, $body );
-      // e-mail to admin
-
+      
+      // #i0005, 130413, dwildt, 2+
+    $os = true;
     return $os;
+      // #i0005, 130413, dwildt, 2+
+    
+//    $os = false;
+//
+//      // SWITCH : server OS
+//    switch( strtolower( PHP_OS ) )
+//    {
+//      case( 'linux' ):
+//          // Linux is proper: Follow the workflow
+//        $os = true;
+//        break;
+//      default:
+//          // OS isn't supported
+//        $os = false;
+//    }
+//      // SWITCH : server OS
+//
+//      // RETURN : os is supported
+//    if( $os )
+//    {
+//      return true;
+//    }
+//      // RETURN : os is supported
+//
+//      // DRS
+//    if( $this->drsModeError )
+//    {
+//      $prompt = 'Sorry, but the operating system "' . PHP_OS . '" isn\'t supported by TYPO3 Org +ESAB.';
+//      t3lib_div::devLog( '[tx_orgesab_ImportTask]: ' . $prompt, $this->extKey, 3 );
+//    }
+//      // DRS
+//
+//      // e-mail to admin
+//    $subject  = 'Failed';
+//    $body     = 'Sorry, but ' . PHP_OS . ' isn\'t supported.' . PHP_EOL
+//              . PHP_EOL
+//              . __CLASS__ . '::' .  __METHOD__ . ' (' . __LINE__ . ')'
+//              ;
+//    $this->drsMailToAdmin( $subject, $body );
+//      // e-mail to admin
+//
+//    return $os;
   }
 
   /**
