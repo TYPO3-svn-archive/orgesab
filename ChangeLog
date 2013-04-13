@@ -1,14 +1,17 @@
 0.0.6
   13-04-13
+  Improvement
   * #i0005: Test of OS is canceled. It isn't needed.
             
 0.0.5
   13-03-30
+  TER Release
   * #i0004: Publishing in the TYPO3 TER
   * #i0003: Writing the manual
             
 0.0.4
   13-03-30
+  Development
   * #i0002: Org +ESAB "stand alone"
             Reintegration Organiser
             Effected files:
@@ -19,11 +22,13 @@
             
 0.0.3
   13-03-29
+  Development
   * #i0001: Work flow
             TypoSCript
             
 0.0.2
   13-03-25
+  Development
   * #46652: Cron Job
             Effected files:
             * ext_autoload.php                                            ( new )
