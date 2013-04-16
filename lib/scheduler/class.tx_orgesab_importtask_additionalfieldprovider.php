@@ -747,10 +747,10 @@ class tx_orgesab_ImportTask_AdditionalFieldProvider implements tx_scheduler_Addi
   public function validateOS( tx_scheduler_Module $parentObject )
   {
     $bool_isValidatingSuccessful = true;
-      // #i0005, 130413, dwildt, 1+
+      // #i0006, 130413, dwildt, 1+
     return $bool_isValidatingSuccessful;
 
-      // #i0005, 130413, dwildt, -
+      // #i0006, 130413, dwildt, -
 //      // SWITCH : OS of the server
 //    switch( strtolower( PHP_OS ) )
 //    {
@@ -766,7 +766,7 @@ class tx_orgesab_ImportTask_AdditionalFieldProvider implements tx_scheduler_Addi
 //      // SWITCH : OS of the server
 //
 //    return $bool_isValidatingSuccessful;
-      // #i0005, 130413, dwildt, -
+      // #i0006, 130413, dwildt, -
   }
 
   /**
