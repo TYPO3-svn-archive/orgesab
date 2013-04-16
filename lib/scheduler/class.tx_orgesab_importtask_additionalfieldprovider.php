@@ -747,22 +747,26 @@ class tx_orgesab_ImportTask_AdditionalFieldProvider implements tx_scheduler_Addi
   public function validateOS( tx_scheduler_Module $parentObject )
   {
     $bool_isValidatingSuccessful = true;
-
-      // SWITCH : OS of the server
-    switch( strtolower( PHP_OS ) )
-    {
-      case( 'linux' ):
-          // Linux is proper: Follow the workflow
-        break;
-      default:
-        $bool_isValidatingSuccessful = false;
-        $prompt = $this->msgPrefix . ': ' . $GLOBALS['LANG']->sL( 'LLL:EXT:orgesab/lib/scheduler/locallang.xml:msg.osIsNotSupported' );
-        $prompt = str_replace( '###PHP_OS###', PHP_OS, $prompt );
-        $parentObject->addMessage( $prompt, t3lib_FlashMessage::ERROR );
-    }
-      // SWITCH : OS of the server
-
+      // #i0005, 130413, dwildt, 1+
     return $bool_isValidatingSuccessful;
+
+      // #i0005, 130413, dwildt, -
+//      // SWITCH : OS of the server
+//    switch( strtolower( PHP_OS ) )
+//    {
+//      case( 'linux' ):
+//          // Linux is proper: Follow the workflow
+//        break;
+//      default:
+//        $bool_isValidatingSuccessful = false;
+//        $prompt = $this->msgPrefix . ': ' . $GLOBALS['LANG']->sL( 'LLL:EXT:orgesab/lib/scheduler/locallang.xml:msg.osIsNotSupported' );
+//        $prompt = str_replace( '###PHP_OS###', PHP_OS, $prompt );
+//        $parentObject->addMessage( $prompt, t3lib_FlashMessage::ERROR );
+//    }
+//      // SWITCH : OS of the server
+//
+//    return $bool_isValidatingSuccessful;
+      // #i0005, 130413, dwildt, -
   }
 
   /**
