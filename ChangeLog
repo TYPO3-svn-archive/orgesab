@@ -2,6 +2,10 @@
   13-07-20
   Bugfix
   * #50220: Integration in Organiser isn't proper
+            Effected files:
+            * ext_conf_template.txt
+            * ext_tables.php
+            * ext_tables.sql
 
 0.0.7
   13-04-16
