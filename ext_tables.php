@@ -313,13 +313,13 @@ $TCA['tx_org_cal']['columns']['type']['config']['items']['tx_orgesab'] = array
   // columns: extend type
 
   // Insert type [esab] with fields to TCAtypes
-//$TCA['tx_org_cal']['types']['tx_orgesab']['showitem'] = 
-//  '--div--;LLL:EXT:org/locallang_db.xml:tx_org_cal.div_calendar,    type,title,datetime,tx_org_caltype,tx_orgesab,'.
-//  '--div--;LLL:EXT:org/locallang_db.xml:tx_org_cal.div_event,       tx_org_location,tx_org_calentrance,'.
-//  '--div--;LLL:EXT:org/locallang_db.xml:tx_org_cal.div_department,  tx_org_department,'.
-//  '--div--;LLL:EXT:org/locallang_db.xml:tx_org_cal.div_control,     hidden;;1;;,fe_group'.
-//  ''
-//;
+$TCA['tx_org_cal']['types']['tx_orgesab']['showitem'] = 
+  '--div--;LLL:EXT:org/locallang_db.xml:tx_org_cal.div_calendar,    type,title,datetime,tx_org_caltype,tx_orgesab,'.
+  '--div--;LLL:EXT:org/locallang_db.xml:tx_org_cal.div_event,       tx_org_location,tx_org_calentrance,'.
+  '--div--;LLL:EXT:org/locallang_db.xml:tx_org_cal.div_department,  tx_org_department,'.
+  '--div--;LLL:EXT:org/locallang_db.xml:tx_org_cal.div_control,     hidden;;1;;,fe_group'.
+  ''
+;
 $TCA['tx_org_cal']['types']['tx_orgesab']['showitem'] = '
     --div--;LLL:EXT:org/locallang_db.xml:tx_org_cal.div_calendar
     ,title
