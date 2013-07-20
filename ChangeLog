@@ -1,7 +1,8 @@
 0.0.8
   13-07-20
   Bugfix
-  * #50220: Integration in Organiser isn't proper
+  * #50220: Integration in Organiser
+            BE AWARE: There is no proper TypoScript Template!
             Effected files:
             * ext_conf_template.txt
             * ext_tables.php
