@@ -320,13 +320,13 @@ $TCA['tx_org_cal']['types']['tx_orgesab']['showitem'] =
   '--div--;LLL:EXT:org/locallang_db.xml:tx_org_cal.div_control,     hidden;;1;;,fe_group'.
   ''
 ;
-$TCA['tx_org_cal']['types']['tx_orgesab']['showitem'] = '
-    --div--;LLL:EXT:org/locallang_db.xml:tx_org_cal.div_calendar
-    ,title
-    ,type
-    ,tx_orgesab
-    ,'
-;
+//$TCA['tx_org_cal']['types']['tx_orgesab']['showitem'] = '
+//    --div--;LLL:EXT:org/locallang_db.xml:tx_org_cal.div_calendar
+//    ,title
+//    ,type
+//    ,tx_orgesab
+//    ,'
+//;
 
   // Insert div [esab] with fields to TCAtypes
   // tx_org_cal
