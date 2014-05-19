@@ -1,3 +1,8 @@
+0.0.9
+  14-05-19
+  Improvement
+  * #i0007: RealURL configuration is updated.
+
 0.0.8
   13-07-20
   Bugfix
@@ -17,13 +22,13 @@
   13-04-13
   Improvement
   * #i0005: Test of OS is canceled. It isn't needed.
-            
+
 0.0.5
   13-03-30
   TER Release
   * #i0004: Publishing in the TYPO3 TER
   * #i0003: Writing the manual
-            
+
 0.0.4
   13-03-30
   Development
@@ -34,13 +39,13 @@
             * ext_conf_template.txt
             * ext_tables.php
             * ext_tables.sql
-            
+
 0.0.3
   13-03-29
   Development
   * #i0001: Work flow
             TypoSCript
-            
+
 0.0.2
   13-03-25
   Development
@@ -58,7 +63,7 @@
                 * class.tx_orgesab_importtask_additionalfieldprovider.php ( new )
                 * class.tx_orgesab_quotatask.php                          ( new )
                 * class.tx_orgesab_quotatask_additionalfieldprovider.php  ( new )
-                * class.tx_orgesab_testtask.php                           ( new )  
+                * class.tx_orgesab_testtask.php                           ( new )
                 * class.tx_orgesab_testtask_additionalfieldprovider.php   ( new )
                 * locallang.xml                                           ( new )
 0.0.1
