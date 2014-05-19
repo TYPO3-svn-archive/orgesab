@@ -37,6 +37,7 @@ $EM_CONF[$_EXTKEY] = array(
 			'browser' => '',
 			'cps_tcatree' => '',
 			'css_styled_content' => '',
+			'typo3' => '4.5.0-4.7.99',
 		),
 		'conflicts' => array(
 		),
