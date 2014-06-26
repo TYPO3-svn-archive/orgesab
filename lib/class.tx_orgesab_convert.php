@@ -797,7 +797,7 @@ class tx_orgesab_convert {
  */
   private function setOrgesabFieldTitlerealurl( $angebot )
   {
-    $titlerealurl = $angebot['angebot_name'] . '_' . $angebot['angebot_link'];
+    $titlerealurl = $angebot['angebot_name'] . '_' . $angebot['angebot_nr'];
 
     return $titlerealurl;
   }
