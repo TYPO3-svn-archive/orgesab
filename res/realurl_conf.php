@@ -69,7 +69,7 @@ $TYPO3_CONF_VARS['EXTCONF']['realurl']['_DEFAULT']['postVarSets'] = array
         (
           'table'               => 'tx_orgesab',
           'id_field'            => 'uid',
-          'alias_field'         => 'title',
+          'alias_field'         => 'titlerealurl',
           'addWhereClause'      => ' AND NOT deleted AND NOT hidden',
           'useUniqueCache'      => 1,
           'useUniqueCache_conf' => array

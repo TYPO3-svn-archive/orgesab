@@ -4,6 +4,7 @@
   * #i0008: unique title for RealURL
             Effected files:
             * lib/class.tx_orgesab_convert.php
+            * res/realurl_conf.php
             * locallang_db.xml
             * tca.php
 
