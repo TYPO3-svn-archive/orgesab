@@ -2,7 +2,7 @@
 /***************************************************************
 *  Copyright notice
 *
-*  (c) 2013 Dirk Wildt (http://wildt.at.die-netzmacher.de/)
+*  (c) 2013-2014 Dirk Wildt (http://wildt.at.die-netzmacher.de/)
 *  All rights reserved
 *
 *  This script is part of the TYPO3 project. The TYPO3 project is
@@ -471,6 +471,7 @@ class tx_orgesab_convert {
         'staff1'      => $angebot['angebot_kursleiter1'],
         'staff2'      => $angebot['angebot_kursleiter2'],
         'title'       => $angebot['angebot_name'],
+        'titlerealurl'  => $this->setOrgesabFieldTitlerealurl( $angebot ), $angebot['angebot_name'] . '_' . $angebot['angebot_link'],
         'tx_orgesab_cat'  => 2,
         'tx_org_cal'      => null,
       );
@@ -783,6 +784,22 @@ class tx_orgesab_convert {
     $timestamp = mktime( $hour, $minute, $second, $month, $day, $year );
 
     return $timestamp;
+  }
+
+/**
+ * setOrgesabFieldTitlerealurl( )  :
+ *
+ * @param	array		$content  :
+ * @return	string		$timestamp  :
+ * @access private
+ * @version       0.1.0
+ * @since         0.1.0
+ */
+  private function setOrgesabFieldTitlerealurl( $angebot )
+  {
+    $titlerealurl = $angebot['angebot_name'] . '_' . $angebot['angebot_link'];
+
+    return $titlerealurl;
   }
 
 /**
