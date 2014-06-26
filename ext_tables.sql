@@ -1,5 +1,5 @@
 # INDEX
-# 
+#
 # tx_orgesab
 # tx_orgesab_cat
 #
@@ -56,9 +56,10 @@ CREATE TABLE tx_orgesab (
   staff1 text,
   staff2 text,
   title tinytext,
+  titlerealurl tinytext,
   tx_orgesab_cat text,
   tx_org_cal tinytext,
-  
+
   PRIMARY KEY (uid),
   KEY parent (pid)
 );
@@ -76,7 +77,7 @@ CREATE TABLE tx_orgesab_cat (
   title tinytext,
   uid_parent int(11) DEFAULT '0' NOT NULL,
   hidden tinyint(4) DEFAULT '0' NOT NULL,
-  
+
   PRIMARY KEY (uid),
   KEY parent (pid)
 );

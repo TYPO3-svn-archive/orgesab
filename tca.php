@@ -8,7 +8,7 @@ if (!defined ('TYPO3_MODE'))
 
 
   /////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
-  // 
+  //
   // INDEX
   // -----
   // Configuration by the extension manager
@@ -22,7 +22,7 @@ if (!defined ('TYPO3_MODE'))
 
 
   /////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
-  // 
+  //
   // Configuration by the extension manager
 
 $bool_LL = false;
@@ -77,7 +77,7 @@ if (strtolower(substr($confArr['full_wizardSupport'], 0, strlen('no'))) == 'no')
 
   // Store record configuration
 $bool_full_wizardSupport_allTables = true;
-switch($confArr['store_records']) 
+switch($confArr['store_records'])
 {
   case('Multi grouped: record groups in different directories'):
     $str_store_record_conf              = 'pid IN (###PAGE_TSCONFIG_IDLIST###)';
@@ -101,9 +101,9 @@ switch($confArr['store_records'])
 
 
     /////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
-    // 
+    //
     // General Configuration
-    
+
     // JSopenParams for all wizards
   $JSopenParams     = 'height=680,width=800,status=0,menubar=0,scrollbars=1';
     // General Configuration
@@ -111,7 +111,7 @@ switch($confArr['store_records'])
 
 
   /////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
-  // 
+  //
   // Wizards and config drafts
 
   $conf_datetime = array (
@@ -121,7 +121,7 @@ switch($confArr['store_records'])
     'eval'    => 'datetime',
     'default' => mktime(date('H'),date('i'),0,date('m'),date('d'),date('Y')),
   );
-  
+
   $conf_datetimeend = $conf_datetime;
   unset($conf_datetimeend['default']);
 
@@ -136,7 +136,7 @@ switch($confArr['store_records'])
     'size' => '30',
     'eval' => 'trim,required'
   );
-  
+
   $conf_input_80_trim = array (
     'type' => 'input',
     'size' => '80',
@@ -144,10 +144,10 @@ switch($confArr['store_records'])
   );
   $conf_text_50_10 = array (
     'type' => 'text',
-    'cols' => '50', 
+    'cols' => '50',
     'rows' => '10',
   );
-  
+
   $conf_text_rte = array (
     'type' => 'text',
     'cols' => '30',
@@ -185,7 +185,7 @@ $TCA['tx_orgesab'] = array (
   'ctrl' => $TCA['tx_orgesab']['ctrl'],
   'interface' => array (
     'showRecordFieldList' => '
-        externalid, title,bookedup,bookingurl,eventbegin,eventend,spaceoftime,staff1,staff2,price1,price2,price3,tx_orgesab_cat,bodytext,skills,details,category
+        externalid, title,titlerealurl,bookedup,bookingurl,eventbegin,eventend,spaceoftime,staff1,staff2,price1,price2,price3,tx_orgesab_cat,bodytext,skills,details,category
       , tx_org_cal
       , tx_orgesab_cat
       , location1,location2,location3,location4,location5
@@ -205,6 +205,11 @@ $TCA['tx_orgesab'] = array (
       'exclude' => 0,
       'label'   => 'LLL:EXT:orgesab/locallang_db.xml:tx_orgesab.title',
       'config'  => $conf_input_30_trimRequired,
+    ),
+    'titlerealurl' => array (
+      'exclude' => 0,
+      'label'   => 'LLL:EXT:orgesab/locallang_db.xml:tx_orgesab.titlerealurl',
+      'config'  => $conf_input_30_trim,
     ),
     'bookedup' => array (
       'exclude' => $bool_exclude_none,
@@ -350,7 +355,7 @@ $TCA['tx_orgesab'] = array (
       'exclude' => $bool_exclude_default,
       'label'   => 'LLL:EXT:orgesab/locallang_db.xml:tx_orgesab.tx_org_cal',
       'config'  => array (
-        'type'                => 'select', 
+        'type'                => 'select',
         'size'                => $size_calendar,
         'minitems'            => 0,
         'maxitems'            => 999,
@@ -472,14 +477,14 @@ $TCA['tx_orgesab'] = array (
       'config'    => $conf_text_50_10,
     ),
   ),
-  'types' =>  array 
+  'types' =>  array
   (
     '0' =>  array
     (
       'showitem' => '
             --div--;LLL:EXT:orgesab/locallang_db.xml:tx_orgesab.div_event
           , externalid
-          , title 
+          , title
           , bookedup
           , bookingurl
           , eventbegin
@@ -520,7 +525,7 @@ $TCA['tx_orgesab'] = array (
           ,fe_group
           , --div--;LLL:EXT:orgesab/locallang_db.xml:tx_orgesab.div_seo
           , keywords
-          , description' 
+          , description'
         ,
     ),
   ),
@@ -538,9 +543,9 @@ if( ! $bool_full_wizardSupport_allTables )
 
 
   /////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
-  // 
+  //
   // tx_orgesab_cat
-  
+
 $TCA['tx_orgesab_cat'] = array (
   'ctrl' => $TCA['tx_orgesab_cat']['ctrl'],
   'interface' => array (
@@ -577,7 +582,7 @@ $TCA['tx_orgesab_cat'] = array (
   ),
   'types' => array
   (
-    '0' => array 
+    '0' => array
     (
       'showitem' => '
           title
