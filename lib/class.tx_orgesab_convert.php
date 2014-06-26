@@ -471,7 +471,7 @@ class tx_orgesab_convert {
         'staff1'      => $angebot['angebot_kursleiter1'],
         'staff2'      => $angebot['angebot_kursleiter2'],
         'title'       => $angebot['angebot_name'],
-        'titlerealurl'  => $this->setOrgesabFieldTitlerealurl( $angebot ), $angebot['angebot_name'] . '_' . $angebot['angebot_link'],
+        'titlerealurl'  => $this->setOrgesabFieldTitlerealurl( $angebot ),
         'tx_orgesab_cat'  => 2,
         'tx_org_cal'      => null,
       );
