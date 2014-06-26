@@ -55,8 +55,8 @@
       <label index="tx_orgesab.staff1">Course instructor 1</label>
       <label index="tx_orgesab.staff2">Course instructor 2</label>
       <label index="tx_orgesab.title">Title of the ESAB event</label>
-      <label index="tx_orgesab.titlerealurl">RealURL title: title plus id of the booking system</label>
       <label index="tx_orgesab.tx_org_cal">Calendar</label>
+
       <label index="tx_orgesab_cat">ESAB category</label>
       <label index="tx_orgesab_cat.title">Label of the ESAB category</label>
 
@@ -114,7 +114,6 @@
       <label index="tx_orgesab.staff1">Kursleiter 1</label>
       <label index="tx_orgesab.staff2">Kursleiter 2</label>
       <label index="tx_orgesab.title">Bezeichnung der ESAB-Veranstaltung</label>
-      <label index="tx_orgesab.titlerealurl">RealURL Titel: Bezeichnung mit ID im Buchungssystem</label>
       <label index="tx_orgesab.tx_org_cal">Kalendar</label>
 
       <label index="tx_orgesab_cat">ESAB-Kategorie</label>
