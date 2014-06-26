@@ -485,6 +485,7 @@ $TCA['tx_orgesab'] = array (
             --div--;LLL:EXT:orgesab/locallang_db.xml:tx_orgesab.div_event
           , externalid
           , title
+          , titlerealurl
           , bookedup
           , bookingurl
           , eventbegin
